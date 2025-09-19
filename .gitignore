@@ -2,3 +2,6 @@
 .vscode/
 
 # Abaikan file lain yang tidak perlu di masa depan
+
+# Abaikan file video player karena akan di-host di domain terpisah
+videy.html
