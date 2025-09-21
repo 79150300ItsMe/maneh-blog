@@ -20,6 +20,14 @@
   <!-- Enhanced SEO Meta Tags -->
   <link id="canon" rel="canonical" href="https://maneh.blog/" />
   
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Maneh">
+  <link rel="apple-touch-icon" href="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=180&h=180&auto=format&fit=crop&crop=center">
+  
   <!-- Primary Meta Tags -->
   <title>Maneh — Tutorial & Tips Teknologi Terlengkap 2025</title>
   <meta name="title" content="Maneh — Tutorial & Tips Teknologi Terlengkap 2025">
@@ -142,10 +150,13 @@
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
   
-  <!-- Resource Hints -->
+  <!-- Enhanced Resource Hints -->
   <link rel="preload" href="/css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <link rel="preload" href="/js/data.js" as="script">
   <link rel="preload" href="/js/script.js" as="script">
+  <link rel="preload" href="https://images.unsplash.com" as="fetch" crossorigin>
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/dompurify@3.0.11/dist/purify.min.js">
+  <link rel="prefetch" href="https://fonts.gstatic.com">
   
   <!-- Stylesheet -->
   <link rel="stylesheet" href="/css/style.css">
@@ -420,6 +431,32 @@
   }
 </script>
 <script src="/js/script.js"></script>
+
+<!-- PWA Service Worker Registration -->
+<script>
+  // Service Worker Registration with error handling
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(registration => {
+          console.log('SW registered: ', registration);
+          // Check for updates
+          registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing;
+            newWorker.addEventListener('statechange', () => {
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                console.log('New SW available, prompting update...');
+                // Auto-update without user prompt for better UX
+                newWorker.postMessage({ type: 'SKIP_WAITING' });
+              }
+            });
+          });
+        })
+        .catch(error => console.log('SW registration failed: ', error));
+    });
+  }
+</script>
+
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"b7853df5a22f4adeb1c02f1cbfb01694","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>

@@ -1,5 +1,10 @@
-// Performance & Security Optimizations
+// Performance & Security Optimizations - Enhanced
+'use strict';
 history.scrollRestoration = 'manual';
+
+// Performance monitoring
+const perfStartTime = performance.now();
+let metricsCollected = false;
 
 // Secure locale detection with fallback
 let LOCALE = (() => {
@@ -162,13 +167,14 @@ function canonicalPath(a) {
 }
 
 /* ======= Secure Article Helpers ======= */
+// Hyper-optimized shuffle function with Fisher-Yates algorithm
 function shuffleArray(array) {
   try {
-    if (!Array.isArray(array)) return [];
-    
-    const shuffled = [...array];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    if (!Array.isArray(array) || array.length <= 1) return array;
+    const shuffled = array.slice(); // Faster than spread for large arrays
+    let i = shuffled.length;
+    while (--i > 0) {
+      const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     return shuffled;
