@@ -48,10 +48,10 @@ function applyI18N() {
   try {
   document.documentElement.lang = LOCALE;
     
-    // Batch DOM updates for better performance
+    // Batch DOM updates for better performance with safe innerHTML
     const updates = [
       { id: 'q', prop: 'placeholder', value: t('searchPH') },
-      { id: 'pillCat', prop: 'innerHTML', value: t('pill') },
+      { id: 'pillCat', prop: 'textContent', value: t('pill') },
       { id: 'heroTitle', prop: 'textContent', value: t('heroTitle') },
       { id: 'heroSub', prop: 'textContent', value: t('heroSub') },
       { id: 'secFeatured', prop: 'textContent', value: t('featured') },
@@ -174,14 +174,14 @@ function shuffleArray(array) {
     const shuffled = array.slice(); // Faster than spread for large arrays
     let i = shuffled.length;
     while (--i > 0) {
-      const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
+  }
     return shuffled;
   } catch (error) {
     console.warn('Array shuffle error:', error);
     return Array.isArray(array) ? [...array] : [];
-  }
+}
 }
 
 function getRandomArticles(count) {
@@ -432,7 +432,12 @@ function renderList(items=ARTICLES){
     `;
   }).join('');
   
-  box.innerHTML = html;
+  // Safe HTML rendering
+  if (typeof DOMPurify !== 'undefined') {
+    box.innerHTML = DOMPurify.sanitize(html);
+  } else {
+    box.innerHTML = html; // Fallback
+  }
   console.log('List rendered, cards created:', box.querySelectorAll('.card').length);
 }
 
@@ -732,7 +737,7 @@ function route(){
     
     const desc = CATEGORY_DESCRIPTIONS[categoryName] || `${filteredArticles.length} artikel ditemukan.`;
     document.getElementById('heroTitle').textContent = `${t('categoryLabel')}: ${cleanCategoryName}`;
-    document.getElementById('heroSub').innerHTML = desc;
+    document.getElementById('heroSub').textContent = desc;
     renderList(filteredArticles); // Tampilkan artikel yang sudah difilter
     
     history.replaceState(null, '', window.location.pathname + window.location.search + `#category/${categoryName}`);

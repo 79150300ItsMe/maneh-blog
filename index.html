@@ -156,7 +156,7 @@
   <link rel="preload" href="/js/script.js" as="script">
   <link rel="preload" href="https://images.unsplash.com" as="fetch" crossorigin>
   <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/dompurify@3.0.11/dist/purify.min.js">
-  <link rel="prefetch" href="https://fonts.gstatic.com">
+  <link rel="prefetch" href="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2">
   
   <!-- Stylesheet -->
   <link rel="stylesheet" href="/css/style.css">
@@ -434,10 +434,18 @@
 
 <!-- PWA Service Worker Registration -->
 <script>
-  // Service Worker Registration with error handling
+  // Service Worker Registration with Trusted Types support
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
+      // Handle Trusted Types for Service Worker URL
+      let swUrl = '/sw.js';
+      if (window.trustedTypes && window.trustedTypes.createPolicy) {
+        const policy = window.trustedTypes.createPolicy('sw-policy', {
+          createScriptURL: (url) => url
+        });
+        swUrl = policy.createScriptURL('/sw.js');
+      }
+      navigator.serviceWorker.register(swUrl)
         .then(registration => {
           console.log('SW registered: ', registration);
           // Check for updates
