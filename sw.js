@@ -1,8 +1,8 @@
 // Enhanced Service Worker for Maneh Blog
 'use strict';
 
-const CACHE_NAME = 'maneh-blog-v1.2';
-const RUNTIME_CACHE = 'maneh-runtime-v1.2';
+const CACHE_NAME = 'maneh-blog-v1.1';
+const RUNTIME_CACHE = 'maneh-runtime-v1.1';
 
 // Resources to cache immediately
 const STATIC_CACHE_URLS = [
@@ -63,32 +63,20 @@ self.addEventListener('fetch', event => {
   // Skip chrome-extension and other non-http(s) URLs
   if (!request.url.startsWith('http')) return;
 
-  // Skip external domains, API calls, video proxy, article URLs, and ad domains
-  const skipDomains = [
+  // Skip API calls, video proxy, article URLs, and ad domains
+  const adDomains = [
     'scornfacultative.com',
     'preferencenail.com', 
     'weirdopt.com',
     'torchfriendlypay.com',
     'professionaltrafficmonitor.com',
-    'skinnycrawlinglax.com',
-    'fonts.gstatic.com',
-    'fonts.googleapis.com',
-    'images.unsplash.com',
-    'static.cloudflareinsights.com',
-    'cdn.jsdelivr.net',
-    'ipapi.co'
+    'skinnycrawlinglax.com'
   ];
-  
-  // Skip if not from our domain
-  if (url.hostname !== self.location.hostname &&
-      !url.hostname.includes('maneh.blog')) {
-    return;
-  }
   
   if (url.pathname.startsWith('/v/') || 
       url.pathname.startsWith('/api/') ||
       url.pathname.match(/^\/\d{4}\/\d{2}\/\d{2}\/\d+-/) ||
-      skipDomains.some(domain => url.hostname.includes(domain))) {
+      adDomains.some(domain => url.hostname.includes(domain))) {
     return;
   }
 
