@@ -150,14 +150,14 @@
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
   
-  <!-- Enhanced Resource Hints -->
+  <!-- Critical Resource Loading for Clean Display -->
   <link rel="preload" href="/css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <link rel="preload" href="/js/data.js" as="script">
   <link rel="preload" href="/js/script.js" as="script">
   <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/dompurify@3.0.11/dist/purify.min.js">
   
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="/css/style.css">
+  <!-- Critical Stylesheet - Must Load First -->
+  <link rel="stylesheet" href="/css/style.css" media="all">
   <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
   
   <!-- Anti-Inspect & Security Scripts -->
@@ -430,18 +430,27 @@
 </script>
 <script src="/js/script.js"></script>
 
-<!-- PWA Service Worker Registration - Temporarily Disabled for Ad Debugging -->
+<!-- PWA Service Worker Registration - Restored for Proper Display -->
 <script>
-  // Service Worker temporarily disabled to resolve ad conflicts
-  console.log('Service Worker disabled for debugging');
-  
-  // Clear existing service workers
+  // Service Worker Registration with proper error handling
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(function(registrations) {
-      for(let registration of registrations) {
-        registration.unregister();
-        console.log('Service Worker unregistered');
-      }
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(registration => {
+          console.log('SW registered: ', registration);
+          // Check for updates
+          registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing;
+            newWorker.addEventListener('statechange', () => {
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                console.log('New SW available, prompting update...');
+                // Auto-update without user prompt for better UX
+                newWorker.postMessage({ type: 'SKIP_WAITING' });
+              }
+            });
+          });
+        })
+        .catch(error => console.log('SW registration failed: ', error));
     });
   }
 </script>

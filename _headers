@@ -20,8 +20,8 @@
   # Permissions Policy - Restrict dangerous APIs
   Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()
   
-  # Enhanced CSP - Allow all ad domains for functionality
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https: http:; style-src 'self' 'unsafe-inline' https: http:; img-src 'self' https: data: http: blob:; font-src 'self' https: http:; connect-src 'self' https: http:; media-src 'self' https: http:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
+  # Enhanced CSP - Balanced security and functionality for clean display
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://static.cloudflareinsights.com https://scornfacultative.com http://scornfacultative.com https://preferencenail.com http://preferencenail.com https://weirdopt.com http://weirdopt.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' https: data: http: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://ipapi.co https://static.cloudflareinsights.com https://scornfacultative.com http://scornfacultative.com https://preparecommands.com https://cdn.jsdelivr.net https://images.unsplash.com https://fonts.gstatic.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
   
   # SEO Headers
   X-Robots-Tag: index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1
