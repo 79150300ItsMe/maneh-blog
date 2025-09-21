@@ -1,8 +1,8 @@
 // Enhanced Service Worker for Maneh Blog
 'use strict';
 
-const CACHE_NAME = 'maneh-blog-v1.3';
-const RUNTIME_CACHE = 'maneh-runtime-v1.3';
+const CACHE_NAME = 'maneh-blog-v1.4';
+const RUNTIME_CACHE = 'maneh-runtime-v1.4';
 
 // Resources to cache immediately
 const STATIC_CACHE_URLS = [
