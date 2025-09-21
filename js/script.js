@@ -6,6 +6,40 @@ history.scrollRestoration = 'manual';
 const perfStartTime = performance.now();
 let metricsCollected = false;
 
+// Suppress ad-related console errors
+const originalConsoleError = console.error;
+console.error = function(...args) {
+  const message = args.join(' ');
+  // Skip ad-related errors
+  if (message.includes('scornfacultative') || 
+      message.includes('preferencenail') ||
+      message.includes('weirdopt') ||
+      message.includes('torchfriendlypay') ||
+      message.includes('professionaltrafficmonitor') ||
+      message.includes('skinnycrawlinglax') ||
+      message.includes('Content Security Policy') ||
+      message.includes('net::ERR_FAILED')) {
+    return; // Suppress these errors
+  }
+  originalConsoleError.apply(console, args);
+};
+
+// Global error handler to suppress ad errors
+window.addEventListener('error', function(event) {
+  const message = event.message || event.error?.message || '';
+  // Suppress ad-related errors
+  if (message.includes('scornfacultative') || 
+      message.includes('preferencenail') ||
+      message.includes('weirdopt') ||
+      message.includes('Failed to fetch') ||
+      event.filename?.includes('scornfacultative') ||
+      event.filename?.includes('preferencenail') ||
+      event.filename?.includes('weirdopt')) {
+    event.preventDefault();
+    return false;
+  }
+});
+
 // Secure locale detection with fallback
 let LOCALE = (() => {
   try {
