@@ -498,8 +498,23 @@ function show(sectionId){
   const targetSection = document.getElementById(sectionId);
   if (targetSection) {
     targetSection.style.display='block';
+    targetSection.style.visibility='visible';
+    targetSection.style.opacity='1';
     console.log('Section displayed:', sectionId, 'new display:', targetSection.style.display);
     console.log('Section visibility:', window.getComputedStyle(targetSection).display);
+    
+    // Force reflow to ensure display change takes effect
+    targetSection.offsetHeight;
+    
+    // Double check after a short delay
+    setTimeout(() => {
+      const computedStyle = window.getComputedStyle(targetSection);
+      console.log('Final section state:', {
+        display: computedStyle.display,
+        visibility: computedStyle.visibility,
+        opacity: computedStyle.opacity
+      });
+    }, 100);
   } else {
     console.error('Section not found:', sectionId);
   }
@@ -570,6 +585,11 @@ function renderReader(slug, queryStr) {
     // Secure DOM update
     post.innerHTML = `<h1 id="post-top">${cleanTitle}</h1>${cleanHTML}`;
     console.log('Article content rendered securely');
+    
+    // Ensure the post element is visible
+    post.style.display = 'block';
+    post.style.visibility = 'visible';
+    post.style.opacity = '1';
 
   /* Hero figure = cover */
   const firstImg = post.querySelector('img.thumb');
@@ -743,8 +763,11 @@ function route(){
     }
     
     hideSearch();
+    console.log('About to render reader for slug:', slug);
     renderReader(slug);
+    console.log('About to show reader section');
     show('reader');
+    console.log('Reader section should now be visible');
     return;
   }
   // Handle old hash format for backward compatibility
