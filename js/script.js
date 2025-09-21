@@ -737,14 +737,15 @@ function route(){
   }
 
   // Handle article page - new URL format: /2025/09/25/1-era-baru-sinema-ai-sora
-  if(path.match(/^\/(\d{4})\/(\d{2})\/(\d{2})\/(\d+)-(.+)$/)){
-    const match = path.match(/^\/(\d{4})\/(\d{2})\/(\d{2})\/(\d+)-(.+)$/);
-    const year = match[1];
-    const month = match[2];
-    const day = match[3];
-    const order = match[4];
-    const slug = match[5];
-    console.log('Handling article page with new format');
+  console.log('Checking path for article format:', path);
+  const articleMatch = path.match(/^\/(\d{4})\/(\d{2})\/(\d{2})\/(\d+)-(.+)$/);
+  if(articleMatch){
+    const year = articleMatch[1];
+    const month = articleMatch[2];
+    const day = articleMatch[3];
+    const order = articleMatch[4];
+    const slug = articleMatch[5];
+    console.log('✅ MATCH FOUND - Handling article page with new format');
     console.log('Article slug:', slug);
     console.log('Date:', year, month, day);
     console.log('Order:', order);
@@ -802,6 +803,9 @@ function route(){
 
 
   // Default to home page (covers #, #tutorial, or any other hash)
+  console.log('❌ NO MATCH FOUND - Defaulting to home page');
+  console.log('Path was:', path);
+  console.log('Hash was:', hash);
   console.log('Showing home page');
   show('home');
   
