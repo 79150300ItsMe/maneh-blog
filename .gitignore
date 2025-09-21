@@ -5,3 +5,6 @@
 
 # Abaikan file video player karena akan di-host di domain terpisah
 videy.html
+
+# Abaikan folder worker karena akan di-deploy terpisah
+maneh-worker/

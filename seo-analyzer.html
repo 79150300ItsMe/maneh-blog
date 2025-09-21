@@ -164,26 +164,48 @@
         }
 
         function analyzeFromURL(url) {
+            console.log('Analyzing URL:', url);
             fetch(url)
-                .then(response => response.text())
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    return response.text();
+                })
                 .then(html => {
+                    console.log('HTML loaded, length:', html.length);
+                    console.log('HTML preview:', html.substring(0, 200) + '...');
+                    
                     // Create a temporary DOM to analyze
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(html, 'text/html');
                     
-                    // Replace current document temporarily for analysis
-                    const originalDoc = document;
-                    window.tempDoc = doc;
+                    // Check what we're analyzing
+                    const title = doc.querySelector('title');
+                    console.log('Document title:', title ? title.textContent : 'No title found');
                     
                     analyzeDocument(doc);
                 })
                 .catch(error => {
                     console.error('Error loading page:', error);
                     addTest('meta', 'Page Load', 'Load page for analysis', 'fail', `Error: ${error.message}`, 0);
+                    updateScore();
                 });
         }
 
         function analyzeMainPage() {
+            // Show loading message
+            document.getElementById('resultsContainer').innerHTML = `
+                <div class="test-section">
+                    <div class="loading">
+                        <h3>🔍 Analyzing Main Page (index.html)...</h3>
+                        <p>Please wait while we analyze the SEO of your main blog page.</p>
+                    </div>
+                </div>
+            `;
+            
+            // Analyze index.html
             analyzeFromURL('index.html');
         }
 
@@ -518,8 +540,17 @@
         // Auto-analyze on page load
         window.addEventListener('load', function() {
             setTimeout(() => {
-                analyzeMainPage();
-            }, 1000);
+                // Don't auto-analyze, let user choose
+                document.getElementById('resultsContainer').innerHTML = `
+                    <div class="test-section">
+                        <h2>🎯 Ready to Analyze</h2>
+                        <p>Click "Analyze Main Page" to test the main blog page SEO, or choose another option below.</p>
+                        <div style="text-align: center; margin: 20px 0;">
+                            <button class="btn" onclick="analyzeMainPage()" style="font-size: 16px; padding: 15px 30px;">🔍 Analyze Main Page (index.html)</button>
+                        </div>
+                    </div>
+                `;
+            }, 500);
         });
     </script>
 </body>

@@ -15,17 +15,17 @@ let LOCALE = (() => {
 /* Enhanced locale detection with error handling */
 function detectAndApplyLocale() {
   try {
-    // Apply default locale immediately for fast initial render
-    applyI18N(); 
-    
+  // Apply default locale immediately for fast initial render
+  applyI18N(); 
+
     // Skip IP detection to avoid CORS issues and improve performance
     console.log('Using browser locale detection for better performance');
   } catch (error) {
     console.error('Locale detection error:', error);
     // Fallback to default
     LOCALE = 'en';
-    applyI18N();
-  }
+        applyI18N();
+      }
 }
 
 // Secure translation function with error handling
@@ -41,7 +41,7 @@ function t(key) {
 // Optimized I18N application with batch DOM updates
 function applyI18N() {
   try {
-    document.documentElement.lang = LOCALE;
+  document.documentElement.lang = LOCALE;
     
     // Batch DOM updates for better performance
     const updates = [
@@ -86,12 +86,12 @@ function applyI18N() {
 /* ======= Optimized Utils ======= */
 function scrollToId(id) {
   try {
-    const el = document.getElementById(id);
+  const el = document.getElementById(id);
     if (!el) return;
     
-    const header = document.querySelector('header');
-    const offset = (header?.offsetHeight || 60) + 8;
-    const y = el.getBoundingClientRect().top + window.scrollY - offset;
+  const header = document.querySelector('header');
+  const offset = (header?.offsetHeight || 60) + 8;
+  const y = el.getBoundingClientRect().top + window.scrollY - offset;
     
     window.scrollTo({
       top: y,
@@ -116,7 +116,7 @@ function slugify(s) {
 // Optimized date formatting with error handling
 function fmtDate(iso) {
   try {
-    const d = new Date(iso);
+  const d = new Date(iso);
     if (isNaN(d.getTime())) return 'Invalid Date';
     
     return d.toLocaleDateString(
@@ -145,16 +145,16 @@ function canonicalPath(a) {
   try {
     if (!a || !a.published) return '/';
     
-    const d = new Date(a.published);
+  const d = new Date(a.published);
     if (isNaN(d.getTime())) return '/';
     
     const yyyy = d.getFullYear();
     const mm = String(d.getMonth() + 1).padStart(2, '0');
     const dd = String(d.getDate()).padStart(2, '0');
-    const index = idxBySlug(a.slug);
-    const category = a.category ? `${a.category}-` : '';
+  const index = idxBySlug(a.slug);
+  const category = a.category ? `${a.category}-` : '';
     
-    return `/${yyyy}/${mm}/${dd}/${index}-${category}${a.slug}`;
+  return `/${yyyy}/${mm}/${dd}/${index}-${category}${a.slug}`;
   } catch (error) {
     console.warn('Canonical path error:', error);
     return '/';
@@ -168,7 +168,7 @@ function shuffleArray(array) {
     
     const shuffled = [...array];
     for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     return shuffled;
@@ -191,7 +191,7 @@ function getRandomArticles(count) {
 /* ======= Enhanced SEO helpers ======= */
 function updateSEOForArticle(a){
   try {
-    const url = canonicalPath(a);
+  const url = canonicalPath(a);
     const fullUrl = `https://maneh.blog${url}`;
     
     // Update canonical URL
@@ -209,7 +209,7 @@ function updateSEOForArticle(a){
     // Update Open Graph tags
     document.getElementById('ogTitle').content = `${a.title} | Maneh Blog`;
     document.getElementById('ogDesc').content = `${a.summary} | Tutorial lengkap dengan panduan step-by-step di Maneh.`;
-    document.getElementById('ogImage').content = a.cover;
+  document.getElementById('ogImage').content = a.cover;
     document.getElementById('ogUrl').content = fullUrl;
     
     // Update Twitter tags
@@ -224,7 +224,7 @@ function updateSEOForArticle(a){
     if (twitterUrl) twitterUrl.content = fullUrl;
     
     // Enhanced Article Structured Data
-    let ld = document.getElementById('ld-article');
+  let ld = document.getElementById('ld-article');
     if(!ld){ 
       ld = document.createElement('script'); 
       ld.type='application/ld+json'; 
@@ -246,7 +246,7 @@ function updateSEOForArticle(a){
       "datePublished": art.published
     }));
     
-    ld.textContent = JSON.stringify({
+  ld.textContent = JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Article",
       "headline": a.title,
@@ -272,7 +272,7 @@ function updateSEOForArticle(a){
         "@type": "WebPage",
         "@id": fullUrl
       },
-      "inLanguage": LOCALE==='en'?'en-US':'id-ID',
+    "inLanguage": LOCALE==='en'?'en-US':'id-ID',
       "wordCount": wordCount,
       "timeRequired": `PT${readingTime}M`,
       "articleSection": a.category || "Technology",
@@ -728,8 +728,23 @@ function route(){
     console.log('Article slug:', slug);
     console.log('Date:', year, month, day);
     console.log('Order:', order);
+    
+    // Check if article exists
+    const article = ARTICLES?.find(a => a.slug === slug);
+    if (!article) {
+      console.warn('Article not found for slug:', slug);
+      console.log('Available slugs:', ARTICLES?.map(a => a.slug) || []);
+      // Redirect to home page
+      history.replaceState(null, '', '/');
+      show('home');
+      renderList(getRandomArticles(8));
+      resetSEOHome();
+      return;
+    }
+    
     hideSearch();
     renderReader(slug);
+    show('reader');
     return;
   }
   // Handle old hash format for backward compatibility
