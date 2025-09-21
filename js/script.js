@@ -186,6 +186,15 @@ function canonicalPath(a) {
 }
 
 /* ======= Secure Article Helpers ======= */
+
+// Calculate reading time for analytics
+function calculateReadingTime(content) {
+  if (!content) return 0;
+  const wordsPerMinute = 200; // Average reading speed
+  const words = content.split(/\s+/).length;
+  return Math.ceil(words / wordsPerMinute);
+}
+
 // Hyper-optimized shuffle function with Fisher-Yates algorithm
 function shuffleArray(array) {
   try {
@@ -574,6 +583,20 @@ function renderReader(slug, queryStr) {
       return; 
     }
     console.log('Found article:', a.title);
+    
+    // Analytics tracking for article view
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'page_view', {
+        page_title: a.title,
+        page_location: window.location.href,
+        content_group1: a.category,
+        custom_parameter_1: a.category,
+        custom_parameter_2: calculateReadingTime(a.content)
+      });
+      
+      // Track article engagement
+      trackArticleView(a.title, a.category);
+    }
     
     const post = document.getElementById('post');
     if (!post) {
@@ -1022,6 +1045,84 @@ function initAds() {
 
 // Initialize ads after DOM is ready
 document.addEventListener('DOMContentLoaded', initAds);
+
+/* ======= Reading Progress Tracking ======= */
+function initReadingProgress() {
+  let readingStartTime = Date.now();
+  let progressTracked = [];
+  
+  const trackProgress = () => {
+    if (window.location.hash.startsWith('#p/')) {
+      const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+      
+      // Track at 25%, 50%, 75%, 100% intervals
+      [25, 50, 75, 100].forEach(milestone => {
+        if (scrollPercent >= milestone && !progressTracked.includes(milestone)) {
+          progressTracked.push(milestone);
+          
+          if (typeof trackReadingProgress !== 'undefined') {
+            trackReadingProgress(milestone);
+          }
+          
+          // Track time spent reading
+          if (milestone === 100) {
+            const readingTime = Math.round((Date.now() - readingStartTime) / 1000);
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'article_complete', {
+                'reading_time_seconds': readingTime,
+                'event_category': 'engagement'
+              });
+            }
+          }
+        }
+      });
+    }
+  };
+  
+  // Reset on new article
+  window.addEventListener('hashchange', () => {
+    readingStartTime = Date.now();
+    progressTracked = [];
+  });
+  
+  // Track progress on scroll
+  window.addEventListener('scroll', trackProgress, { passive: true });
+}
+
+// Initialize reading progress tracking
+document.addEventListener('DOMContentLoaded', initReadingProgress);
+
+/* ======= Health Check for Monitoring ======= */
+function healthCheck() {
+  return {
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    version: '1.4',
+    uptime: Math.round(performance.now() / 1000),
+    services: {
+      css: document.querySelector('link[href*="style.css"]') ? 'ok' : 'error',
+      js: typeof ARTICLES !== 'undefined' && ARTICLES.length > 0 ? 'ok' : 'error',
+      analytics: typeof gtag !== 'undefined' ? 'ok' : 'error',
+      dompurify: typeof DOMPurify !== 'undefined' ? 'ok' : 'error',
+      articles_count: ARTICLES?.length || 0,
+      locale: LOCALE || 'unknown'
+    },
+    performance: {
+      page_load: Math.round(performance.now()),
+      memory_used: performance.memory ? Math.round(performance.memory.usedJSHeapSize / 1024 / 1024) + 'MB' : 'unknown'
+    }
+  };
+}
+
+// Expose health check for monitoring
+window.healthCheck = healthCheck;
+
+// Expose health endpoint via hash route
+window.addEventListener('hashchange', () => {
+  if (location.hash === '#health') {
+    document.body.innerHTML = `<pre>${JSON.stringify(healthCheck(), null, 2)}</pre>`;
+  }
+});
 
 /* ======= Theme Toggle ======= */
 (function initTheme() {
