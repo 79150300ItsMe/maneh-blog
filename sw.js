@@ -1,8 +1,8 @@
 // Enhanced Service Worker for Maneh Blog
 'use strict';
 
-const CACHE_NAME = 'maneh-blog-v1.0';
-const RUNTIME_CACHE = 'maneh-runtime-v1.0';
+const CACHE_NAME = 'maneh-blog-v1.1';
+const RUNTIME_CACHE = 'maneh-runtime-v1.1';
 
 // Resources to cache immediately
 const STATIC_CACHE_URLS = [
@@ -63,8 +63,10 @@ self.addEventListener('fetch', event => {
   // Skip chrome-extension and other non-http(s) URLs
   if (!request.url.startsWith('http')) return;
 
-  // Skip API calls and video proxy
-  if (url.pathname.startsWith('/v/') || url.pathname.startsWith('/api/')) {
+  // Skip API calls, video proxy, and article URLs
+  if (url.pathname.startsWith('/v/') || 
+      url.pathname.startsWith('/api/') ||
+      url.pathname.match(/^\/\d{4}\/\d{2}\/\d{2}\/\d+-/)) {
     return;
   }
 

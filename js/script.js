@@ -1027,6 +1027,20 @@ document.addEventListener('DOMContentLoaded', initAds);
 const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+// Clear Service Worker cache for debugging
+function clearCache() {
+  if ('serviceWorker' in navigator && 'caches' in window) {
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => caches.delete(cacheName))
+      );
+    }).then(() => {
+      console.log('All caches cleared');
+      location.reload();
+    });
+  }
+}
+
 // Initialize with proper error handling
 function initializeBlog() {
   try {
@@ -1188,34 +1202,5 @@ if (document.readyState === 'loading') {
   loadSavedInfo();
 })();
 
-/* ======= Blog Initialization ======= */
-function initializeBlog() {
-  try {
-    console.log('Initializing Maneh blog...');
-    console.log('ARTICLES available:', ARTICLES?.length || 0);
-    console.log('I18N available:', typeof I18N !== 'undefined' ? 'yes' : 'no');
-    console.log('DOMPurify available:', typeof DOMPurify !== 'undefined' ? 'yes' : 'no');
-    
-    // Validate required elements
-    console.log('Home element:', document.getElementById('home') ? 'found' : 'missing');
-    console.log('Reader element:', document.getElementById('reader') ? 'found' : 'missing');
-    console.log('Post element:', document.getElementById('post') ? 'found' : 'missing');
-    
-    // Initialize locale and routing
-    detectAndApplyLocale();
-    setupClickHandlers();
-    route();
-    
-    console.log('Blog initialization completed successfully');
-  } catch (error) {
-    console.error('Blog initialization failed:', error);
-  }
-}
-
-// Initialize blog when DOM is ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initializeBlog);
-} else {
-  // DOM already loaded
-  initializeBlog();
-}
+/* ======= Blog Initialization - Cleaned ======= */
+// Initialization handled above - duplicated code removed
