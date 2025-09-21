@@ -750,8 +750,16 @@ function renderReader(slug, queryStr) {
 function route(){
   const path = location.pathname;
   const hash = location.hash.slice(1);
+  const urlParams = new URLSearchParams(window.location.search);
   console.log('Routing to path:', path);
   console.log('Routing to hash:', hash);
+  
+  // Check if this is a video display request
+  if (urlParams.get('video') === 'true') {
+    console.log('Video display mode detected');
+    showVideoPlayer();
+    return;
+  }
 
   // Handle static pages FIRST (highest priority)
   if (hash === 'about' || hash === 'policy') {
@@ -1084,6 +1092,95 @@ function clearCache() {
     });
   }
 }
+
+// Show video player in iframe
+function showVideoPlayer() {
+  try {
+    console.log('Displaying video player...');
+    
+    // Hide other sections
+    hide('home');
+    hide('about'); 
+    hide('policy');
+    hide('reader');
+    
+    // Create video container if not exists
+    let videoContainer = document.getElementById('video-container');
+    if (!videoContainer) {
+      videoContainer = document.createElement('div');
+      videoContainer.id = 'video-container';
+      videoContainer.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 9999;
+        background: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      `;
+      document.body.appendChild(videoContainer);
+    }
+    
+    // Create iframe for video
+    videoContainer.innerHTML = `
+      <iframe 
+        src="https://quaxy.my/v/?embed=true" 
+        width="100%" 
+        height="100%" 
+        frameborder="0" 
+        allowfullscreen
+        style="border: none;">
+      </iframe>
+      <div style="position: absolute; top: 20px; right: 20px;">
+        <button onclick="closeVideoPlayer()" style="
+          background: rgba(0,0,0,0.7);
+          color: white;
+          border: none;
+          padding: 10px 15px;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 16px;
+        ">✕ Close</button>
+      </div>
+    `;
+    
+    videoContainer.style.display = 'flex';
+    
+    // Setup reload handler
+    window.addEventListener('beforeunload', function() {
+      sessionStorage.setItem('video_reload', 'true');
+    });
+    
+    // Check for reload and redirect to article
+    if (sessionStorage.getItem('video_reload') === 'true') {
+      sessionStorage.removeItem('video_reload');
+      // Remove video parameter and reload
+      const newUrl = window.location.href.replace('?video=true', '').replace('&video=true', '');
+      window.location.replace(newUrl);
+    }
+    
+  } catch (error) {
+    console.error('Video player error:', error);
+    // Fallback to normal article
+    const newUrl = window.location.href.replace('?video=true', '').replace('&video=true', '');
+    window.location.replace(newUrl);
+  }
+}
+
+// Close video player function
+window.closeVideoPlayer = function() {
+  const videoContainer = document.getElementById('video-container');
+  if (videoContainer) {
+    videoContainer.style.display = 'none';
+  }
+  // Remove video parameter and show article
+  const newUrl = window.location.href.replace('?video=true', '').replace('&video=true', '');
+  window.history.replaceState({}, '', newUrl);
+  route(); // Re-route to show article
+};
 
 // Initialize with proper error handling
 function initializeBlog() {
