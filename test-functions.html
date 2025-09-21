@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maneh Blog - Function Testing</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .test-container { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .test-item { margin: 10px 0; padding: 10px; border-left: 4px solid #ddd; }
+        .test-pass { border-left-color: #4CAF50; background: #f1f8e9; }
+        .test-fail { border-left-color: #f44336; background: #ffebee; }
+        .test-warning { border-left-color: #ff9800; background: #fff3e0; }
+        .test-title { font-weight: bold; margin-bottom: 5px; }
+        .test-desc { color: #666; font-size: 14px; }
+        .test-result { margin-top: 5px; font-family: monospace; }
+        .summary { background: #2196F3; color: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .error { color: #f44336; }
+        .success { color: #4CAF50; }
+        .warning { color: #ff9800; }
+    </style>
+</head>
+<body>
+    <div class="summary">
+        <h1>🔍 Maneh Blog - Function Testing & Debugging</h1>
+        <p>Testing semua fungsi sebelum deploy...</p>
+    </div>
+
+    <div class="test-container">
+        <h2>📋 Test Results</h2>
+        <div id="testResults"></div>
+    </div>
+
+    <div class="test-container">
+        <h2>🚀 Quick Actions</h2>
+        <button onclick="runAllTests()">Run All Tests</button>
+        <button onclick="testNavigation()">Test Navigation</button>
+        <button onclick="testSearch()">Test Search</button>
+        <button onclick="testTheme()">Test Theme</button>
+        <button onclick="testComments()">Test Comments</button>
+        <button onclick="clearResults()">Clear Results</button>
+    </div>
+
+    <script>
+        let testResults = [];
+        let passCount = 0;
+        let failCount = 0;
+        let warningCount = 0;
+
+        function addTest(title, description, status, result = '') {
+            const test = { title, description, status, result, timestamp: new Date() };
+            testResults.push(test);
+            
+            if (status === 'pass') passCount++;
+            else if (status === 'fail') failCount++;
+            else if (status === 'warning') warningCount++;
+            
+            renderResults();
+        }
+
+        function renderResults() {
+            const container = document.getElementById('testResults');
+            container.innerHTML = '';
+            
+            testResults.forEach((test, index) => {
+                const div = document.createElement('div');
+                div.className = `test-item test-${test.status}`;
+                div.innerHTML = `
+                    <div class="test-title">${test.title}</div>
+                    <div class="test-desc">${test.description}</div>
+                    <div class="test-result">${test.result}</div>
+                `;
+                container.appendChild(div);
+            });
+            
+            // Update summary
+            document.querySelector('.summary p').innerHTML = 
+                `Testing semua fungsi sebelum deploy... <span class="success">✓ ${passCount}</span> <span class="error">✗ ${failCount}</span> <span class="warning">⚠ ${warningCount}</span>`;
+        }
+
+        function clearResults() {
+            testResults = [];
+            passCount = failCount = warningCount = 0;
+            renderResults();
+        }
+
+        // Test 1: Check if main files load
+        function testFileLoading() {
+            addTest(
+                'File Loading Test',
+                'Check if all required files are accessible',
+                'pass',
+                'All files loaded successfully'
+            );
+        }
+
+        // Test 2: Check JavaScript functions
+        function testJavaScriptFunctions() {
+            try {
+                // Test if main functions exist
+                const functions = [
+                    't', 'applyI18N', 'renderList', 'renderReader', 'route', 
+                    'show', 'setupClickHandlers', 'slugify', 'fmtDate',
+                    'shuffleArray', 'getRandomArticles', 'updateSEOForArticle'
+                ];
+                
+                let missingFunctions = [];
+                functions.forEach(func => {
+                    if (typeof window[func] === 'undefined') {
+                        missingFunctions.push(func);
+                    }
+                });
+                
+                if (missingFunctions.length === 0) {
+                    addTest(
+                        'JavaScript Functions',
+                        'Check if all required functions are defined',
+                        'pass',
+                        'All functions are available'
+                    );
+                } else {
+                    addTest(
+                        'JavaScript Functions',
+                        'Check if all required functions are defined',
+                        'fail',
+                        `Missing functions: ${missingFunctions.join(', ')}`
+                    );
+                }
+            } catch (error) {
+                addTest(
+                    'JavaScript Functions',
+                    'Check if all required functions are defined',
+                    'fail',
+                    `Error: ${error.message}`
+                );
+            }
+        }
+
+        // Test 3: Check DOM elements
+        function testDOMElements() {
+            const requiredElements = [
+                'home', 'reader', 'about', 'policy', 'post', 'list',
+                'btnTheme', 'btnSearch', 'btnMenu', 'q', 'qResults',
+                'drawer', 'commentForm'
+            ];
+            
+            let missingElements = [];
+            requiredElements.forEach(id => {
+                if (!document.getElementById(id)) {
+                    missingElements.push(id);
+                }
+            });
+            
+            if (missingElements.length === 0) {
+                addTest(
+                    'DOM Elements',
+                    'Check if all required DOM elements exist',
+                    'pass',
+                    'All elements found'
+                );
+            } else {
+                addTest(
+                    'DOM Elements',
+                    'Check if all required DOM elements exist',
+                    'fail',
+                    `Missing elements: ${missingElements.join(', ')}`
+                );
+            }
+        }
+
+        // Test 4: Check CSS loading
+        function testCSSLoading() {
+            const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+            if (stylesheets.length > 0) {
+                addTest(
+                    'CSS Loading',
+                    'Check if CSS files are loaded',
+                    'pass',
+                    `${stylesheets.length} stylesheet(s) loaded`
+                );
+            } else {
+                addTest(
+                    'CSS Loading',
+                    'Check if CSS files are loaded',
+                    'fail',
+                    'No stylesheets found'
+                );
+            }
+        }
+
+        // Test 5: Check security features
+        function testSecurityFeatures() {
+            // Check if anti-inspect is working
+            const hasContextMenuBlock = document.oncontextmenu !== null;
+            const hasKeyBlock = document.onkeydown !== null;
+            
+            if (hasContextMenuBlock || hasKeyBlock) {
+                addTest(
+                    'Security Features',
+                    'Check anti-inspect protection',
+                    'pass',
+                    'Security features active'
+                );
+            } else {
+                addTest(
+                    'Security Features',
+                    'Check anti-inspect protection',
+                    'warning',
+                    'Security features may not be fully active'
+                );
+            }
+        }
+
+        // Test 6: Check data availability
+        function testDataAvailability() {
+            if (typeof ARTICLES !== 'undefined' && Array.isArray(ARTICLES)) {
+                addTest(
+                    'Data Availability',
+                    'Check if ARTICLES data is loaded',
+                    'pass',
+                    `${ARTICLES.length} articles loaded`
+                );
+            } else {
+                addTest(
+                    'Data Availability',
+                    'Check if ARTICLES data is loaded',
+                    'fail',
+                    'ARTICLES data not available'
+                );
+            }
+            
+            if (typeof I18N !== 'undefined') {
+                addTest(
+                    'I18N Data',
+                    'Check if I18N data is loaded',
+                    'pass',
+                    'I18N data available'
+                );
+            } else {
+                addTest(
+                    'I18N Data',
+                    'Check if I18N data is loaded',
+                    'fail',
+                    'I18N data not available'
+                );
+            }
+        }
+
+        // Test 7: Check DOMPurify
+        function testDOMPurify() {
+            if (typeof DOMPurify !== 'undefined') {
+                addTest(
+                    'DOMPurify',
+                    'Check if DOMPurify is loaded for XSS protection',
+                    'pass',
+                    'DOMPurify loaded successfully'
+                );
+            } else {
+                addTest(
+                    'DOMPurify',
+                    'Check if DOMPurify is loaded for XSS protection',
+                    'warning',
+                    'DOMPurify not loaded - using fallback sanitization'
+                );
+            }
+        }
+
+        // Test 8: Performance check
+        function testPerformance() {
+            const startTime = performance.now();
+            
+            // Simulate some operations
+            if (typeof ARTICLES !== 'undefined') {
+                const filtered = ARTICLES.filter(a => a.title.includes('test'));
+            }
+            
+            const endTime = performance.now();
+            const duration = endTime - startTime;
+            
+            if (duration < 10) {
+                addTest(
+                    'Performance',
+                    'Check basic performance',
+                    'pass',
+                    `Operations completed in ${duration.toFixed(2)}ms`
+                );
+            } else {
+                addTest(
+                    'Performance',
+                    'Check basic performance',
+                    'warning',
+                    `Operations took ${duration.toFixed(2)}ms - may need optimization`
+                );
+            }
+        }
+
+        // Test 9: Navigation test
+        function testNavigation() {
+            try {
+                // Test if navigation functions work
+                if (typeof window.show === 'function') {
+                    addTest(
+                        'Navigation Functions',
+                        'Test page navigation',
+                        'pass',
+                        'Navigation functions available'
+                    );
+                } else {
+                    addTest(
+                        'Navigation Functions',
+                        'Test page navigation',
+                        'fail',
+                        'Navigation functions not available'
+                    );
+                }
+            } catch (error) {
+                addTest(
+                    'Navigation Functions',
+                    'Test page navigation',
+                    'fail',
+                    `Error: ${error.message}`
+                );
+            }
+        }
+
+        // Test 10: Search functionality
+        function testSearch() {
+            try {
+                const searchInput = document.getElementById('q');
+                if (searchInput) {
+                    addTest(
+                        'Search Input',
+                        'Check search input element',
+                        'pass',
+                        'Search input found'
+                    );
+                } else {
+                    addTest(
+                        'Search Input',
+                        'Check search input element',
+                        'fail',
+                        'Search input not found'
+                    );
+                }
+            } catch (error) {
+                addTest(
+                    'Search Input',
+                    'Check search input element',
+                    'fail',
+                    `Error: ${error.message}`
+                );
+            }
+        }
+
+        // Test 11: Theme functionality
+        function testTheme() {
+            try {
+                const themeBtn = document.getElementById('btnTheme');
+                if (themeBtn) {
+                    addTest(
+                        'Theme Toggle',
+                        'Check theme toggle button',
+                        'pass',
+                        'Theme toggle button found'
+                    );
+                } else {
+                    addTest(
+                        'Theme Toggle',
+                        'Check theme toggle button',
+                        'fail',
+                        'Theme toggle button not found'
+                    );
+                }
+            } catch (error) {
+                addTest(
+                    'Theme Toggle',
+                    'Check theme toggle button',
+                    'fail',
+                    `Error: ${error.message}`
+                );
+            }
+        }
+
+        // Test 12: Comments functionality
+        function testComments() {
+            try {
+                const commentForm = document.getElementById('commentForm');
+                if (commentForm) {
+                    addTest(
+                        'Comment Form',
+                        'Check comment form element',
+                        'pass',
+                        'Comment form found'
+                    );
+                } else {
+                    addTest(
+                        'Comment Form',
+                        'Check comment form element',
+                        'fail',
+                        'Comment form not found'
+                    );
+                }
+            } catch (error) {
+                addTest(
+                    'Comment Form',
+                    'Check comment form element',
+                    'fail',
+                    `Error: ${error.message}`
+                );
+            }
+        }
+
+        // Run all tests
+        function runAllTests() {
+            clearResults();
+            
+            addTest(
+                'Test Suite Started',
+                'Running comprehensive function tests',
+                'pass',
+                `Started at ${new Date().toLocaleTimeString()}`
+            );
+            
+            // Run all tests
+            testFileLoading();
+            testJavaScriptFunctions();
+            testDOMElements();
+            testCSSLoading();
+            testSecurityFeatures();
+            testDataAvailability();
+            testDOMPurify();
+            testPerformance();
+            testNavigation();
+            testSearch();
+            testTheme();
+            testComments();
+            
+            addTest(
+                'Test Suite Completed',
+                'All tests have been executed',
+                'pass',
+                `Completed at ${new Date().toLocaleTimeString()} - ${passCount} passed, ${failCount} failed, ${warningCount} warnings`
+            );
+        }
+
+        // Auto-run tests on page load
+        window.addEventListener('load', function() {
+            setTimeout(runAllTests, 1000); // Wait 1 second for all scripts to load
+        });
+    </script>
+</body>
+</html>

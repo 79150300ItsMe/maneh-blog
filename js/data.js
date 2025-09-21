@@ -6,7 +6,7 @@ const ARTICLES = [
     category: "news",
     title: "Era Baru Sinema: Bagaimana AI Seperti Sora Mengubah Wajah Industri Film",
     tags: ["AI", "Sora", "Generative Video", "Teknologi"],
-    cover: "https://images.unsplash.com/photo-1677756119517-756a188d2d94?w=800&q=80&auto=format",
+    cover: "https://images.unsplash.com/photo-1489599808061-4b5b5b5b5b5b?w=800&q=80&auto=format",
     minutes: 18,
     summary: "Analisis mendalam tentang bagaimana model AI text-to-video seperti Sora dari OpenAI merevolusi industri perfilman, mulai dari pra-produksi hingga efek visual, serta tantangan etis yang menyertainya.",
     html: `
@@ -62,7 +62,7 @@ const ARTICLES = [
     category: "news",
     title: "Perlombaan Antariksa Generasi Baru: Swasta vs. Negara dalam Menaklukkan Mars dan Bulan",
     tags: ["Antariksa", "SpaceX", "NASA", "Mars"],
-    cover: "https://images.unsplash.com/photo-1614728263952-84ea256ec676?w=800&q=80&auto=format",
+    cover: "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=800&q=80&auto=format",
     minutes: 19,
     summary: "Eksplorasi dinamika baru dalam penjelajahan antariksa, di mana perusahaan swasta seperti SpaceX dan Blue Origin kini bersaing dan berkolaborasi dengan badan antariksa negara seperti NASA dan CNSA.",
     html: `
@@ -121,7 +121,7 @@ const ARTICLES = [
     category: "news",
     title: "Revolusi Energi Hijau: Terobosan Baterai Solid-State dan Masa Depan Kendaraan Listrik",
     tags: ["Energi Terbarukan", "EV", "Baterai", "Lingkungan"],
-    cover: "https://images.unsplash.com/photo-1624378439291-3dbf8a27f2a7?w=800&q=80&auto=format",
+    cover: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format",
     minutes: 17,
     summary: "Mengapa baterai solid-state dianggap sebagai 'cawan suci' untuk kendaraan listrik (EV) dan penyimpanan energi terbarukan, serta tantangan manufaktur yang harus diatasi.",
     html: `
@@ -180,7 +180,7 @@ const ARTICLES = [
     category: "news",
     title: "Pasca-Pandemi, Pasca-Kantor: Menganalisis Dampak Jangka Panjang Remote Work pada Ekonomi Global",
     tags: ["Remote Work", "Ekonomi", "Masa Depan Kerja", "WFH"],
-    cover: "https://images.unsplash.com/photo-1589994237292-28c2550d9a48?w=800&q=80&auto=format",
+    cover: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&q=80&auto=format",
     minutes: 20,
     summary: "Studi komprehensif tentang bagaimana eksperimen kerja jarak jauh terbesar dalam sejarah membentuk kembali pasar tenaga kerja, real estat komersial, dan geografi ekonomi.",
     html: `
@@ -234,7 +234,7 @@ const ARTICLES = [
     category: "news",
     title: "Kedokteran Presisi: Bagaimana CRISPR dan Terapi Gen Menulis Ulang Masa Depan Kesehatan Manusia",
     tags: ["Bioteknologi", "CRISPR", "Kesehatan", "Genetika"],
-    cover: "https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?w=800&q=80&auto=format",
+    cover: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=80&auto=format",
     minutes: 18,
     summary: "Tinjauan mendalam tentang revolusi bioteknologi yang dipimpin oleh alat pengeditan gen CRISPR-Cas9, potensinya untuk menyembuhkan penyakit genetik, dan dilema etis yang kompleks.",
     html: `
@@ -290,7 +290,7 @@ const ARTICLES = [
     category: "news",
     title: "Perang Dingin Digital: Eskalasi Ancaman Siber Berbasis Negara dan Tantangan Kedaulatan Data",
     tags: ["Keamanan Siber", "Privasi Data", "Perang Siber", "Regulasi"],
-    cover: "https://images.unsplash.com/photo-1563206767-5b18f218e8de?w=800&q=80&auto=format",
+    cover: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80&auto=format",
     minutes: 16,
     summary: "Analisis tentang bagaimana spionase dan sabotase siber yang disponsori negara telah menjadi alat utama dalam geopolitik modern, mengancam infrastruktur kritis dan privasi warga negara.",
     html: `
@@ -334,7 +334,7 @@ const ARTICLES = [
     category: "tutorial",
     title: "Optimasi ChatGPT: Panduan Lengkap Menghasilkan Prompts yang Lebih Baik",
     tags: ["AI", "ChatGPT", "Prompt Engineering"],
-    cover: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80&auto=format",
+    cover: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80&auto=format",
     minutes: 18,
     summary: "Tips dan teknik terbaru untuk mengoptimalkan hasil ChatGPT dengan struktur prompt yang efektif, context setting, dan chain-of-thought prompting.",
     html: `
@@ -1935,61 +1935,63 @@ const ARTICLES = [
 
 /* ======= I18N (ringkas) ======= */
 const ABOUT_ID = `
-<h2>Tentang Maneh: Menjelajahi Teknologi, Memberdayakan Anda</h2>
-<p><strong>Maneh</strong> bukan sekadar blog teknologi. Kami adalah platform edukasi independen yang lahir dari sebuah keyakinan sederhana: pemahaman mendalam tentang teknologi adalah kunci untuk menavigasi dan berkembang di era digital yang kompleks ini. Didirikan pada tahun 2025, misi kami adalah menjadi jembatan antara kemajuan teknologi yang pesat dan rasa ingin tahu Anda, menyajikan wawasan, berita, dan panduan praktis dalam Bahasa Indonesia yang lugas, akurat, dan mudah diakses.</p>
-<p>Di dunia di mana setiap hari muncul inovasi baru—mulai dari kecerdasan buatan yang mengubah industri hingga perlombaan antariksa generasi baru—informasi yang terfragmentasi dan dangkal tidak lagi cukup. Maneh hadir untuk memotong kebisingan tersebut, memberikan analisis mendalam dan tutorial yang dapat ditindaklanjuti yang tidak hanya memberi tahu Anda "apa", tetapi juga menjelaskan "mengapa" dan menunjukkan "bagaimana".</p>
+<h2>Tentang Maneh: Platform Teknologi Terpercaya untuk Masa Depan</h2>
+<p><strong>Maneh</strong> adalah platform teknologi independen yang didedikasikan untuk memberikan wawasan mendalam, analisis terkini, dan panduan praktis dalam dunia teknologi yang terus berkembang. Didirikan pada tahun 2025, kami hadir dengan misi sederhana namun kuat: menjembatani kesenjangan antara kemajuan teknologi yang pesat dan kebutuhan masyarakat Indonesia untuk memahami dampaknya dalam kehidupan sehari-hari.</p>
 
-<h3>Filosofi Kami: Konteks adalah Raja, Kejelasan adalah Ratu</h3>
-<p>Kami percaya bahwa nilai sejati dari informasi teknologi tidak terletak pada jargon atau spesifikasi mentah, melainkan pada konteks dan relevansinya dengan kehidupan kita. Filosofi konten kami dibangun di atas tiga pilar utama:</p>
+<p>Di era di mana teknologi berkembang dengan kecepatan yang belum pernah terjadi sebelumnya—dari revolusi AI generatif seperti Sora hingga eksplorasi antariksa generasi baru—informasi yang dangkal dan terfragmentasi tidak lagi memadai. Maneh hadir untuk memotong kebisingan informasi, menyajikan analisis yang mendalam dan tutorial yang dapat langsung diterapkan, tidak hanya menjawab "apa" tetapi juga menjelaskan "mengapa" dan menunjukkan "bagaimana".</p>
+
+<h3>Visi dan Misi Kami</h3>
+<p>Kami percaya bahwa teknologi yang dipahami dengan baik adalah kunci untuk masa depan yang lebih cerah. Oleh karena itu, komitmen kami dibangun di atas tiga pilar fundamental:</p>
 <ol>
-  <li><strong>Kedalaman Analisis:</strong> Kami tidak puas hanya dengan melaporkan sebuah berita. Tim kami berusaha keras untuk menggali lebih dalam, menghubungkan titik-titik antara berbagai tren, menganalisis implikasi jangka panjang dari sebuah terobosan, dan menyajikan gambaran besar dari setiap perkembangan teknologi.</li>
-  <li><strong>Kejelasan Radikal:</strong> Teknologi bisa jadi rumit, tetapi penjelasannya tidak harus begitu. Kami berkomitmen untuk memecah konsep-konsep yang paling kompleks menjadi bahasa yang dapat dipahami oleh semua orang, mulai dari pelajar yang baru memulai hingga profesional berpengalaman yang ingin memperluas wawasan mereka.</li>
-  <li><strong>Pemberdayaan Praktis:</strong> Pengetahuan menjadi kuat ketika dapat diterapkan. Setiap tutorial dan panduan di Maneh dirancang dengan satu tujuan: memberdayakan Anda dengan keterampilan dan pemahaman yang dapat Anda gunakan secara langsung untuk meningkatkan produktivitas, mengamankan kehidupan digital Anda, atau bahkan memulai karir baru.</li>
+  <li><strong>Analisis Mendalam:</strong> Kami tidak puas hanya menyampaikan berita permukaan. Setiap artikel di Maneh adalah hasil riset mendalam yang menghubungkan berbagai tren teknologi, menganalisis implikasi jangka panjang, dan menyajikan gambaran utuh dari setiap perkembangan teknologi yang membentuk masa depan kita.</li>
+  <li><strong>Kejelasan dalam Kompleksitas:</strong> Teknologi bisa rumit, tetapi penjelasannya tidak harus demikian. Kami berkomitmen untuk memecah konsep-konsep paling kompleks menjadi bahasa yang mudah dipahami, mulai dari mahasiswa yang baru memulai hingga profesional yang ingin memperluas wawasan mereka.</li>
+  <li><strong>Pemberdayaan Nyata:</strong> Pengetahuan menjadi berharga ketika dapat diterapkan. Setiap tutorial dan panduan di Maneh dirancang untuk memberdayakan Anda dengan keterampilan praktis yang dapat langsung digunakan untuk meningkatkan produktivitas, mengamankan kehidupan digital, atau bahkan memulai karir baru di bidang teknologi.</li>
 </ol>
 
-<h2>Apa yang Anda Temukan di Maneh?</h2>
-<p>Konten kami terbagi menjadi dua kategori utama, yang masing-masing mencerminkan komitmen kami terhadap kedalaman dan kepraktisan:</p>
+<h2>Konten Unggulan Maneh</h2>
+<p>Platform Maneh menyajikan konten berkualitas tinggi yang terbagi dalam dua kategori utama, masing-masing dirancang untuk memenuhi kebutuhan pembelajaran dan informasi teknologi Anda:</p>
 
-<h3>Kategori 1: News - Analisis Teknologi Terkini</h3>
-<p>Di segmen Berita kami, Anda tidak akan menemukan berita utama yang sekadar lewat. Sebaliknya, Anda akan menemukan analisis komprehensif yang mengeksplorasi kekuatan transformatif di balik berita utama tersebut. Kami fokus pada bidang-bidang yang secara fundamental membentuk masa depan kita:</p>
+<h3>📰 News - Analisis Mendalam Teknologi Terkini</h3>
+<p>Di bagian News, kami tidak hanya menyampaikan berita, tetapi memberikan analisis komprehensif yang mengungkap dampak nyata dari setiap perkembangan teknologi. Fokus utama kami meliputi:</p>
 <ul>
-  <li><strong>Kecerdasan Buatan (AI) & Pembelajaran Mesin:</strong> Dari model video generatif seperti Sora hingga implikasi etis dari AI di berbagai sektor, kami mengupas bagaimana algoritma cerdas menulis ulang aturan main.</li>
-  <li><strong>Eksplorasi Antariksa & Bioteknologi:</strong> Kami meliput perlombaan baru menuju Mars dan Bulan, serta revolusi dalam kedokteran presisi yang dipimpin oleh teknologi seperti CRISPR, menjelaskan sains di balik pencapaian luar biasa ini.</li>
-  <li><strong>Keamanan Siber & Privasi Data:</strong> Di era perang dingin digital, kami menganalisis ancaman siber yang disponsori negara, tantangan kedaulatan data, dan apa artinya bagi keamanan infrastruktur kritis dan privasi pribadi Anda.</li>
-  <li><strong>Masa Depan Pekerjaan & Ekonomi Digital:</strong> Kami menyelidiki bagaimana tren seperti kerja jarak jauh (remote work) dan otomatisasi secara permanen mengubah lanskap ekonomi global dan pasar tenaga kerja.</li>
+  <li><strong>🤖 Kecerdasan Buatan & Machine Learning:</strong> Analisis mendalam tentang revolusi AI generatif seperti Sora, ChatGPT, dan dampaknya terhadap industri kreatif, serta implikasi etis yang menyertainya.</li>
+  <li><strong>🚀 Eksplorasi Antariksa & Bioteknologi:</strong> Liputan komprehensif tentang perlombaan antariksa generasi baru, revolusi CRISPR dalam kedokteran presisi, dan terobosan bioteknologi yang mengubah masa depan kesehatan manusia.</li>
+  <li><strong>🔒 Keamanan Siber & Privasi Data:</strong> Analisis ancaman siber berbasis negara, tantangan kedaulatan data, dan panduan praktis untuk melindungi privasi digital Anda di era perang dingin digital.</li>
+  <li><strong>💼 Masa Depan Pekerjaan & Ekonomi Digital:</strong> Investigasi mendalam tentang dampak remote work, otomatisasi, dan transformasi digital terhadap lanskap ekonomi global dan pasar tenaga kerja.</li>
 </ul>
 
-<h3>Kategori 2: Tutorial - Panduan Praktis untuk Dunia Digital</h3>
-<p>Segmen Tutorial kami adalah wujud dari filosofi pemberdayaan kami. Ini adalah ruang di mana teori bertemu praktik. Setiap tutorial adalah hasil dari riset mendalam, pengujian langsung, dan komitmen untuk menyajikan langkah-langkah yang paling efisien dan jelas. Area fokus kami meliputi:</p>
+<h3>📚 Tutorial - Panduan Praktis untuk Dunia Digital</h3>
+<p>Bagian Tutorial adalah jantung dari filosofi pemberdayaan Maneh. Setiap panduan dirancang untuk memberikan keterampilan praktis yang dapat langsung diterapkan. Fokus utama kami meliputi:</p>
 <ul>
-  <li><strong>Pengembangan Diri & Karir:</strong> Panduan lengkap untuk memulai karir sebagai developer, menguasai alat-alat produktivitas, dan membangun kebiasaan kerja yang efektif di era digital.</li>
-  <li><strong>Optimalisasi Perangkat Keras & Perangkat Lunak:</strong> Dari memilih laptop gaming yang tepat hingga mengoptimalkan kinerja smartphone Android Anda, kami membantu Anda mendapatkan hasil maksimal dari teknologi yang Anda miliki.</li>
-  <li><strong>Keamanan Digital Praktis:</strong> Kami memberikan panduan yang dapat ditindaklanjuti tentang cara mengamankan akun digital Anda, memilih pengelola kata sandi, dan melindungi diri dari ancaman siber modern.</li>
-  <li><strong>Produktifitas & Gaya Hidup Digital:</strong> Tips untuk membangun home office yang ergonomis, mengelola waktu secara efektif, dan menavigasi tantangan keseimbangan kerja-hidup di dunia yang selalu terhubung.</li>
+  <li><strong>💻 Pengembangan Karir & Keterampilan Digital:</strong> Roadmap lengkap untuk memulai karir di bidang teknologi, menguasai tools produktivitas modern, dan membangun kebiasaan kerja yang efektif di era digital.</li>
+  <li><strong>⚙️ Optimasi Perangkat & Software:</strong> Panduan komprehensif untuk memilih dan mengoptimalkan perangkat keras, dari laptop gaming hingga smartphone, serta tips mengoptimalkan performa sistem operasi dan aplikasi.</li>
+  <li><strong>🛡️ Keamanan Digital & Privasi:</strong> Tutorial praktis untuk mengamankan akun digital, memilih password manager yang tepat, dan melindungi diri dari ancaman siber modern dengan tools dan teknik terbaru.</li>
+  <li><strong>📈 Produktivitas & Gaya Hidup Digital:</strong> Tips membangun workspace yang ergonomis, mengelola waktu secara efektif, dan menavigasi tantangan work-life balance di dunia yang selalu terhubung.</li>
 </ul>
 
-<h2>Komitmen Kami pada Kualitas dan Integritas</h2>
-<p>Di Maneh, kepercayaan Anda adalah aset kami yang paling berharga. Untuk menjaga kepercayaan itu, kami mematuhi proses editorial yang ketat:</p>
+<h2>Standar Kualitas dan Integritas Maneh</h2>
+<p>Kepercayaan pembaca adalah fondasi utama Maneh. Untuk mempertahankan standar tertinggi, kami menerapkan proses editorial yang ketat dan transparan:</p>
 <ul>
-  <li><strong>Riset Mendalam:</strong> Setiap artikel dimulai dengan riset ekstensif dari sumber-sumber primer, laporan industri, dan jurnal akademik untuk memastikan akurasi dan kedalaman.</li>
-  <li><strong>Verifikasi Fakta:</strong> Semua klaim dan data diverifikasi secara independen sebelum dipublikasikan. Untuk tutorial, setiap langkah diuji untuk memastikan keberhasilannya.</li>
-  <li><strong>Perspektif Seimbang:</strong> Saat membahas topik yang kompleks dan kontroversial, seperti etika AI atau regulasi teknologi, kami berusaha untuk menyajikan berbagai sudut pandang secara adil.</li>
-  <li><strong>Pembaruan Berkelanjutan:</strong> Dunia teknologi bergerak cepat. Kami secara teratur meninjau dan memperbarui artikel-artikel kami yang ada untuk memastikan informasinya tetap relevan dan akurat.</li>
+  <li><strong>🔍 Riset Berbasis Sumber Terpercaya:</strong> Setiap artikel dimulai dengan riset mendalam dari sumber-sumber primer, laporan industri terbaru, dan jurnal akademik peer-reviewed untuk memastikan akurasi dan kedalaman analisis.</li>
+  <li><strong>✅ Verifikasi Fakta Multi-Layer:</strong> Semua klaim, data, dan statistik diverifikasi secara independen dari minimal dua sumber berbeda. Untuk tutorial, setiap langkah diuji secara praktis untuk memastikan keberhasilannya.</li>
+  <li><strong>⚖️ Perspektif Seimbang dan Objektif:</strong> Dalam membahas topik kontroversial seperti etika AI atau regulasi teknologi, kami menyajikan berbagai sudut pandang secara adil dan objektif, memungkinkan pembaca membentuk opini yang terinformasi.</li>
+  <li><strong>🔄 Pembaruan Konten Berkelanjutan:</strong> Mengingat kecepatan perubahan teknologi, kami secara berkala meninjau dan memperbarui artikel untuk memastikan informasi tetap relevan, akurat, dan sesuai dengan perkembangan terbaru.</li>
 </ul>
 
-<h2>Untuk Siapa Maneh?</h2>
-<p>Maneh dirancang untuk audiens yang beragam, disatukan oleh rasa ingin tahu dan keinginan untuk memahami dunia teknologi yang membentuk kehidupan kita. Anda akan menemukan nilai di sini jika Anda adalah:</p>
+<h2>Target Audiens Maneh</h2>
+<p>Maneh dirancang untuk komunitas pembelajar yang beragam, disatukan oleh keinginan untuk memahami dan menguasai teknologi yang membentuk masa depan. Platform ini cocok untuk:</p>
 <ul>
-  <li>Seorang <strong>pelajar atau mahasiswa</strong> yang ingin membangun fondasi pengetahuan teknologi yang kuat.</li>
-  <li>Seorang <strong>profesional</strong> di bidang non-teknologi yang ingin memahami bagaimana inovasi baru akan memengaruhi industri Anda.</li>
-  <li>Seorang <strong>penggemar teknologi</strong> yang mencari analisis mendalam di balik berita utama.</li>
-  <li>Seseorang yang ingin <strong>mengembangkan keterampilan praktis</strong> untuk meningkatkan produktivitas dan keamanan digital mereka.</li>
-  <li>Siapa pun yang percaya bahwa <strong>belajar seumur hidup</strong> adalah suatu keharusan di abad ke-21.</li>
+  <li><strong>🎓 Mahasiswa & Pelajar:</strong> Yang ingin membangun fondasi pengetahuan teknologi yang solid untuk karir masa depan mereka.</li>
+  <li><strong>💼 Profesional Non-Teknis:</strong> Yang perlu memahami dampak inovasi teknologi terhadap industri dan pekerjaan mereka.</li>
+  <li><strong>🔬 Tech Enthusiasts:</strong> Yang mencari analisis mendalam di balik headline teknologi dan tren terkini.</li>
+  <li><strong>🚀 Career Switchers:</strong> Yang ingin mengembangkan keterampilan praktis untuk transisi ke karir di bidang teknologi.</li>
+  <li><strong>📚 Lifelong Learners:</strong> Yang percaya bahwa pembelajaran berkelanjutan adalah kunci sukses di era digital.</li>
 </ul>
 
-<h2>Bergabunglah dengan Komunitas Kami</h2>
-<p>Maneh lebih dari sekadar tempat untuk membaca; ini adalah tempat untuk belajar dan berdiskusi. Kami sangat menghargai masukan, pertanyaan, dan perspektif dari para pembaca kami. Setiap komentar dan email yang kami terima membantu kami menjadi lebih baik. Kami mengundang Anda untuk menjadi bagian dari komunitas kami, berbagi wawasan Anda, dan memulai perjalanan pembelajaran ini bersama kami.</p>
-<p>Terima kasih telah mengunjungi Maneh. Mari kita jelajahi masa depan, bersama-sama.</p>
+<h2>Bergabung dengan Komunitas Maneh</h2>
+<p>Maneh bukan sekadar platform membaca—ini adalah komunitas pembelajaran yang aktif. Kami sangat menghargai setiap masukan, pertanyaan, dan perspektif dari pembaca kami. Setiap komentar dan interaksi membantu kami terus berkembang dan memberikan konten yang lebih baik.</p>
+<p>Kami mengundang Anda untuk menjadi bagian dari perjalanan pembelajaran ini. Berbagilah wawasan, ajukan pertanyaan, dan mari bersama-sama menjelajahi masa depan teknologi yang penuh kemungkinan.</p>
+<p><strong>Selamat datang di Maneh—di mana teknologi bertemu dengan pemahaman, dan masa depan dimulai hari ini.</strong></p>
 `;
 
 const ABOUT_EN = `
@@ -2051,79 +2053,122 @@ const ABOUT_EN = `
 `;
 
 const POLICY_ID = `
-<h2>Kebijakan Privasi untuk Maneh</h2>
+<h2>Kebijakan Privasi Maneh</h2>
 <p><strong>Tanggal Efektif:</strong> 25 September 2025</p>
+<p><strong>Terakhir Diperbarui:</strong> 25 September 2025</p>
 
-<h3>1. Pendahuluan</h3>
-<p>Selamat datang di Maneh ("kami", "milik kami", atau "situs"). Kami sangat menghargai privasi pengunjung dan pembaca kami. Kebijakan Privasi ini bertujuan untuk menjelaskan secara transparan jenis informasi apa yang kami kumpulkan saat Anda mengunjungi dan berinteraksi dengan situs kami (maneh.blog), bagaimana kami menggunakan informasi tersebut, dengan siapa kami mungkin membagikannya, dan hak-hak apa yang Anda miliki terkait data pribadi Anda.</p>
-<p>Dengan mengakses atau menggunakan layanan kami, Anda mengakui bahwa Anda telah membaca, memahami, dan menyetujui pengumpulan, penyimpanan, penggunaan, dan pengungkapan informasi pribadi Anda sebagaimana dijelaskan dalam Kebijakan Privasi ini. Jika Anda tidak setuju dengan kebijakan ini, mohon untuk tidak menggunakan situs kami.</p>
+<h3>1. Pengantar</h3>
+<p>Selamat datang di <strong>Maneh</strong>—platform teknologi terpercaya yang berkomitmen melindungi privasi dan keamanan data Anda. Kebijakan Privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, menyimpan, dan melindungi informasi pribadi Anda saat mengakses dan menggunakan layanan kami di maneh.blog.</p>
+<p>Kami memahami bahwa privasi Anda adalah hal yang fundamental, terutama di era digital saat ini. Oleh karena itu, kami berkomitmen untuk memproses data Anda dengan transparansi, keamanan, dan sesuai dengan prinsip-prinsip perlindungan data yang berlaku.</p>
+<p>Dengan menggunakan layanan Maneh, Anda menyetujui praktik-praktik yang dijelaskan dalam Kebijakan Privasi ini. Jika Anda tidak setuju dengan ketentuan ini, mohon untuk tidak menggunakan platform kami.</p>
 
-<h3>2. Informasi yang Kami Kumpulkan</h3>
-<p>Kami menganut prinsip minimalisasi data, yang berarti kami hanya mengumpulkan informasi yang benar-benar diperlukan untuk menyediakan dan meningkatkan layanan kami. Informasi yang kami kumpulkan dapat dibagi menjadi dua kategori utama:</p>
+<h3>2. Jenis Data yang Kami Kumpulkan</h3>
+<p>Maneh berkomitmen pada prinsip <strong>minimalisasi data</strong>—kami hanya mengumpulkan informasi yang benar-benar diperlukan untuk menyediakan layanan terbaik dan meningkatkan pengalaman pengguna. Data yang kami kumpulkan terbagi dalam dua kategori:</p>
 
-<h4>A. Informasi yang Kami Kumpulkan Secara Otomatis (Data Teknis)</h4>
-<p>Saat Anda mengunjungi Maneh, server kami dan layanan analitik pihak ketiga secara otomatis mencatat informasi tertentu yang dikirimkan oleh browser Anda. Informasi ini bersifat non-pribadi dan tidak dapat mengidentifikasi Anda secara langsung. Data ini meliputi:</p>
+<h4>🔍 A. Data Teknis (Dikumpulkan Otomatis)</h4>
+<p>Untuk memastikan platform berfungsi optimal dan aman, kami mengumpulkan data teknis berikut secara otomatis:</p>
 <ul>
-    <li><strong>Data Log:</strong> Seperti kebanyakan situs web, kami mengumpulkan informasi dalam file log. Ini termasuk alamat Protokol Internet (IP) Anda (yang mungkin dianonimkan), jenis browser (misalnya, Chrome, Firefox), penyedia layanan internet (ISP), halaman rujukan/keluar, jenis platform, cap tanggal/waktu, dan jumlah klik. Informasi ini digunakan untuk menganalisis tren, mengelola situs, melacak pergerakan pengguna secara agregat, dan mengumpulkan informasi demografis umum.</li>
-    <li><strong>Cookie dan Teknologi Pelacakan Serupa:</strong> Kami menggunakan cookie untuk meningkatkan pengalaman Anda. Cookie adalah file data kecil yang disimpan di perangkat Anda. Kami menggunakan cookie untuk:
+    <li><strong>📊 Data Log Server:</strong> Informasi dasar seperti alamat IP (yang dianonimkan), jenis browser, sistem operasi, halaman yang dikunjungi, waktu akses, dan durasi kunjungan. Data ini digunakan untuk analisis performa dan keamanan platform.</li>
+    <li><strong>🍪 Cookie & Storage Lokal:</strong> Kami menggunakan cookie untuk:
         <ul>
-            <li><strong>Cookie Esensial:</strong> Diperlukan untuk fungsionalitas dasar situs, seperti mengingat preferensi tema (gelap/terang) Anda.</li>
-            <li><strong>Cookie Analitik:</strong> Membantu kami memahami bagaimana pengunjung berinteraksi dengan situs kami, halaman mana yang paling populer, dan berapa lama pengunjung tinggal di situs. Ini memungkinkan kami untuk terus meningkatkan konten dan tata letak kami. Kami menggunakan layanan seperti Cloudflare Analytics yang berfokus pada privasi.</li>
+            <li><strong>⚙️ Preferensi Pengguna:</strong> Menyimpan pilihan tema (terang/gelap) dan pengaturan tampilan lainnya</li>
+            <li><strong>📈 Analitik Anonim:</strong> Mengukur performa konten dan interaksi pengguna untuk perbaikan platform</li>
+            <li><strong>🔒 Keamanan:</strong> Melindungi dari serangan dan aktivitas mencurigakan</li>
         </ul>
     </li>
-    <li><strong>Informasi Perangkat:</strong> Kami dapat mengumpulkan informasi tentang perangkat yang Anda gunakan untuk mengakses situs kami, seperti model perangkat keras, sistem operasi dan versi, pengidentifikasi perangkat unik, dan informasi jaringan seluler. Ini membantu kami mengoptimalkan tampilan situs untuk berbagai perangkat.</li>
+    <li><strong>📱 Informasi Perangkat:</strong> Data teknis perangkat (model, OS, resolusi layar) untuk mengoptimalkan tampilan dan fungsionalitas di berbagai perangkat.</li>
 </ul>
 
-<h4>B. Informasi yang Anda Berikan Secara Sukarela</h4>
-<p>Saat ini, Maneh tidak memiliki fitur yang secara aktif meminta informasi pribadi seperti pendaftaran akun, komentar, atau formulir kontak. Namun, jika di masa depan kami memperkenalkan fitur-fitur tersebut, kebijakan ini akan diperbarui. Jika Anda menghubungi kami secara langsung melalui email, kami akan menerima informasi yang Anda berikan, seperti nama, alamat email, dan isi pesan Anda.</p>
-
-<h3>3. Bagaimana Kami Menggunakan Informasi Anda</h3>
-<p>Tujuan utama kami dalam mengumpulkan data adalah untuk menyediakan dan meningkatkan pengalaman di Maneh. Secara spesifik, kami menggunakan informasi yang kami kumpulkan untuk:</p>
+<h4>✍️ B. Data yang Anda Berikan (Opsional)</h4>
+<p>Maneh menyediakan fitur komentar yang memungkinkan Anda berinteraksi dengan konten. Data yang Anda berikan meliputi:</p>
 <ul>
-    <li><strong>Menyediakan, Mengoperasikan, dan Memelihara Situs Web Kami:</strong> Memastikan situs berfungsi dengan baik, memuat dengan cepat, dan aman dari ancaman.</li>
-    <li><strong>Meningkatkan, Mempersonalisasi, dan Memperluas Situs Web Kami:</strong> Menganalisis data penggunaan untuk memahami konten apa yang paling berharga bagi pembaca kami, sehingga kami dapat membuat lebih banyak artikel seperti itu.</li>
-    <li><strong>Memahami dan Menganalisis Cara Anda Menggunakan Situs Web Kami:</strong> Mengidentifikasi pola navigasi, hambatan pengguna, dan peluang untuk perbaikan desain dan fungsionalitas.</li>
-    <li><strong>Mencegah Penipuan dan Menegakkan Keamanan:</strong> Memantau lalu lintas untuk aktivitas mencurigakan, serangan DDoS, dan upaya peretasan lainnya untuk melindungi integritas situs dan data pengguna.</li>
-    <li><strong>Mematuhi Kewajiban Hukum:</strong> Memenuhi persyaratan hukum, peraturan, atau permintaan pemerintah yang berlaku.</li>
+    <li><strong>💬 Komentar:</strong> Konten komentar yang Anda tulis pada artikel</li>
+    <li><strong>👤 Informasi Profil:</strong> Nama, email, dan website (jika Anda memilih untuk menyimpannya)</li>
+    <li><strong>📧 Komunikasi Langsung:</strong> Email yang Anda kirimkan kepada tim Maneh</li>
 </ul>
+<p><em>Catatan: Semua data pribadi yang Anda berikan bersifat opsional dan dapat dihapus kapan saja sesuai permintaan Anda.</em></p>
 
-<h3>4. Berbagi dan Pengungkapan Informasi</h3>
-<p>Privasi Anda adalah prioritas kami. Kami tidak menjual, menyewakan, atau memperdagangkan informasi pribadi Anda kepada pihak ketiga untuk tujuan pemasaran mereka. Kami hanya dapat membagikan informasi dalam keadaan terbatas berikut:</p>
+<h3>3. Tujuan Penggunaan Data</h3>
+<p>Data yang kami kumpulkan digunakan secara eksklusif untuk meningkatkan kualitas layanan Maneh dan pengalaman pengguna. Berikut adalah tujuan spesifik penggunaan data:</p>
 <ul>
-    <li><strong>Penyedia Layanan Pihak Ketiga:</strong> Kami dapat bekerja sama dengan perusahaan pihak ketiga untuk memfasilitasi layanan kami (misalnya, hosting web, layanan analitik, penyedia CDN). Penyedia ini hanya memiliki akses ke informasi yang diperlukan untuk melakukan tugas mereka atas nama kami dan secara kontrak dilarang untuk mengungkapkan atau menggunakannya untuk tujuan lain.</li>
-    <li><strong>Kewajiban Hukum:</strong> Kami dapat mengungkapkan informasi Anda jika diwajibkan oleh hukum atau sebagai tanggapan atas permintaan yang sah dari otoritas publik (misalnya, pengadilan atau lembaga pemerintah).</li>
-    <li><strong>Perlindungan Hak:</strong> Kami dapat mengungkapkan informasi jika kami yakin itu perlu untuk menyelidiki, mencegah, atau mengambil tindakan terkait aktivitas ilegal, dugaan penipuan, situasi yang melibatkan potensi ancaman terhadap keselamatan fisik siapa pun, pelanggaran Ketentuan Layanan kami, atau sebagaimana diwajibkan oleh hukum.</li>
+    <li><strong>🚀 Operasional Platform:</strong> Memastikan situs web berfungsi optimal, cepat, dan aman untuk semua pengguna</li>
+    <li><strong>📈 Analisis & Perbaikan:</strong> Menganalisis pola penggunaan untuk mengidentifikasi konten yang paling bermanfaat dan area yang perlu diperbaiki</li>
+    <li><strong>🎯 Personalisasi Pengalaman:</strong> Menyesuaikan tampilan dan konten sesuai preferensi pengguna (tema, bahasa, dll.)</li>
+    <li><strong>🔒 Keamanan & Perlindungan:</strong> Memantau dan mencegah aktivitas mencurigakan, serangan siber, dan pelanggaran keamanan</li>
+    <li><strong>📊 Statistik Anonim:</strong> Membuat laporan statistik umum untuk memahami tren teknologi dan minat pembaca</li>
+    <li><strong>⚖️ Kepatuhan Hukum:</strong> Memenuhi kewajiban hukum dan regulasi yang berlaku di Indonesia</li>
 </ul>
+<p><em>Kami tidak menggunakan data Anda untuk tujuan komersial, iklan yang tidak relevan, atau membagikan informasi pribadi kepada pihak ketiga tanpa persetujuan Anda.</em></p>
 
-<h3>5. Periklanan Pihak Ketiga</h3>
-<p>Untuk mendukung operasional situs ini, kami mungkin menampilkan iklan dari jaringan iklan pihak ketiga. Kebijakan ini tidak mencakup praktik privasi dari pengiklan atau jaringan iklan tersebut. Mereka dapat menggunakan cookie dan teknologi pelacakan lainnya untuk mengumpulkan informasi tentang aktivitas Anda di situs ini dan situs lain untuk menyediakan iklan yang ditargetkan.</p>
-<p>Kami mendorong Anda untuk meninjau kebijakan privasi dari jaringan iklan mana pun yang mungkin kami gunakan untuk memahami praktik mereka. Anda umumnya dapat menyisih dari periklanan yang dipersonalisasi melalui pengaturan browser Anda atau melalui alat penyisihan industri seperti Digital Advertising Alliance (DAA) atau Network Advertising Initiative (NAI).</p>
+<h3>4. Berbagi Data dengan Pihak Ketiga</h3>
+<p><strong>Komitmen Privasi:</strong> Maneh tidak menjual, menyewakan, atau memperdagangkan data pribadi Anda kepada pihak ketiga untuk tujuan komersial. Privasi Anda adalah prioritas utama kami.</p>
 
-<h3>6. Hak Privasi Data Anda</h3>
-<p>Kami menghormati hak Anda atas data Anda. Bergantung pada lokasi Anda, Anda mungkin memiliki hak-hak berikut berdasarkan undang-undang perlindungan data yang berlaku (seperti GDPR):</p>
+<p>Kami hanya membagikan data dalam situasi terbatas berikut:</p>
 <ul>
-    <li><strong>Hak untuk Mengakses:</strong> Anda berhak meminta salinan informasi pribadi yang kami miliki tentang Anda.</li>
-    <li><strong>Hak untuk Perbaikan:</strong> Anda berhak meminta kami untuk memperbaiki informasi apa pun yang Anda yakini tidak akurat atau melengkapi informasi yang tidak lengkap.</li>
-    <li><strong>Hak untuk Menghapus (Hak untuk Dilupakan):</strong> Anda berhak meminta kami untuk menghapus data pribadi Anda dalam kondisi tertentu.</li>
-    <li><strong>Hak untuk Membatasi Pemrosesan:</strong> Anda berhak meminta kami untuk membatasi pemrosesan data pribadi Anda dalam kondisi tertentu.</li>
-    <li><strong>Hak untuk Menolak Pemrosesan:</strong> Anda berhak menolak pemrosesan data pribadi Anda oleh kami dalam kondisi tertentu.</li>
+    <li><strong>🤝 Penyedia Layanan Teknis:</strong> Bekerja sama dengan penyedia hosting, CDN, dan layanan analitik yang membantu operasional platform. Semua mitra terikat kontrak ketat untuk melindungi data Anda.</li>
+    <li><strong>⚖️ Kewajiban Hukum:</strong> Mengungkapkan data jika diwajibkan oleh hukum Indonesia atau permintaan resmi dari otoritas yang berwenang.</li>
+    <li><strong>🛡️ Perlindungan Keamanan:</strong> Membagikan informasi untuk mencegah atau menyelidiki aktivitas ilegal, penipuan, atau ancaman keamanan.</li>
+    <li><strong>✅ Persetujuan Eksplisit:</strong> Membagikan data hanya jika Anda memberikan persetujuan tertulis yang jelas dan spesifik.</li>
 </ul>
-<p>Untuk menggunakan salah satu dari hak-hak ini, silakan hubungi kami melalui detail kontak yang disediakan di akhir kebijakan ini.</p>
+<p><em>Semua pihak ketiga yang bekerja dengan kami diwajibkan untuk mematuhi standar perlindungan data yang sama atau lebih ketat dari yang kami terapkan.</em></p>
 
-<h3>7. Keamanan Data</h3>
-<p>Kami menerapkan langkah-langkah keamanan teknis dan organisasi yang wajar untuk melindungi informasi yang kami kumpulkan dari kehilangan, penyalahgunaan, akses tidak sah, pengungkapan, perubahan, dan perusakan. Ini termasuk penggunaan enkripsi SSL/TLS untuk semua transmisi data dan praktik hosting yang aman. Namun, harap dicatat bahwa tidak ada sistem keamanan yang tidak dapat ditembus, dan kami tidak dapat menjamin keamanan absolut dari data Anda.</p>
+<h3>5. Iklan dan Monetisasi</h3>
+<p>Untuk mendukung operasional platform dan menyediakan konten berkualitas gratis, Maneh menampilkan iklan dari jaringan periklanan terpercaya. Berikut adalah komitmen kami terkait iklan:</p>
+<ul>
+    <li><strong>🎯 Iklan Relevan:</strong> Kami bekerja dengan jaringan iklan yang menyediakan iklan yang relevan dengan minat teknologi Anda</li>
+    <li><strong>🔒 Privasi Terlindungi:</strong> Iklan tidak mengumpulkan data pribadi sensitif tanpa persetujuan Anda</li>
+    <li><strong>⚙️ Kontrol Pengguna:</strong> Anda dapat mengatur preferensi iklan melalui pengaturan browser atau tools opt-out industri</li>
+    <li><strong>🚫 Tidak Ada Iklan Intrusif:</strong> Kami tidak menampilkan iklan pop-up yang mengganggu atau iklan yang tidak sesuai dengan nilai-nilai Maneh</li>
+</ul>
+<p><em>Kami mendorong Anda untuk meninjau kebijakan privasi dari jaringan iklan yang kami gunakan dan mengatur preferensi iklan sesuai keinginan Anda.</em></p>
 
-<h3>8. Privasi Anak-Anak</h3>
-<p>Maneh tidak ditujukan untuk individu di bawah usia 13 tahun. Kami tidak secara sadar mengumpulkan informasi yang dapat diidentifikasi secara pribadi dari anak-anak di bawah 13 tahun. Jika Anda adalah orang tua atau wali dan Anda mengetahui bahwa anak Anda telah memberikan kami informasi pribadi, silakan hubungi kami. Jika kami mengetahui bahwa kami telah mengumpulkan informasi pribadi dari anak-anak tanpa verifikasi persetujuan orang tua, kami akan mengambil langkah-langkah untuk menghapus informasi tersebut dari server kami.</p>
+<h3>6. Hak-Hak Anda atas Data Pribadi</h3>
+<p>Maneh menghormati dan melindungi hak-hak privasi Anda. Sesuai dengan undang-undang perlindungan data yang berlaku, Anda memiliki hak-hak berikut:</p>
+<ul>
+    <li><strong>👁️ Hak Akses:</strong> Meminta salinan data pribadi yang kami miliki tentang Anda</li>
+    <li><strong>✏️ Hak Perbaikan:</strong> Meminta koreksi data yang tidak akurat atau tidak lengkap</li>
+    <li><strong>🗑️ Hak Penghapusan:</strong> Meminta penghapusan data pribadi Anda (hak untuk dilupakan)</li>
+    <li><strong>⏸️ Hak Pembatasan:</strong> Membatasi pemrosesan data pribadi Anda dalam kondisi tertentu</li>
+    <li><strong>🚫 Hak Penolakan:</strong> Menolak pemrosesan data pribadi untuk tujuan tertentu</li>
+    <li><strong>📋 Hak Portabilitas:</strong> Meminta transfer data Anda ke platform lain dalam format yang dapat dibaca</li>
+    <li><strong>⚖️ Hak Keberatan:</strong> Menolak pemrosesan data untuk tujuan analitik atau pemasaran</li>
+</ul>
+<p><strong>📧 Cara Menggunakan Hak Anda:</strong> Untuk menggunakan hak-hak di atas, silakan hubungi kami di <strong>privacy@maneh.blog</strong> dengan subjek "Permintaan Data Pribadi" dan jelaskan hak apa yang ingin Anda gunakan.</p>
+<p><em>Kami akan merespons permintaan Anda dalam waktu maksimal 30 hari kerja dan tidak akan memungut biaya untuk proses ini.</em></p>
 
-<h3>9. Tautan ke Situs Web Lain</h3>
-<p>Situs kami mungkin berisi tautan ke situs web lain yang tidak dioperasikan oleh kami. Jika Anda mengklik tautan pihak ketiga, Anda akan diarahkan ke situs pihak ketiga tersebut. Kami sangat menyarankan Anda untuk meninjau Kebijakan Privasi setiap situs yang Anda kunjungi. Kami tidak memiliki kendali atas dan tidak bertanggung jawab atas konten, kebijakan privasi, atau praktik situs atau layanan pihak ketiga mana pun.</p>
+<h3>7. Keamanan dan Perlindungan Data</h3>
+<p>Maneh menerapkan standar keamanan tinggi untuk melindungi data Anda dari ancaman siber dan akses tidak sah:</p>
+<ul>
+    <li><strong>🔐 Enkripsi End-to-End:</strong> Semua transmisi data menggunakan enkripsi SSL/TLS 256-bit</li>
+    <li><strong>🛡️ Keamanan Server:</strong> Hosting aman dengan firewall dan monitoring keamanan 24/7</li>
+    <li><strong>🔒 Akses Terbatas:</strong> Hanya personel yang berwenang yang dapat mengakses data pribadi</li>
+    <li><strong>📊 Monitoring Berkelanjutan:</strong> Sistem deteksi ancaman real-time untuk mencegah serangan siber</li>
+    <li><strong>💾 Backup Rutin:</strong> Data dicadangkan secara berkala dengan enkripsi tambahan</li>
+</ul>
+<p><em>Meskipun kami menerapkan langkah-langkah keamanan terbaik, tidak ada sistem yang 100% aman. Kami akan segera memberitahu Anda jika terjadi pelanggaran data yang mempengaruhi informasi pribadi Anda.</em></p>
 
-<h3>10. Perubahan pada Kebijakan Privasi Ini</h3>
-<p>Kami dapat memperbarui Kebijakan Privasi kami dari waktu ke waktu. Kami akan memberi tahu Anda tentang perubahan apa pun dengan memposting Kebijakan Privasi baru di halaman ini dan memperbarui "Tanggal Efektif" di bagian atas. Anda disarankan untuk meninjau Kebijakan Privasi ini secara berkala untuk setiap perubahan. Perubahan pada Kebijakan Privasi ini efektif ketika diposting di halaman ini.</p>
+<h3>8. Perlindungan Anak-Anak</h3>
+<p>Maneh tidak dirancang untuk pengguna di bawah usia 13 tahun. Kami tidak secara sengaja mengumpulkan data pribadi dari anak-anak. Jika Anda adalah orang tua/wali dan mengetahui bahwa anak Anda telah memberikan data pribadi, segera hubungi kami di <strong>privacy@maneh.blog</strong>.</p>
 
-<h3>11. Hubungi Kami</h3>
-<p>Jika Anda memiliki pertanyaan, kekhawatiran, atau permintaan terkait Kebijakan Privasi ini, jangan ragu untuk menghubungi kami melalui email di: <strong>privacy@maneh.blog</strong>.</p>
+<h3>9. Tautan Eksternal</h3>
+<p>Platform Maneh mungkin berisi tautan ke situs web lain. Kami tidak bertanggung jawab atas praktik privasi situs tersebut. Kami mendorong Anda untuk membaca kebijakan privasi setiap situs yang Anda kunjungi.</p>
+
+<h3>10. Perubahan Kebijakan</h3>
+<p>Kami dapat memperbarui Kebijakan Privasi ini untuk mencerminkan perubahan dalam praktik kami atau peraturan yang berlaku. Perubahan signifikan akan diberitahukan melalui:</p>
+<ul>
+    <li>📢 Pemberitahuan di halaman utama platform</li>
+    <li>📧 Email kepada pengguna terdaftar (jika ada)</li>
+    <li>📅 Pembaruan tanggal "Terakhir Diperbarui" di bagian atas kebijakan</li>
+</ul>
+
+<h3>11. Kontak dan Bantuan</h3>
+<p>Jika Anda memiliki pertanyaan, kekhawatiran, atau ingin menggunakan hak-hak privasi Anda, jangan ragu untuk menghubungi kami:</p>
+<ul>
+    <li><strong>📧 Email:</strong> privacy@maneh.blog</li>
+    <li><strong>📝 Subjek:</strong> "Kebijakan Privasi Maneh"</li>
+    <li><strong>⏰ Waktu Respons:</strong> Maksimal 48 jam untuk pertanyaan umum, 30 hari untuk permintaan data</li>
+</ul>
+<p><strong>Terima kasih telah mempercayai Maneh dengan privasi dan keamanan data Anda. Komitmen kami adalah melindungi informasi Anda sambil menyediakan pengalaman teknologi yang terbaik.</strong></p>
 `;
 
 const POLICY_EN = `
@@ -2213,7 +2258,6 @@ const I18N = {
     pill: "Panduan Teknologi • Berita Terkini • Tips Produktivitas",
     heroTitle: "Wawasan Teknologi untuk Anda",
     heroSub: "Jelajahi panduan mendalam dan berita teknologi terbaru yang disajikan secara lugas dan mudah dipahami.",
-    published: "Dipublikasikan",
     featured: "Artikel Pilihan",
     popular: "Artikel Populer",
     toc: "Daftar Isi",

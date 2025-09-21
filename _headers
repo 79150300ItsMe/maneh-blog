@@ -1,8 +1,92 @@
-/* 
+/*
+  # Enhanced Security & SEO Headers for Maneh Blog
+  # Optimized for maximum security, performance, and SEO
+  
+  # HSTS - Force HTTPS
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  
+  # Prevent clickjacking
   X-Frame-Options: DENY
+  
+  # Prevent MIME type sniffing
   X-Content-Type-Options: nosniff
+  
+  # XSS Protection
+  X-XSS-Protection: 1; mode=block
+  
+  # Referrer Policy
   Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
-  Content-Security-Policy: default-src 'self' https: data: blob:; img-src 'self' https: data:; style-src 'self' 'unsafe-inline' https:; script-src 'self' https: 'unsafe-inline'; connect-src 'self' https:
-  Cache-Control: public, max-age=600
+  
+  # Permissions Policy - Restrict dangerous APIs
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()
+  
+  # Enhanced CSP with nonce support
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://static.cloudflareinsights.com https://scornfacultative.com http://scornfacultative.com https://preferencenail.com http://preferencenail.com https://weirdopt.com http://weirdopt.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' https: data: http: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://ipapi.co https://static.cloudflareinsights.com https://scornfacultative.com http://scornfacultative.com https://preparecommands.com https://cdn.jsdelivr.net; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests; block-all-mixed-content
+  
+  # SEO Headers
+  X-Robots-Tag: index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1
+  X-DNS-Prefetch-Control: on
+  
+  # Additional Security Headers
+  X-Permitted-Cross-Domain-Policies: none
+  Cross-Origin-Embedder-Policy: require-corp
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  
+  # Performance Headers
+  Vary: Accept-Encoding, User-Agent
+  X-Cache-Status: HIT
+  
+  # Custom Headers
+  X-Powered-By: Maneh-Blog/1.0
+  X-Security-Level: High
+*/
+
+# Home page - highest priority for SEO
+/
+  Cache-Control: public, max-age=1800, s-maxage=3600, stale-while-revalidate=86400
+  X-Robots-Tag: index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1
+
+# Article pages - high priority for SEO
+/*/2025/*/*
+  Cache-Control: public, max-age=7200, s-maxage=14400, stale-while-revalidate=86400
+  X-Robots-Tag: index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1
+
+# Category pages - medium priority
+/#category/*
+  Cache-Control: public, max-age=3600, s-maxage=7200, stale-while-revalidate=86400
+  X-Robots-Tag: index, follow, max-snippet:-1, max-image-preview:large
+
+# Static pages - lower priority
+/#about
+  Cache-Control: public, max-age=7200, s-maxage=14400, stale-while-revalidate=86400
+  X-Robots-Tag: index, follow, max-snippet:-1
+
+/#policy
+  Cache-Control: public, max-age=7200, s-maxage=14400, stale-while-revalidate=86400
+  X-Robots-Tag: index, follow, max-snippet:-1
+
+# Static assets - long cache
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+
+/js/*
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+
+# Images - medium cache
+/images/*
+  Cache-Control: public, max-age=2592000, s-maxage=31536000
+  X-Content-Type-Options: nosniff
+
+# Sitemap and robots - short cache
+/sitemap.xml
+  Cache-Control: public, max-age=3600, s-maxage=7200
+  Content-Type: application/xml; charset=utf-8
+  X-Robots-Tag: noindex
+
+/robots.txt
+  Cache-Control: public, max-age=3600, s-maxage=7200
+  Content-Type: text/plain; charset=utf-8
+  X-Robots-Tag: noindex

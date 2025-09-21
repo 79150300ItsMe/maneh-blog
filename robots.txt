@@ -1,4 +1,22 @@
 User-agent: *
 Allow: /
+Crawl-delay: 1
 
+# Allow specific paths
+Allow: /css/
+Allow: /js/
+Allow: /images/
+Allow: /*.xml
+Allow: /*.txt
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /private/
+Disallow: /test/
+Disallow: /*.json$
+
+# Sitemap location
 Sitemap: https://maneh.blog/sitemap.xml
+
+# Additional directives
+Host: https://maneh.blog
