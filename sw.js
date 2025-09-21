@@ -63,10 +63,20 @@ self.addEventListener('fetch', event => {
   // Skip chrome-extension and other non-http(s) URLs
   if (!request.url.startsWith('http')) return;
 
-  // Skip API calls, video proxy, and article URLs
+  // Skip API calls, video proxy, article URLs, and ad domains
+  const adDomains = [
+    'scornfacultative.com',
+    'preferencenail.com', 
+    'weirdopt.com',
+    'torchfriendlypay.com',
+    'professionaltrafficmonitor.com',
+    'skinnycrawlinglax.com'
+  ];
+  
   if (url.pathname.startsWith('/v/') || 
       url.pathname.startsWith('/api/') ||
-      url.pathname.match(/^\/\d{4}\/\d{2}\/\d{2}\/\d+-/)) {
+      url.pathname.match(/^\/\d{4}\/\d{2}\/\d{2}\/\d+-/) ||
+      adDomains.some(domain => url.hostname.includes(domain))) {
     return;
   }
 

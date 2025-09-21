@@ -319,11 +319,16 @@ function resetSEOHome(){
       metaDesc.content = 'Maneh: platform tutorial & tips teknologi terlengkap dengan bahasa sederhana, panduan step-by-step, dan bisa langsung dipraktikkan. Update terbaru 2025!';
     }
     
-    // Reset Open Graph tags
-    document.getElementById('ogTitle').content = 'Maneh — Tutorial & Tips Teknologi Terlengkap 2025';
-    document.getElementById('ogDesc').content = 'Maneh: platform tutorial & tips teknologi terlengkap dengan bahasa sederhana, panduan step-by-step, dan bisa langsung dipraktikkan. Update terbaru 2025!';
-    document.getElementById('ogImage').content = 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1200&h=630&auto=format&fit=crop&crop=center';
-    document.getElementById('ogUrl').content = 'https://maneh.blog/';
+    // Reset Open Graph tags with null checks
+    const ogTitle = document.getElementById('ogTitle');
+    const ogDesc = document.getElementById('ogDesc');
+    const ogImage = document.getElementById('ogImage');
+    const ogUrl = document.getElementById('ogUrl');
+    
+    if (ogTitle) ogTitle.content = 'Maneh — Tutorial & Tips Teknologi Terlengkap 2025';
+    if (ogDesc) ogDesc.content = 'Maneh: platform tutorial & tips teknologi terlengkap dengan bahasa sederhana, panduan step-by-step, dan bisa langsung dipraktikkan. Update terbaru 2025!';
+    if (ogImage) ogImage.content = 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1200&h=630&auto=format&fit=crop&crop=center';
+    if (ogUrl) ogUrl.content = 'https://maneh.blog/';
     
     // Reset Twitter tags
     const twitterTitle = document.querySelector('meta[name="twitter:title"]');
