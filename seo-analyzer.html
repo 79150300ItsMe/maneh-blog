@@ -3,76 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maneh Blog - SEO Testing Tool</title>
-    <meta name="description" content="Comprehensive SEO testing and analysis tool for Maneh Blog - Tutorial & Tips Teknologi">
-    <meta name="keywords" content="SEO testing, blog analysis, website optimization, Maneh Blog">
+    <title>Maneh Blog - SEO Analyzer</title>
+    <meta name="description" content="SEO analysis tool for Maneh Blog main page">
     <meta name="robots" content="noindex, nofollow">
-    <link rel="canonical" href="https://maneh.blog/seo-test.html">
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
-        .test-container { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .test-item { margin: 10px 0; padding: 10px; border-left: 4px solid #ddd; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { background: #2196F3; color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .test-section { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .test-item { margin: 10px 0; padding: 15px; border-left: 4px solid #ddd; border-radius: 4px; }
         .test-pass { border-left-color: #4CAF50; background: #f1f8e9; }
         .test-fail { border-left-color: #f44336; background: #ffebee; }
         .test-warning { border-left-color: #ff9800; background: #fff3e0; }
-        .test-title { font-weight: bold; margin-bottom: 5px; }
-        .test-desc { color: #666; font-size: 14px; }
-        .test-result { margin-top: 5px; font-family: monospace; }
-        .summary { background: #2196F3; color: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-        .error { color: #f44336; }
-        .success { color: #4CAF50; }
-        .warning { color: #ff9800; }
-        .seo-score { font-size: 24px; font-weight: bold; margin: 10px 0; }
+        .test-title { font-weight: bold; margin-bottom: 5px; font-size: 16px; }
+        .test-desc { color: #666; font-size: 14px; margin-bottom: 8px; }
+        .test-result { font-family: monospace; background: #f8f9fa; padding: 8px; border-radius: 4px; font-size: 13px; }
+        .score-display { text-align: center; padding: 20px; }
+        .score-number { font-size: 48px; font-weight: bold; margin: 10px 0; }
         .score-excellent { color: #4CAF50; }
         .score-good { color: #8BC34A; }
         .score-fair { color: #FFC107; }
         .score-poor { color: #f44336; }
+        .btn { background: #2196F3; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin: 5px; }
+        .btn:hover { background: #1976D2; }
+        .iframe-container { width: 100%; height: 600px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; }
+        .iframe-container iframe { width: 100%; height: 100%; border: none; }
+        .loading { text-align: center; padding: 40px; color: #666; }
     </style>
 </head>
 <body>
-    <div class="summary">
-        <h1>🔍 Maneh Blog - SEO Testing & Analysis</h1>
-        <p>Comprehensive SEO testing and optimization analysis...</p>
-    </div>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Maneh Blog - SEO Analyzer</h1>
+            <p>Analyze the main blog page for SEO optimization</p>
+            <button class="btn" onclick="analyzeMainPage()">Analyze Main Page</button>
+            <button class="btn" onclick="analyzeCurrentPage()">Analyze Current Page</button>
+            <button class="btn" onclick="clearResults()">Clear Results</button>
+        </div>
 
-    <div class="test-container">
-        <h2>📊 SEO Score</h2>
-        <div id="seoScore" class="seo-score">Calculating...</div>
-        <div id="seoBreakdown"></div>
-    </div>
+        <div id="scoreSection" class="test-section" style="display: none;">
+            <h2>📊 SEO Score</h2>
+            <div id="scoreDisplay" class="score-display">
+                <div id="scoreNumber" class="score-number">-</div>
+                <div id="scoreDetails"></div>
+            </div>
+        </div>
 
-    <div class="test-container">
-        <h2>🔍 Meta Tags Analysis</h2>
-        <div id="metaResults"></div>
-    </div>
+        <div id="resultsContainer"></div>
 
-    <div class="test-container">
-        <h2>📋 Structured Data Analysis</h2>
-        <div id="structuredDataResults"></div>
-    </div>
+        <div class="test-section">
+            <h2>📋 Analysis Options</h2>
+            <p>Choose what to analyze:</p>
+            <button class="btn" onclick="loadMainPage()">Load Main Page in Frame</button>
+            <button class="btn" onclick="analyzeFromURL('index.html')">Analyze index.html</button>
+            <button class="btn" onclick="analyzeFromURL('seo-test.html')">Analyze seo-test.html</button>
+        </div>
 
-    <div class="test-container">
-        <h2>🚀 Performance Analysis</h2>
-        <div id="performanceResults"></div>
-    </div>
-
-    <div class="test-container">
-        <h2>📱 Mobile & Accessibility</h2>
-        <div id="mobileResults"></div>
-    </div>
-
-    <div class="test-container">
-        <h2>🔗 Internal Linking</h2>
-        <div id="linkingResults"></div>
-    </div>
-
-    <div class="test-container">
-        <h2>📈 Recommendations</h2>
-        <div id="recommendations"></div>
+        <div id="iframeSection" class="test-section" style="display: none;">
+            <h2>📄 Page Preview</h2>
+            <div class="iframe-container">
+                <iframe id="pageFrame" src="about:blank"></iframe>
+            </div>
+        </div>
     </div>
 
     <script>
-        let seoScore = 0;
+        let currentScore = 0;
         let maxScore = 100;
         let testResults = [];
 
@@ -80,15 +76,22 @@
             const test = { category, title, description, status, result, points, timestamp: new Date() };
             testResults.push(test);
             
-            if (status === 'pass') seoScore += points;
-            else if (status === 'warning') seoScore += points * 0.5;
+            if (status === 'pass') currentScore += points;
+            else if (status === 'warning') currentScore += points * 0.5;
             
             renderTest(category, test);
         }
 
         function renderTest(category, test) {
-            const container = document.getElementById(category + 'Results');
-            if (!container) return;
+            let container = document.getElementById(category + 'Results');
+            if (!container) {
+                // Create category section if it doesn't exist
+                const section = document.createElement('div');
+                section.className = 'test-section';
+                section.innerHTML = `<h2>${getCategoryTitle(category)}</h2><div id="${category}Results"></div>`;
+                document.getElementById('resultsContainer').appendChild(section);
+                container = document.getElementById(category + 'Results');
+            }
             
             const div = document.createElement('div');
             div.className = `test-item test-${test.status}`;
@@ -100,30 +103,121 @@
             container.appendChild(div);
         }
 
-        function updateSEOScore() {
-            const scoreElement = document.getElementById('seoScore');
-            const percentage = Math.round((seoScore / maxScore) * 100);
-            
-            let scoreClass = 'score-poor';
-            if (percentage >= 90) scoreClass = 'score-excellent';
-            else if (percentage >= 80) scoreClass = 'score-good';
-            else if (percentage >= 70) scoreClass = 'score-fair';
-            
-            scoreElement.innerHTML = `<span class="${scoreClass}">${percentage}/100</span>`;
-            
-            // Update breakdown
-            const breakdown = document.getElementById('seoBreakdown');
-            breakdown.innerHTML = `
-                <p><strong>Current Score:</strong> ${seoScore}/${maxScore} points</p>
-                <p><strong>Grade:</strong> ${percentage >= 90 ? 'A+' : percentage >= 80 ? 'A' : percentage >= 70 ? 'B' : percentage >= 60 ? 'C' : 'D'}</p>
-                <p><strong>Status:</strong> ${percentage >= 80 ? 'Excellent SEO' : percentage >= 70 ? 'Good SEO' : percentage >= 60 ? 'Fair SEO' : 'Needs Improvement'}</p>
-            `;
+        function getCategoryTitle(category) {
+            const titles = {
+                'meta': '🔍 Meta Tags Analysis',
+                'structured': '📋 Structured Data Analysis',
+                'performance': '🚀 Performance Analysis',
+                'mobile': '📱 Mobile & Accessibility',
+                'linking': '🔗 Internal Linking',
+                'content': '📝 Content Analysis'
+            };
+            return titles[category] || category;
         }
 
-        // Test 1: Meta Tags Analysis
-        function testMetaTags() {
+        function updateScore() {
+            const percentage = Math.round((currentScore / maxScore) * 100);
+            const scoreElement = document.getElementById('scoreNumber');
+            const detailsElement = document.getElementById('scoreDetails');
+            
+            let scoreClass = 'score-poor';
+            let grade = 'D';
+            let status = 'Needs Improvement';
+            
+            if (percentage >= 90) {
+                scoreClass = 'score-excellent';
+                grade = 'A+';
+                status = 'Excellent SEO';
+            } else if (percentage >= 80) {
+                scoreClass = 'score-good';
+                grade = 'A';
+                status = 'Good SEO';
+            } else if (percentage >= 70) {
+                scoreClass = 'score-fair';
+                grade = 'B';
+                status = 'Fair SEO';
+            } else if (percentage >= 60) {
+                grade = 'C';
+                status = 'Needs Work';
+            }
+            
+            scoreElement.innerHTML = `<span class="${scoreClass}">${percentage}/100</span>`;
+            detailsElement.innerHTML = `
+                <p><strong>Current Score:</strong> ${currentScore}/${maxScore} points</p>
+                <p><strong>Grade:</strong> ${grade}</p>
+                <p><strong>Status:</strong> ${status}</p>
+            `;
+            
+            document.getElementById('scoreSection').style.display = 'block';
+        }
+
+        function clearResults() {
+            document.getElementById('resultsContainer').innerHTML = '';
+            document.getElementById('scoreSection').style.display = 'none';
+            testResults = [];
+            currentScore = 0;
+        }
+
+        function loadMainPage() {
+            document.getElementById('pageFrame').src = 'index.html';
+            document.getElementById('iframeSection').style.display = 'block';
+        }
+
+        function analyzeFromURL(url) {
+            fetch(url)
+                .then(response => response.text())
+                .then(html => {
+                    // Create a temporary DOM to analyze
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    
+                    // Replace current document temporarily for analysis
+                    const originalDoc = document;
+                    window.tempDoc = doc;
+                    
+                    analyzeDocument(doc);
+                })
+                .catch(error => {
+                    console.error('Error loading page:', error);
+                    addTest('meta', 'Page Load', 'Load page for analysis', 'fail', `Error: ${error.message}`, 0);
+                });
+        }
+
+        function analyzeMainPage() {
+            analyzeFromURL('index.html');
+        }
+
+        function analyzeCurrentPage() {
+            analyzeDocument(document);
+        }
+
+        function analyzeDocument(doc) {
+            clearResults();
+            
+            // Meta Tags Analysis
+            analyzeMetaTags(doc);
+            
+            // Structured Data Analysis
+            analyzeStructuredData(doc);
+            
+            // Performance Analysis
+            analyzePerformance(doc);
+            
+            // Mobile & Accessibility
+            analyzeMobileAccessibility(doc);
+            
+            // Content Analysis
+            analyzeContent(doc);
+            
+            // Internal Linking
+            analyzeLinking(doc);
+            
+            updateScore();
+        }
+
+        function analyzeMetaTags(doc) {
             // Title tag
-            const title = document.querySelector('title');
+            const title = doc.querySelector('title');
             if (title && title.textContent.length > 0) {
                 if (title.textContent.length >= 30 && title.textContent.length <= 60) {
                     addTest('meta', 'Title Tag', 'Check title tag length and content', 'pass', 
@@ -137,7 +231,7 @@
             }
 
             // Meta description
-            const description = document.querySelector('meta[name="description"]');
+            const description = doc.querySelector('meta[name="description"]');
             if (description && description.content.length > 0) {
                 if (description.content.length >= 120 && description.content.length <= 160) {
                     addTest('meta', 'Meta Description', 'Check meta description length and content', 'pass', 
@@ -151,19 +245,19 @@
             }
 
             // Keywords
-            const keywords = document.querySelector('meta[name="keywords"]');
+            const keywords = doc.querySelector('meta[name="keywords"]');
             if (keywords && keywords.content.length > 0) {
                 addTest('meta', 'Meta Keywords', 'Check meta keywords', 'pass', 
                     `Keywords: "${keywords.content}"`, 3);
             } else {
-                addTest('meta', 'Meta Keywords', 'Check meta keywords', 'warning', 'No meta keywords found (optional but recommended)', 1);
+                addTest('meta', 'Meta Keywords', 'Check meta keywords', 'warning', 'No meta keywords found', 1);
             }
 
             // Open Graph tags
-            const ogTitle = document.querySelector('meta[property="og:title"]');
-            const ogDesc = document.querySelector('meta[property="og:description"]');
-            const ogImage = document.querySelector('meta[property="og:image"]');
-            const ogUrl = document.querySelector('meta[property="og:url"]');
+            const ogTitle = doc.querySelector('meta[property="og:title"]');
+            const ogDesc = doc.querySelector('meta[property="og:description"]');
+            const ogImage = doc.querySelector('meta[property="og:image"]');
+            const ogUrl = doc.querySelector('meta[property="og:url"]');
             
             if (ogTitle && ogDesc && ogImage && ogUrl) {
                 addTest('meta', 'Open Graph Tags', 'Check Open Graph meta tags', 'pass', 
@@ -174,10 +268,10 @@
             }
 
             // Twitter Card tags
-            const twitterCard = document.querySelector('meta[name="twitter:card"]');
-            const twitterTitle = document.querySelector('meta[name="twitter:title"]');
-            const twitterDesc = document.querySelector('meta[name="twitter:description"]');
-            const twitterImage = document.querySelector('meta[name="twitter:image"]');
+            const twitterCard = doc.querySelector('meta[name="twitter:card"]');
+            const twitterTitle = doc.querySelector('meta[name="twitter:title"]');
+            const twitterDesc = doc.querySelector('meta[name="twitter:description"]');
+            const twitterImage = doc.querySelector('meta[name="twitter:image"]');
             
             if (twitterCard && twitterTitle && twitterDesc && twitterImage) {
                 addTest('meta', 'Twitter Card Tags', 'Check Twitter Card meta tags', 'pass', 
@@ -188,7 +282,7 @@
             }
 
             // Canonical URL
-            const canonical = document.querySelector('link[rel="canonical"]');
+            const canonical = doc.querySelector('link[rel="canonical"]');
             if (canonical && canonical.href) {
                 addTest('meta', 'Canonical URL', 'Check canonical URL', 'pass', 
                     `Canonical: ${canonical.href}`, 3);
@@ -197,12 +291,11 @@
             }
         }
 
-        // Test 2: Structured Data Analysis
-        function testStructuredData() {
-            const jsonLdScripts = document.querySelectorAll('script[type="application/ld+json"]');
+        function analyzeStructuredData(doc) {
+            const jsonLdScripts = doc.querySelectorAll('script[type="application/ld+json"]');
             
             if (jsonLdScripts.length > 0) {
-                addTest('structuredData', 'JSON-LD Scripts', 'Check for structured data', 'pass', 
+                addTest('structured', 'JSON-LD Scripts', 'Check for structured data', 'pass', 
                     `${jsonLdScripts.length} JSON-LD script(s) found`, 5);
                 
                 // Check for specific schema types
@@ -222,38 +315,37 @@
                 });
                 
                 if (hasOrganization) {
-                    addTest('structuredData', 'Organization Schema', 'Check for Organization structured data', 'pass', 
+                    addTest('structured', 'Organization Schema', 'Check for Organization structured data', 'pass', 
                         'Organization schema found', 3);
                 } else {
-                    addTest('structuredData', 'Organization Schema', 'Check for Organization structured data', 'warning', 
+                    addTest('structured', 'Organization Schema', 'Check for Organization structured data', 'warning', 
                         'Organization schema not found', 1);
                 }
                 
                 if (hasWebSite) {
-                    addTest('structuredData', 'WebSite Schema', 'Check for WebSite structured data', 'pass', 
+                    addTest('structured', 'WebSite Schema', 'Check for WebSite structured data', 'pass', 
                         'WebSite schema found', 3);
                 } else {
-                    addTest('structuredData', 'WebSite Schema', 'Check for WebSite structured data', 'warning', 
+                    addTest('structured', 'WebSite Schema', 'Check for WebSite structured data', 'warning', 
                         'WebSite schema not found', 1);
                 }
                 
                 if (hasArticle) {
-                    addTest('structuredData', 'Article Schema', 'Check for Article structured data', 'pass', 
+                    addTest('structured', 'Article Schema', 'Check for Article structured data', 'pass', 
                         'Article schema found', 3);
                 } else {
-                    addTest('structuredData', 'Article Schema', 'Check for Article structured data', 'info', 
+                    addTest('structured', 'Article Schema', 'Check for Article structured data', 'info', 
                         'Article schema not found (normal for home page)', 0);
                 }
             } else {
-                addTest('structuredData', 'JSON-LD Scripts', 'Check for structured data', 'fail', 
+                addTest('structured', 'JSON-LD Scripts', 'Check for structured data', 'fail', 
                     'No JSON-LD scripts found', 0);
             }
         }
 
-        // Test 3: Performance Analysis
-        function testPerformance() {
+        function analyzePerformance(doc) {
             // Check for preload hints
-            const preloadLinks = document.querySelectorAll('link[rel="preload"]');
+            const preloadLinks = doc.querySelectorAll('link[rel="preload"]');
             if (preloadLinks.length > 0) {
                 addTest('performance', 'Resource Preloading', 'Check for preload hints', 'pass', 
                     `${preloadLinks.length} preload hint(s) found`, 3);
@@ -263,7 +355,7 @@
             }
 
             // Check for DNS prefetch
-            const dnsPrefetch = document.querySelectorAll('link[rel="dns-prefetch"]');
+            const dnsPrefetch = doc.querySelectorAll('link[rel="dns-prefetch"]');
             if (dnsPrefetch.length > 0) {
                 addTest('performance', 'DNS Prefetch', 'Check for DNS prefetch hints', 'pass', 
                     `${dnsPrefetch.length} DNS prefetch hint(s) found`, 2);
@@ -273,7 +365,7 @@
             }
 
             // Check for font optimization
-            const fontLinks = document.querySelectorAll('link[href*="fonts.googleapis.com"]');
+            const fontLinks = doc.querySelectorAll('link[href*="fonts.googleapis.com"]');
             let hasFontOptimization = false;
             fontLinks.forEach(link => {
                 if (link.media === 'print' && link.onload) {
@@ -290,7 +382,7 @@
             }
 
             // Check for image optimization
-            const images = document.querySelectorAll('img');
+            const images = doc.querySelectorAll('img');
             let optimizedImages = 0;
             images.forEach(img => {
                 if (img.loading === 'lazy' && img.decoding === 'async') {
@@ -310,10 +402,9 @@
             }
         }
 
-        // Test 4: Mobile & Accessibility
-        function testMobileAccessibility() {
+        function analyzeMobileAccessibility(doc) {
             // Viewport meta tag
-            const viewport = document.querySelector('meta[name="viewport"]');
+            const viewport = doc.querySelector('meta[name="viewport"]');
             if (viewport && viewport.content.includes('width=device-width')) {
                 addTest('mobile', 'Viewport Meta Tag', 'Check for responsive viewport', 'pass', 
                     'Viewport meta tag configured correctly', 3);
@@ -323,7 +414,7 @@
             }
 
             // Language attribute
-            const htmlLang = document.documentElement.lang;
+            const htmlLang = doc.documentElement.lang;
             if (htmlLang) {
                 addTest('mobile', 'Language Attribute', 'Check for language attribute', 'pass', 
                     `Language: ${htmlLang}`, 2);
@@ -333,7 +424,7 @@
             }
 
             // Theme color
-            const themeColor = document.querySelector('meta[name="theme-color"]');
+            const themeColor = doc.querySelector('meta[name="theme-color"]');
             if (themeColor) {
                 addTest('mobile', 'Theme Color', 'Check for theme color', 'pass', 
                     `Theme color: ${themeColor.content}`, 2);
@@ -343,7 +434,7 @@
             }
 
             // Check for alt attributes on images
-            const images = document.querySelectorAll('img');
+            const images = doc.querySelectorAll('img');
             let imagesWithAlt = 0;
             images.forEach(img => {
                 if (img.alt && img.alt.trim().length > 0) {
@@ -363,9 +454,38 @@
             }
         }
 
-        // Test 5: Internal Linking
-        function testInternalLinking() {
-            const links = document.querySelectorAll('a[href]');
+        function analyzeContent(doc) {
+            // Check for headings structure
+            const h1s = doc.querySelectorAll('h1');
+            const h2s = doc.querySelectorAll('h2');
+            const h3s = doc.querySelectorAll('h3');
+            
+            if (h1s.length === 1) {
+                addTest('content', 'H1 Structure', 'Check for proper H1 structure', 'pass', 
+                    `1 H1 found: "${h1s[0].textContent}"`, 3);
+            } else if (h1s.length > 1) {
+                addTest('content', 'H1 Structure', 'Check for proper H1 structure', 'warning', 
+                    `${h1s.length} H1 tags found - should be only 1`, 1);
+            } else {
+                addTest('content', 'H1 Structure', 'Check for proper H1 structure', 'fail', 
+                    'No H1 tag found', 0);
+            }
+
+            // Check for content length
+            const bodyText = doc.body ? doc.body.textContent.replace(/\s+/g, ' ').trim() : '';
+            const wordCount = bodyText.split(' ').length;
+            
+            if (wordCount >= 300) {
+                addTest('content', 'Content Length', 'Check for sufficient content', 'pass', 
+                    `${wordCount} words found`, 3);
+            } else {
+                addTest('content', 'Content Length', 'Check for sufficient content', 'warning', 
+                    `${wordCount} words found - aim for 300+ words`, 1);
+            }
+        }
+
+        function analyzeLinking(doc) {
+            const links = doc.querySelectorAll('a[href]');
             let internalLinks = 0;
             let externalLinks = 0;
             
@@ -395,87 +515,11 @@
             }
         }
 
-        // Generate recommendations
-        function generateRecommendations() {
-            const recommendations = [];
-            
-            // Analyze test results
-            const failedTests = testResults.filter(t => t.status === 'fail');
-            const warningTests = testResults.filter(t => t.status === 'warning');
-            
-            if (failedTests.length > 0) {
-                recommendations.push({
-                    priority: 'high',
-                    title: 'Critical Issues',
-                    description: `Fix ${failedTests.length} critical SEO issue(s)`,
-                    items: failedTests.map(t => t.title)
-                });
-            }
-            
-            if (warningTests.length > 0) {
-                recommendations.push({
-                    priority: 'medium',
-                    title: 'Improvements',
-                    description: `Address ${warningTests.length} SEO improvement(s)`,
-                    items: warningTests.map(t => t.title)
-                });
-            }
-            
-            // Add general recommendations
-            recommendations.push({
-                priority: 'low',
-                title: 'General SEO Tips',
-                description: 'Additional recommendations for better SEO',
-                items: [
-                    'Add more internal links between related articles',
-                    'Optimize images with proper alt text and compression',
-                    'Consider adding a blog sitemap',
-                    'Monitor Core Web Vitals regularly',
-                    'Add social media sharing buttons',
-                    'Consider implementing AMP for mobile'
-                ]
-            });
-            
-            // Render recommendations
-            const container = document.getElementById('recommendations');
-            recommendations.forEach(rec => {
-                const div = document.createElement('div');
-                div.className = `test-item test-${rec.priority === 'high' ? 'fail' : rec.priority === 'medium' ? 'warning' : 'pass'}`;
-                div.innerHTML = `
-                    <div class="test-title">${rec.title} (${rec.priority.toUpperCase()})</div>
-                    <div class="test-desc">${rec.description}</div>
-                    <div class="test-result">
-                        <ul>
-                            ${rec.items.map(item => `<li>${item}</li>`).join('')}
-                        </ul>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        // Run all tests
-        function runAllTests() {
-            // Clear previous results
-            document.querySelectorAll('[id$="Results"]').forEach(el => el.innerHTML = '');
-            testResults = [];
-            seoScore = 0;
-            
-            // Run tests
-            testMetaTags();
-            testStructuredData();
-            testPerformance();
-            testMobileAccessibility();
-            testInternalLinking();
-            
-            // Update score and generate recommendations
-            updateSEOScore();
-            generateRecommendations();
-        }
-
-        // Auto-run tests on page load
+        // Auto-analyze on page load
         window.addEventListener('load', function() {
-            setTimeout(runAllTests, 1000);
+            setTimeout(() => {
+                analyzeMainPage();
+            }, 1000);
         });
     </script>
 </body>

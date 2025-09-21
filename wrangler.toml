@@ -1,0 +1,36 @@
+name = "maneh-blog-worker"
+main = "worker.js"
+compatibility_date = "2024-09-25"
+
+[env.production]
+name = "maneh-blog-worker"
+route = "maneh.blog/*"
+
+[env.staging]
+name = "maneh-blog-worker-staging"
+route = "staging.maneh.blog/*"
+
+# Worker configuration
+[build]
+command = ""
+
+# Environment variables
+[vars]
+ENVIRONMENT = "production"
+CORS_ORIGIN = "*"
+PROXY_TARGET = "https://quaxy.my"
+
+# KV namespaces (if needed)
+# [[kv_namespaces]]
+# binding = "CACHE"
+# id = "your-kv-namespace-id"
+
+# Durable Objects (if needed)
+# [[durable_objects.bindings]]
+# name = "RATE_LIMITER"
+# class_name = "RateLimiter"
+
+# R2 buckets (if needed)
+# [[r2_buckets]]
+# binding = "ASSETS"
+# bucket_name = "maneh-assets"
