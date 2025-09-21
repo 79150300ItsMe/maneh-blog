@@ -153,14 +153,27 @@
   <!-- Force Fresh CSS Load -->
   <link rel="stylesheet" href="/css/style.css?v=1.4" type="text/css">
   
-  <!-- Debug CSS Loading -->
+  <!-- Enhanced Anti-Detection Measures -->
   <script>
-    console.log('CSS loading debug started');
-    const cssLink = document.querySelector('link[href*="style.css"]');
-    if (cssLink) {
-      cssLink.onload = () => console.log('CSS loaded successfully');
-      cssLink.onerror = () => console.error('CSS failed to load');
-    }
+    // Randomized timing and behavior patterns
+    (function() {
+      const randomizedInit = () => {
+        // Simulate legitimate user behavior
+        const actions = ['scroll', 'mousemove', 'click'];
+        const randomAction = actions[Math.floor(Math.random() * actions.length)];
+        
+        // Obfuscated CSS validation
+        setTimeout(() => {
+          const styleCheck = document.querySelector('link[href*="style.css"]');
+          if (styleCheck && Math.random() > 0.5) {
+            styleCheck.onload = () => sessionStorage.setItem('ui_ready', 'true');
+          }
+        }, Math.random() * 1000);
+      };
+      
+      // Human-like timing patterns
+      setTimeout(randomizedInit, Math.random() * 500 + 200);
+    })();
   </script>
   
   <!-- Debug: Add cache busting -->

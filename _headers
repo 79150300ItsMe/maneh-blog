@@ -40,9 +40,11 @@
   Vary: Accept-Encoding, User-Agent
   X-Cache-Status: HIT
   
-  # Custom Headers
-  X-Powered-By: Maneh-Blog/1.0
-  X-Security-Level: High
+  # Randomized Headers for Anti-Detection
+  X-Powered-By: Apache/2.4.41
+  X-Content-Generator: WordPress/6.3.2
+  X-Framework: React/18.2.0
+  Server: nginx/1.22.1
 */
 
 # Home page - highest priority for SEO
