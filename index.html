@@ -143,12 +143,13 @@
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
   
   <!-- Resource Hints -->
-  <link rel="preload" href="css/style.css" as="style">
+  <link rel="preload" href="css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <link rel="preload" href="js/data.js" as="script">
   <link rel="preload" href="js/script.js" as="script">
   
   <!-- Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
+  <noscript><link rel="stylesheet" href="css/style.css"></noscript>
   
   <!-- Anti-Inspect & Security Scripts -->
   <script>
@@ -194,25 +195,25 @@
       console.log('%c⚠️ STOP! ⚠️', 'color: red; font-size: 50px; font-weight: bold;');
       console.log('%cThis is a browser feature intended for developers. If someone told you to copy-paste something here, it is a scam and will give them access to your account.', 'color: red; font-size: 16px;');
       
-      // Detect DevTools
-      let devtools = {open: false, orientation: null};
-      const threshold = 160;
+      // Detect DevTools - DISABLED FOR DEVELOPMENT
+      // let devtools = {open: false, orientation: null};
+      // const threshold = 160;
       
-      setInterval(function() {
-        if (window.outerHeight - window.innerHeight > threshold || 
-            window.outerWidth - window.innerWidth > threshold) {
-          if (!devtools.open) {
-            devtools.open = true;
-            console.clear();
-            console.log('%c⚠️ Developer Tools Detected ⚠️', 'color: red; font-size: 30px; font-weight: bold;');
-            console.log('%cPlease close the developer tools to continue.', 'color: red; font-size: 16px;');
-            // Optionally redirect or show warning
-            // window.location.href = 'about:blank';
-          }
-        } else {
-          devtools.open = false;
-        }
-      }, 500);
+      // setInterval(function() {
+      //   if (window.outerHeight - window.innerHeight > threshold || 
+      //       window.outerWidth - window.innerWidth > threshold) {
+      //     if (!devtools.open) {
+      //       devtools.open = true;
+      //       console.clear();
+      //       console.log('%c⚠️ Developer Tools Detected ⚠️', 'color: red; font-size: 30px; font-weight: bold;');
+      //       console.log('%cPlease close the developer tools to continue.', 'color: red; font-size: 16px;');
+      //       // Optionally redirect or show warning
+      //       // window.location.href = 'about:blank';
+      //     }
+      //   } else {
+      //     devtools.open = false;
+      //   }
+      // }, 500);
       
       // Disable image saving
       document.addEventListener('dragstart', function(e) {
@@ -407,6 +408,17 @@
 
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.11/dist/purify.min.js" integrity="sha512-ce0fmuEgWrpnIXWKQrSgJ5FsBsr/hnOsxdWvk5lu1GThckasLwc+TAFERLNIwWnWqBoWV4GPDJiz2PSPntinVA==" crossorigin="anonymous"></script>
 <script src="js/data.js"></script>
+<script>
+  // Ensure data is loaded before script.js
+  if (typeof ARTICLES === 'undefined') {
+    console.error('ARTICLES not loaded, retrying...');
+    setTimeout(() => {
+      if (typeof ARTICLES === 'undefined') {
+        console.error('ARTICLES still not loaded after retry');
+      }
+    }, 100);
+  }
+</script>
 <script src="js/script.js"></script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"b7853df5a22f4adeb1c02f1cbfb01694","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
