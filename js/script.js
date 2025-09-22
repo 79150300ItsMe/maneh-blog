@@ -478,25 +478,25 @@ function renderList(items=ARTICLES){
 function setupClickHandlers() {
 document.addEventListener('click', (e)=>{
     console.log('Click detected on:', e.target);
-  
-  // Skip category and other navigation links
-  const categoryLink = e.target.closest('a[href^="#category/"]');
-  const otherNavLink = e.target.closest('a[href="#about"], a[href="#policy"]');
-  if (categoryLink || otherNavLink) {
-    console.log('Category or navigation link clicked, allowing default behavior');
-    console.log('Link href:', categoryLink ? categoryLink.href : otherNavLink.href);
-    console.log('Target element:', e.target);
-    console.log('Closest link element:', categoryLink || otherNavLink);
     
-    // For About and Policy links, ensure they work properly
-    if (otherNavLink) {
-      console.log('About/Policy link clicked, ensuring navigation works');
-      // Let the default behavior handle the navigation
+    // Skip category and other navigation links
+    const categoryLink = e.target.closest('a[href^="#category/"]');
+    const otherNavLink = e.target.closest('a[href="#about"], a[href="#policy"]');
+    if (categoryLink || otherNavLink) {
+      console.log('Category or navigation link clicked, allowing default behavior');
+      console.log('Link href:', categoryLink ? categoryLink.href : otherNavLink.href);
+      console.log('Target element:', e.target);
+      console.log('Closest link element:', categoryLink || otherNavLink);
+      
+      // For About and Policy links, ensure they work properly
+      if (otherNavLink) {
+        console.log('About/Policy link clicked, ensuring navigation works');
+        // Let the default behavior handle the navigation
+        return;
+      }
       return;
     }
-    return;
-  }
-  
+    
   const a = e.target.closest('a[data-slug]');
     if(!a) {
       console.log('No article link found');
@@ -1001,7 +1001,6 @@ document.addEventListener('click',e=>{
     qResults.classList.remove('show');
   }
   
-  // Debug: Log all clicks to see what's happening
   if (e.target.closest('a[href="#about"], a[href="#policy"]')) {
     console.log('About/Policy link clicked in search handler:', e.target.closest('a[href="#about"], a[href="#policy"]'));
   }
@@ -1017,34 +1016,7 @@ function share(url,title){
 }
 share(location.href,'Maneh &mdash; Tutorial & Tips Teknologi');
 
-/* ======= Ad Management - Anti-Detection Enhanced ======= */
-function initAds() {
-  try {
-    // Dynamic loading with randomized timing
-    const randomDelay = Math.floor(Math.random() * 3000) + 1000; // 1-4 seconds
-    
-    setTimeout(() => {
-      // Obfuscated initialization
-      const adConfig = btoa('popunder-config');
-      sessionStorage.setItem('ad_state', adConfig);
-      
-      // Silent banner loading with human-like patterns
-      if (document.readyState === 'complete') {
-        // Simulate human interaction delay
-        setTimeout(() => {
-          console.log('Content optimization complete');
-        }, Math.random() * 2000);
-      }
-    }, randomDelay);
-    
-  } catch (error) {
-    // Silent error handling
-    setTimeout(() => console.log('System ready'), 1000);
-  }
-}
-
-// Initialize ads after DOM is ready
-document.addEventListener('DOMContentLoaded', initAds);
+/* ======= Ad Management Removed ======= */
 
 /* ======= Reading Progress Tracking ======= */
 function initReadingProgress() {
@@ -1170,7 +1142,6 @@ window.addEventListener('hashchange', () => {
 const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-// Clear Service Worker cache for debugging
 function clearCache() {
   if ('serviceWorker' in navigator && 'caches' in window) {
     caches.keys().then(cacheNames => {
