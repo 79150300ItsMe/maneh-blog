@@ -96,9 +96,9 @@ header{position:sticky;top:0;background:rgba(255,255,255,.9);backdrop-filter:sat
 .title{font-family:Playfair Display,serif;font-weight:800;background:linear-gradient(90deg,var(--brand1),var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:28px;letter-spacing:.2px}
 .actions{margin-left:auto;display:flex;gap:10px;align-items:center}
 .iconbtn{width:44px;height:44px;border:1px solid var(--line);border-radius:12px;background:#fff;display:grid;place-items:center;box-shadow:var(--shadow);cursor:pointer}
-.icon{width:22px;height:22px;stroke:#0f2642;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.icon:not(.verified-badge){width:22px;height:22px;stroke:#0f2642;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
 [data-theme="dark"] .iconbtn{background:#0e1f33}
-[data-theme="dark"] .icon{stroke:#cfe1ff}
+[data-theme="dark"] .icon:not(.verified-badge){stroke:#cfe1ff}
 
 /* Search */
 .searchbar {
@@ -170,14 +170,14 @@ header{position:sticky;top:0;background:rgba(255,255,255,.9);backdrop-filter:sat
 .link:before{content:'';position:absolute;inset:0;background:var(--accent);opacity:0;transition:opacity 0.2s ease}
 .link:hover:before{opacity:1}
 .link:hover{text-decoration:none;transform:translateX(4px)}
-.link svg{width:20px;height:20px;margin-right:12px;stroke:var(--fg);stroke-width:2;position:relative;z-index:1;flex-shrink:0}
+.link svg:not(.verified-badge){width:20px;height:20px;margin-right:12px;stroke:var(--fg);stroke-width:2;position:relative;z-index:1;flex-shrink:0}
 .link span{position:relative;z-index:1}
 .closebar{display:flex;justify-content:space-between;align-items:center;padding:16px;border-bottom:1px solid var(--line);background:var(--bg)}
 .closebar .brand{display:flex;align-items:center;gap:10px}
 .closebar .brand .badge{width:32px;height:32px;font-size:20px}
 .closebar button{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;transition:all 0.2s ease;background:var(--accent)}
 .closebar button:hover{transform:rotate(90deg)}
-.closebar button svg{width:20px;height:20px;stroke:var(--fg)}
+.closebar button svg:not(.verified-badge){width:20px;height:20px;stroke:var(--fg)}
 body.noscroll{overflow:hidden}
 
 /* Page sections */
@@ -266,8 +266,8 @@ body.noscroll{overflow:hidden}
 .toc .toc-title{font-weight:800;font-size:20px;color:var(--heading)}
 .toc .burger{border:1px solid var(--line);background:#fff;border-radius:10px;padding:6px 10px;cursor:pointer;display:grid;place-items:center}
 @media (prefers-color-scheme: dark){ .toc .burger{background:#0b1420} }
-.toc .burger svg{width:18px;height:18px;stroke:#0f2642;stroke-width:2;fill:none;stroke-linecap:round}
-.toc .burger svg{width:18px;height:18px;stroke:var(--fg);stroke-width:2;fill:none;stroke-linecap:round}
+.toc .burger svg:not(.verified-badge){width:18px;height:18px;stroke:#0f2642;stroke-width:2;fill:none;stroke-linecap:round}
+.toc .burger svg:not(.verified-badge){width:18px;height:18px;stroke:var(--fg);stroke-width:2;fill:none;stroke-linecap:round}
 .toc-ol{list-style:none;margin:0 0 0 18px;padding:0}
 .toc-ol li{display:block;margin:6px 0}
 .toc-ol li:before{content:none}
@@ -312,17 +312,40 @@ body.noscroll{overflow:hidden}
 }
 
 .author-name {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   font-weight: 600;
   color: var(--text);
+  line-height: 1.2;
 }
 
-.badge-verified {
-  width: 16px;
-  height: 16px;
-  margin-left: 6px;
-  vertical-align: middle;
+/* Verified Badge Styles */
+:root {
+  --vb-size: 0.9em; /* mobile default ~14-16px * 0.9 */
+}
+
+.verified-badge {
+  width: var(--vb-size);
+  height: var(--vb-size);
+  display: inline-block;
+  line-height: 1;
+  vertical-align: -0.15em; /* turun sedikit agar sejajar teks */
+  margin-left: 0.375rem; /* 6px */
+  flex-shrink: 0;
+  color: #1da1f2;
+}
+
+/* Responsive badge sizes */
+@media (min-width: 640px) {
+  :root {
+    --vb-size: 1.0em; /* tablet */
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --vb-size: 1.125em; /* desktop */
+  }
 }
 
 /* Comment Author Info */
