@@ -4,6 +4,24 @@
  */
 'use strict';
 
+// Trusted Types helper untuk production
+function setHTMLSafe(el, html) {
+  if (!el) return;
+  try {
+    if (window.__ttPolicy && window.trustedTypes) {
+      el.innerHTML = __ttPolicy.createHTML(html);
+    } else if (window.DOMPurify) {
+      el.innerHTML = DOMPurify.sanitize(html);
+    } else {
+      el.innerHTML = html; // fallback terakhir (lokal)
+    }
+  } catch (e) {
+    // fallback ekstra
+    el.textContent = '';
+    if (window.DOMPurify) el.innerHTML = DOMPurify.sanitize(html);
+  }
+}
+
 // Performance monitoring
 const perfStartTime = performance.now();
 let metricsCollected = false;
@@ -176,7 +194,7 @@ function applyI18N() {
     if (aboutPostH1) aboutPostH1.textContent = t('aboutTitle');
     
     const aboutContent = document.getElementById('aboutContent');
-    if (aboutContent) aboutContent.innerHTML = t('aboutHTML');
+    if (aboutContent) setHTMLSafe(aboutContent, t('aboutHTML'));
     
     const policyPostH1 = document.querySelector('#policyPost h1');
     if (policyPostH1) policyPostH1.textContent = t('policyTitle');
@@ -185,10 +203,10 @@ function applyI18N() {
     if (contactPostH1) contactPostH1.textContent = t('contactTitle');
     
     const policyContent = document.getElementById('policyContent');
-    if (policyContent) policyContent.innerHTML = t('policyHTML');
+    if (policyContent) setHTMLSafe(policyContent, t('policyHTML'));
     
     const contactContent = document.getElementById('contactContent');
-    if (contactContent) contactContent.innerHTML = t('contactHTML');
+    if (contactContent) setHTMLSafe(contactContent, t('contactHTML'));
     
   } catch (error) {
     console.error('I18N application error:', error);
@@ -1241,7 +1259,7 @@ function renderHomeSafe() {
       // Fallback: show simple message
       const listEl = document.getElementById('list');
       if (listEl) {
-        listEl.innerHTML = '<p>Loading articles...</p>';
+        setHTMLSafe(listEl, '<p>Loading articles...</p>');
       }
     }
 
@@ -1627,7 +1645,7 @@ async function renderCategoryPage(slug) {
     showSection('home');          // kita pakai container list yang sama seperti home
     
     const container = document.getElementById('list');
-    if (container) container.innerHTML = ''; // clear list
+    if (container) setHTMLSafe(container, ''); // clear list
     
     // Set category header and SEO first
     setCategoryHeader(normalizedSlug);
@@ -1652,7 +1670,7 @@ async function renderCategoryPage(slug) {
     } else {
       // Empty state - tampilkan pesan tanpa fallback
       if (container) {
-        container.innerHTML = `<div style="text-align: center; padding: 2rem; color: #666;">Belum ada artikel di kategori "${slug}".</div>`;
+        setHTMLSafe(container, `<div style="text-align: center; padding: 2rem; color: #666;">Belum ada artikel di kategori "${slug}".</div>`);
       }
     }
 
@@ -1697,15 +1715,15 @@ function renderArticlesList(list, opts={}) {
 
     // Safe HTML rendering
     if (typeof DOMPurify !== 'undefined') {
-      container.innerHTML = DOMPurify.sanitize(html);
+      setHTMLSafe(container, DOMPurify.sanitize(html));
     } else {
-      container.innerHTML = html; // Fallback
+      setHTMLSafe(container, html); // Fallback
     }
     console.log('Articles list rendered, cards created:', container.querySelectorAll('.card').length);
   } catch (error) {
     console.error('❌ Error rendering articles list:', error);
     // Fallback: show error message
-    container.innerHTML = '<p>Error loading articles. Please refresh the page.</p>';
+    setHTMLSafe(container, '<p>Error loading articles. Please refresh the page.</p>');
   }
 }
 
@@ -1746,15 +1764,15 @@ function renderList(items){
 
     // Safe HTML rendering
     if (typeof DOMPurify !== 'undefined') {
-      box.innerHTML = DOMPurify.sanitize(html);
+      setHTMLSafe(box, DOMPurify.sanitize(html));
     } else {
-      box.innerHTML = html; // Fallback
+      setHTMLSafe(box, html); // Fallback
     }
     console.log('List rendered, cards created:', box.querySelectorAll('.card').length);
   } catch (error) {
     console.error('❌ Error rendering list:', error);
     // Fallback: show error message
-    box.innerHTML = '<p>Error loading articles. Please refresh the page.</p>';
+    setHTMLSafe(box, '<p>Error loading articles. Please refresh the page.</p>');
   }
 }
 
@@ -1973,7 +1991,7 @@ function renderReader(slug, queryStr) {
     const optimizedHTML = optimizeImagesInContent(cleanHTML);
     
     // Secure DOM update with proper order: H1 → Meta → Figure → Body
-    post.innerHTML = `
+    setHTMLSafe(post, `
       <h1 class="post-title" id="post-top">${cleanTitle}</h1>
       <div class="post-meta" role="contentinfo" aria-label="Informasi penulis dan tanggal">
         <span class="post-verified" title="Verified" aria-label="Verified">
@@ -1990,7 +2008,7 @@ function renderReader(slug, queryStr) {
         <figcaption class="caption">${a.altTitle || a.title}</figcaption>
       </figure>
       <div class="post-body">${optimizedHTML}</div>
-    `;
+    `);
     console.log('Article content rendered with proper order: H1 → Meta → Figure → Body');
     
     // Ensure the post element is visible
@@ -2003,9 +2021,9 @@ function renderReader(slug, queryStr) {
   if (a.tags && a.tags.length > 0) {
     const tagsContainer = document.createElement('div');
     tagsContainer.className = 'tags-container';
-    tagsContainer.innerHTML = a.tags.map(tag => 
+    setHTMLSafe(tagsContainer, a.tags.map(tag => 
       `<a href="#tag/${slugify(tag)}" class="tag-item">${tag}</a>`
-    ).join('');
+    ).join(''));
     const postMeta = post.querySelector('.post-meta');
     if (postMeta) {
       postMeta.after(tagsContainer);
@@ -2033,7 +2051,7 @@ function renderReader(slug, queryStr) {
 
   // Side lists
   const others=ARTICLES.filter(x=>x.slug!==slug);
-  document.getElementById('pilihan').innerHTML = others.slice(0,3).map(x=>{
+  setHTMLSafe(document.getElementById('pilihan'), others.slice(0,3).map(x=>{
     // Generate new URL format
     const date = new Date(x.published);
     const year = date.getFullYear();
@@ -2052,8 +2070,8 @@ function renderReader(slug, queryStr) {
       <div><div style="font-weight:700">${x.title}</div><div class="meta"><time datetime="${x.published}">${fmtDate(x.published)}</time></div></div>
       </a>
     `;
-  }).join('');
-  document.getElementById('populer').innerHTML = others.slice(0,4).map((x,i)=>{
+  }).join(''));
+  setHTMLSafe(document.getElementById('populer'), others.slice(0,4).map((x,i)=>{
     // Generate new URL format
     const date = new Date(x.published);
     const year = date.getFullYear();
@@ -2071,7 +2089,7 @@ function renderReader(slug, queryStr) {
       <div class="dot">#${i+1}</div><div style="font-weight:700">${x.title}</div>
       </a>
     `;
-  }).join('');
+  }).join(''));
 
 
   // Generate new URL format: /2025/09/25/1-era-baru-sinema-ai-sora
@@ -2148,11 +2166,11 @@ function showReaderError() {
   console.log('Showing reader error page');
   const post = document.getElementById('post');
   if (post) {
-    post.innerHTML = `
+    setHTMLSafe(post, `
       <h1>Error Loading Article</h1>
       <p>Maaf, terjadi kesalahan saat memuat artikel.</p>
       <p><a href="/">← Kembali ke Beranda</a></p>
-    `;
+    `);
   }
   show('reader');
 }
@@ -2217,11 +2235,11 @@ function render404() {
   show('reader');
   const post = document.getElementById('post');
   if (post) {
-    post.innerHTML = `
+    setHTMLSafe(post, `
       <h1>Artikel Tidak Ditemukan</h1>
       <p>Maaf, artikel yang Anda cari tidak ditemukan.</p>
       <p><a href="/">← Kembali ke Beranda</a></p>
-    `;
+    `);
   }
 }
 
@@ -2397,9 +2415,9 @@ let qTimer=null, qActiveIndex=-1;
 
 function renderQuickResults(term){
   const v = term.trim().toLowerCase();
-  if(v.length<2){ qResults.classList.remove('show'); qResults.innerHTML=''; qActiveIndex=-1; return; }
+  if(v.length<2){ qResults.classList.remove('show'); setHTMLSafe(qResults, ''); qActiveIndex=-1; return; }
   const filtered = ARTICLES.filter(a => (a.title+' '+a.summary).toLowerCase().includes(v));
-  qResults.innerHTML = filtered.length
+  setHTMLSafe(qResults, filtered.length
     ? filtered.map(a=>{
         // Generate new URL format for search results
         const date = new Date(a.published);
@@ -2421,7 +2439,7 @@ function renderQuickResults(term){
             <div class="hit-meta"><time datetime="${a.published}">${fmtDate(a.published)}</time></div>
           </div>
           </a>`;
-      }).join('') : `<div style="padding:12px;color:var(--muted)">${t('noResultsFor')} &ldquo;${term}&rdquo;.</div>`;
+      }).join('') : `<div style="padding:12px;color:var(--muted)">${t('noResultsFor')} &ldquo;${term}&rdquo;.</div>`);
   qResults.classList.add('show');
   qActiveIndex=-1;
 }
@@ -2694,7 +2712,7 @@ window.healthCheck = healthCheck;
 // Expose health endpoint via hash route (debounced)
 const debouncedHealthCheck = debounce(() => {
   if (location.hash === '#health') {
-    document.body.innerHTML = `<pre>${JSON.stringify(healthCheck(), null, 2)}</pre>`;
+    setHTMLSafe(document.body, `<pre>${JSON.stringify(healthCheck(), null, 2)}</pre>`);
   }
 }, 120);
 
@@ -2955,7 +2973,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn = document.createElement('button'); 
     btn.type='button'; btn.className='burger'; btn.setAttribute('aria-label','Tampilkan/Sembunyikan Daftar Isi'); 
     btn.setAttribute('aria-expanded','true');
-    btn.innerHTML = `<svg viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="18" x2="20" y2="18"></line></svg>`;
+    setHTMLSafe(btn, `<svg viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="18" x2="20" y2="18"></line></svg>`);
     head.appendChild(title); head.appendChild(btn); wrap.appendChild(head);
     const root = document.createElement('ol'); root.className='toc-ol'; wrap.appendChild(root);
     let stack=[root], curLevel=2;

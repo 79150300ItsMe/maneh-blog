@@ -500,6 +500,41 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.11/dist/purify.min.js" integrity="sha512-ce0fmuEgWrpnIXWKQrSgJ5FsBsr/hnOsxdWvk5lu1GThckasLwc+TAFERLNIwWnWqBoWV4GPDJiz2PSPntinVA==" crossorigin="anonymous"></script>
+
+<!-- Trusted Types Bootstrap - HARUS SEBELUM SCRIPT LAIN -->
+<script>
+  // Trusted Types policy untuk Maneh (fallback aman jika browser tidak mendukung)
+  (function () {
+    // Gunakan DOMPurify bila available
+    window.__tt = {
+      html: function (raw) {
+        if (window.DOMPurify && DOMPurify.sanitize) {
+          // Kembalikan TrustedHTML bila didukung
+          try {
+            return DOMPurify.sanitize(raw, { RETURN_TRUSTED_TYPE: true });
+          } catch(e) {
+            // fallback string bersih
+            return DOMPurify.sanitize(raw);
+          }
+        }
+        return raw;
+      },
+      scriptURL: function (url) { return url; }
+    };
+
+    if (window.trustedTypes && trustedTypes.createPolicy) {
+      try {
+        window.__ttPolicy = trustedTypes.createPolicy('maneh', {
+          createHTML: (s) => window.__tt.html(s),
+          createScriptURL: (u) => window.__tt.scriptURL(u)
+        });
+      } catch(e) {
+        // policy mungkin sudah ada; abaikan
+      }
+    }
+  })();
+</script>
+
         <script>
           // Normalize path on boot - treat /index.html same as /
           function normalizePathOnBoot() {
@@ -569,13 +604,18 @@
 <script>
   // Only load Cloudflare RUM in production
   if (window.location.hostname !== '127.0.0.1' && window.location.hostname !== 'localhost') {
-    const script = document.createElement('script');
-    script.defer = true;
-    script.src = 'https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015';
-    script.integrity = 'sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==';
-    script.setAttribute('data-cf-beacon', '{"version":"2024.11.0","token":"b7853df5a22f4adeb1c02f1cbfb01694","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}');
-    script.crossOrigin = 'anonymous';
-    document.head.appendChild(script);
+    const s = document.createElement('script');
+    s.defer = true;
+    var rumURL = 'https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015';
+    if (window.__ttPolicy && window.trustedTypes) {
+      s.src = __ttPolicy.createScriptURL(rumURL);
+    } else {
+      s.src = rumURL;
+    }
+    s.integrity = 'sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==';
+    s.setAttribute('data-cf-beacon', '{"version":"2024.11.0","token":"b7853df5a22f4adeb1c02f1cbfb01694","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}');
+    s.crossOrigin = 'anonymous';
+    document.head.appendChild(s);
   }
 </script>
 </body>
