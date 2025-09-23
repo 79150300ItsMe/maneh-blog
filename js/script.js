@@ -356,18 +356,44 @@ function hideSection(id) {
 
 function showSection(id) {
   const node = (SECTIONS || initSectionsCache())[id];
-  if (!node) return;
+  if (!node) {
+    console.error('Section not found:', id);
+    return;
+  }
+  
   node.style.display = 'block';
   node.style.visibility = 'visible';
   node.style.opacity = '1';
+  
+  console.log('Show section:', id);
 }
 
 // ====== HASH PARSER ======
 function getRoute() {
+  // Check for pathname-based article routing first
+  const pathname = location.pathname;
+  if (pathname && pathname !== '/' && pathname !== '/index.html') {
+    // Pattern: /2025/01/01/1-article-slug or /year/month/day/order-slug
+    const pathMatch = pathname.match(/^\/(\d{4})\/(\d{2})\/(\d{2})\/(\d+)-(.+)$/);
+    if (pathMatch) {
+      const [, year, month, day, order, slug] = pathMatch;
+      console.log('Routing -> article (pathname)', { slug, pathname });
+      return { name: 'article', params: { slug, year, month, day, order } };
+    }
+  }
+  
+  // Fallback to hash-based routing
   const raw = (location.hash || '').replace(/^#/, '').trim(); // "", "category/news", "about"
   if (!raw) return { name: 'home', params: {} };
 
   const parts = raw.split('/').filter(Boolean);
+  
+  // Handle article hash routes: #p/slug or #post/slug
+  if ((parts[0] === 'p' || parts[0] === 'post') && parts[1]) {
+    console.log('Routing -> article (hash)', { slug: parts[1] });
+    return { name: 'article', params: { slug: parts[1] } };
+  }
+  
   if (parts[0] === 'category' && parts[1]) {
     return { name: 'category', params: { slug: parts[1].toLowerCase() } };
   }
@@ -651,7 +677,10 @@ async function syncSEO({type, title, description, image}) {
     if (title && title.length > 65) title = title.slice(0, 62).trim() + '…';
     if (description && description.length > 155) description = description.slice(0, 152).trim() + '…';
     
-    const ttl = title ? `${title} — ${SITE}` : SITE;
+    // Prevent double brand in title
+    const ttl = title ? 
+      (title.includes('Maneh') ? title : `${title} — ${SITE}`) : 
+      SITE;
     const desc = description || 'Tutorial & Tips Teknologi: web, mobile, AI, produktivitas.';
     
     // Validasi cover URL dengan fallback
@@ -881,7 +910,8 @@ async function updateSEOForArticle(a){
     const readingTime = Math.ceil(wordCount / 200); // 200 words per minute
     
     // Get category articles for related content
-    const categoryArticles = ARTICLES.filter(art => art.category === a.category && art.slug !== a.slug);
+    const allArticles = window.ARTICLES || ARTICLES || [];
+    const categoryArticles = allArticles.filter(art => art.category === a.category && art.slug !== a.slug);
     const relatedArticles = categoryArticles.slice(0, 3).map(art => ({
       "@type": "Article",
       "headline": art.title,
@@ -1180,13 +1210,23 @@ function updateBreadcrumbStructuredData(article) {
  * Safe home render function with comprehensive error handling
  */
 function renderHomeSafe() {
+  // Guard: prevent double render
+  if (window.__HOME_RENDERING) {
+    console.log('⚠️ Home already rendering, skipping...');
+    return;
+  }
+  window.__HOME_RENDERING = true;
+  
   try {
     console.log('🏠 Rendering home safely...');
     
-    // Show home section
+    // Reset header to home defaults
+    resetHomeHeader();
+    
+    // Ensure home section is visible (idempotent if already shown by router)
     try {
-      show('home');
-      console.log('✅ Home section shown');
+      showSection('home');
+      console.log('[SECTION] home');
     } catch(e) { 
       console.warn('❌ Show home failed:', e); 
     }
@@ -1207,8 +1247,8 @@ function renderHomeSafe() {
 
     // Non-critical: SEO/QA should not stop render
     try { 
-      const siteTitle = typeof SITE_TITLE !== 'undefined' ? SITE_TITLE : 'Maneh';
-      const siteDesc = typeof SITE_DESC !== 'undefined' ? SITE_DESC : 'Tutorial & Tips Teknologi';
+      const siteTitle = 'Artikel Unggulan — Maneh';
+      const siteDesc = 'Jelajahi panduan mendalam dan berita teknologi terkini dari Maneh, disajikan dengan cara yang jelas dan mudah dipahami.';
       syncSEO({ type: 'page', title: siteTitle, description: siteDesc }); 
     } catch(e) {
       console.warn('❌ SEO sync failed (non-critical):', e);
@@ -1226,6 +1266,9 @@ function renderHomeSafe() {
     console.log('✅ Home rendered safely');
   } catch (error) {
     console.error('❌ Critical home render error:', error);
+  } finally {
+    // Reset render guard
+    window.__HOME_RENDERING = false;
   }
 }
 
@@ -1265,180 +1308,226 @@ function logArticleMetadata(articles) {
   console.log('=== END DIAGNOSTIC ===');
 }
 
-// ====== CATEGORY GETTER TERPADU ======
+// ====== HELPER NORMALISASI ======
+function normalize(str) {
+  if (!str || typeof str !== 'string') return '';
+  
+  return String(str)
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '') // hapus combining marks
+    .replace(/[^a-z0-9]+/g, '-')     // non-alphanumeric jadi dash
+    .replace(/^-+|-+$/g, '');        // trim dash di awal/akhir
+}
+
+// ====== ALIAS MAPPING ======
+const CATEGORY_ALIASES = {
+  news: ['news', 'berita', 'berita-teknologi', 'tech-news', 'trending', 'tren', 'trend'],
+  tutorial: ['tutorial', 'panduan', 'guide', 'how-to', 'howto', 'step-by-step', 'belajar']
+};
+
+// ====== CATEGORY COPY MAPPING ======
+const CATEGORY_COPY = {
+  news: {
+    h1: "News",
+    subtitle: "Kumpulan berita dan ulasan tren teknologi terbaru dari Maneh—padat, jelas, dan mudah diikuti.",
+    seoTitle: "News — Maneh",
+    seoDesc: "Berita dan analisis tren teknologi terkini dari Maneh. Update padat, jelas, dan relevan."
+  },
+  tutorial: {
+    h1: "Tutorial", 
+    subtitle: "Koleksi panduan praktis dari Maneh untuk memahami teknologi langkah demi langkah, siap dipraktikkan.",
+    seoTitle: "Tutorial — Maneh",
+    seoDesc: "Tutorial teknologi dari Maneh: panduan praktis, jelas, dan bertahap untuk meningkatkan skill digital."
+  }
+};
+
+// ====== ARTICLE FINDER BY SLUG ======
+function getArticleBySlug(slug) {
+  if (!slug || typeof slug !== 'string') {
+    console.warn('Invalid slug provided:', slug);
+    return null;
+  }
+  
+  // Access ARTICLES consistently
+  const articles = window.ARTICLES || ARTICLES || [];
+  if (!articles.length) {
+    console.warn('No articles available for slug lookup');
+    return null;
+  }
+  
+  // Normalize function (same as used for category matching)
+  const normalize = str => {
+    if (!str || typeof str !== 'string') return '';
+    return String(str)
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // remove combining marks
+      .replace(/[^a-z0-9]+/g, '-')     // non-alphanumeric to dash
+      .replace(/^-+|-+$/g, '');        // trim dashes
+  };
+  
+  const normalizedTargetSlug = normalize(slug);
+  
+  // Find article by exact slug match or normalized title match
+  const found = articles.find(article => {
+    // Try exact slug match first
+    if (article.slug && normalize(article.slug) === normalizedTargetSlug) {
+      return true;
+    }
+    // Fallback to normalized title match
+    if (article.title && normalize(article.title) === normalizedTargetSlug) {
+      return true;
+    }
+    return false;
+  });
+  
+  if (found) {
+    console.log('Article found for slug:', slug, '→', found.title);
+  } else {
+    console.warn('Article not found for slug:', slug);
+    console.log('Available slugs:', articles.map(a => a.slug || normalize(a.title)).slice(0, 10));
+  }
+  
+  return found || null;
+}
+
+// ====== ENHANCED CATEGORY GETTER ======
 function getArticleCategories(article) {
   if (!article) return new Set();
-  
+
   const candidates = [];
+
+  // Ambil semua kandidat label dari artikel
+  const fields = ['category', 'categories', 'type', 'tags'];
   
-  // Level atas - string fields
-  const topLevelStringFields = ['category', 'categories', 'type', 'tag', 'tags', 'topic', 'topics', 'label', 'labels', 'section', 'keywords'];
-  topLevelStringFields.forEach(field => {
+  fields.forEach(field => {
     try {
       const value = article[field];
       if (value !== undefined && value !== null && value !== '') {
         candidates.push(value);
       }
     } catch (e) {
-      // Ignore errors
+      // Ignore errors, nilai angka/objek asing diabaikan
     }
   });
-  
-  // Nested fields - meta
-  try {
-    if (article.meta) {
-      ['category', 'categories', 'tags', 'type'].forEach(field => {
-        const value = article.meta[field];
-        if (value !== undefined && value !== null && value !== '') {
-          candidates.push(value);
-        }
-      });
-    }
-  } catch (e) {
-    // Ignore errors
-  }
-  
-  // Nested fields - frontmatter
-  try {
-    if (article.frontmatter) {
-      ['category', 'categories', 'tags'].forEach(field => {
-        const value = article.frontmatter[field];
-        if (value !== undefined && value !== null && value !== '') {
-          candidates.push(value);
-        }
-      });
-    }
-  } catch (e) {
-    // Ignore errors
-  }
-  
-  // Nested fields - data
-  try {
-    if (article.data) {
-      ['category', 'categories', 'tags'].forEach(field => {
-        const value = article.data[field];
-        if (value !== undefined && value !== null && value !== '') {
-          candidates.push(value);
-        }
-      });
-    }
-  } catch (e) {
-    // Ignore errors
-  }
-  
-  // Dari path/slug - ambil segmen yang mirip kategori
-  try {
-    const pathFields = ['url', 'permalink', 'slug', 'path', 'filePath', 'source'];
-    pathFields.forEach(field => {
-      const value = article[field];
-      if (value && typeof value === 'string') {
-        // Pecah path dan cari segmen yang mirip kategori
-        const segments = value.split('/').filter(Boolean);
-        segments.forEach(segment => {
-          const cleanSegment = segment.toLowerCase()
-            .replace(/[^\w\s-]/g, '')
-            .replace(/\s+/g, '-')
-            .replace(/-+/g, '-')
-            .replace(/^-|-$/g, '');
-          
-          // Cek apakah segmen mirip kategori
-          if (cleanSegment && (
-            cleanSegment.includes('news') || 
-            cleanSegment.includes('berita') || 
-            cleanSegment.includes('tutorial') || 
-            cleanSegment.includes('panduan') ||
-            cleanSegment.includes('guide') ||
-            cleanSegment.includes('how-to')
-          )) {
-            candidates.push(cleanSegment);
-          }
-        });
-      }
-    });
-  } catch (e) {
-    // Ignore errors
-  }
-  
-  // Flatten dan normalisasi
+
+  // Flatten dan buang null/undefined/empty
   const flattened = [];
   candidates.forEach(candidate => {
     try {
       if (Array.isArray(candidate)) {
         candidate.forEach(item => {
-          if (typeof item === 'object' && item !== null) {
+          if (typeof item === 'string' && item.trim()) {
+            flattened.push(item.trim());
+          } else if (typeof item === 'object' && item !== null) {
             // Handle object dengan property name/title/slug
             const objValue = item.name || item.title || item.slug || item.label;
-            if (objValue) flattened.push(String(objValue));
-          } else if (typeof item === 'string') {
-            flattened.push(item);
+            if (objValue && typeof objValue === 'string') {
+              flattened.push(objValue.trim());
+            }
           }
         });
-      } else if (typeof candidate === 'string') {
-        flattened.push(candidate);
+      } else if (typeof candidate === 'string' && candidate.trim()) {
+        flattened.push(candidate.trim());
       }
     } catch (e) {
       // Ignore errors
     }
   });
-  
-  // Split by delimiters
-  const splitCandidates = flattened
-    .join(',')
-    .split(/[,;|•\/\s]+/)
-    .map(s => s.trim())
-    .filter(Boolean);
-  
-  // Normalisasi (slugify ringan)
-  const normalized = splitCandidates.map(s => 
-    s.toLowerCase()
-      .replace(/[^\w\s-]/g, '') // hapus diakritik/emoji
-      .replace(/\s+/g, '-') // spasi jadi dash
-      .replace(/-+/g, '-') // multiple dash jadi single
-      .replace(/^-|-$/g, '') // hapus dash di awal/akhir
-  ).filter(Boolean);
-  
-  // Alias mapping (dua arah)
-  const aliasMap = {
-    'news': ['news', 'berita', 'berita-teknologi', 'tech-news', 'trending', 'tren', 'trend'],
-    'tutorial': ['tutorial', 'panduan', 'guide', 'how-to', 'howto', 'step-by-step', 'belajar']
-  };
-  
-  const result = new Set();
-  normalized.forEach(cat => {
-    // Add original
-    result.add(cat);
-    
-    // Add aliases
-    Object.entries(aliasMap).forEach(([key, aliases]) => {
-      if (aliases.includes(cat)) {
-        result.add(key);
-        aliases.forEach(alias => result.add(alias));
-      }
-    });
+
+  // Normalize setiap label
+  const normalizedSet = new Set();
+  flattened.forEach(label => {
+    const normalized = normalize(label);
+    if (normalized) {
+      normalizedSet.add(normalized);
+    }
   });
+
+  return normalizedSet;
+}
+
+// ====== LOGIKA COCOK KATEGORI ======
+function matchesCategory(article, targetSlug) {
+  const normalizedTarget = normalize(targetSlug);
+  if (!normalizedTarget) return false;
+
+  // Buat targetSet dengan slug dan semua aliasnya (semua di-normalize)
+  const targetSet = new Set([normalizedTarget]);
   
-  // Fallback heuristik jika tidak ada kategori
-  if (result.size === 0) {
-    try {
-      const content = `${article.title || ''} ${article.summary || ''}`.toLowerCase();
-      
-      // Tutorial keywords
-      const tutorialKeywords = ['cara', 'panduan', 'langkah', 'tutorial', 'setup', 'konfigurasi', 'how-to', 'step-by-step'];
-      if (tutorialKeywords.some(keyword => content.includes(keyword))) {
-        result.add('tutorial');
-      }
-      
-      // News keywords
-      const newsKeywords = ['rilis', 'update', 'tren', 'ancaman', 'laporan', 'kabar', 'berita', 'terbaru', 'baru'];
-      if (newsKeywords.some(keyword => content.includes(keyword))) {
-        result.add('news');
-      }
-    } catch (e) {
-      // Ignore errors
+  // Tambahkan aliases yang sudah dinormalize
+  if (CATEGORY_ALIASES[normalizedTarget]) {
+    CATEGORY_ALIASES[normalizedTarget].forEach(alias => {
+      targetSet.add(normalize(alias));
+    });
+  }
+
+  // Dapatkan labels artikel yang sudah dinormalize
+  const articleLabels = getArticleCategories(article);
+
+  // Cek irisan - apakah ada yang cocok
+  for (const label of articleLabels) {
+    if (targetSet.has(label)) {
+      return true;
     }
   }
+
+  return false;
+}
+
+// ====== CATEGORY HEADER SETTER ======
+function setCategoryHeader(slug) {
+  const normalizedSlug = normalize(slug);
+  const copy = CATEGORY_COPY[normalizedSlug];
   
-  return result;
+  if (!copy) {
+    console.warn('No category copy found for:', normalizedSlug);
+    return;
+  }
+  
+  // Add category-page class to hide pill
+  document.body.classList.add('category-page');
+  
+  // Update H1 heroTitle
+  const heroTitle = document.getElementById('heroTitle');
+  if (heroTitle) {
+    heroTitle.textContent = copy.h1;
+  }
+  
+  // Update subtitle heroSub
+  const heroSub = document.getElementById('heroSub');
+  if (heroSub) {
+    heroSub.textContent = copy.subtitle;
+  }
+  
+  console.debug('Category header set:', normalizedSlug, copy.h1);
+}
+
+// ====== RESET HOME HEADER ======
+function resetHomeHeader() {
+  try {
+    // Remove category-page class to show pill again
+    document.body.classList.remove('category-page');
+    
+    // Reset to original home values using consistent Indonesian
+    const heroTitle = document.getElementById('heroTitle');
+    if (heroTitle) {
+      heroTitle.textContent = 'Artikel Unggulan';
+    }
+    
+    const heroSub = document.getElementById('heroSub');
+    if (heroSub) {
+      heroSub.textContent = 'Jelajahi panduan mendalam dan berita teknologi terkini, disajikan dengan cara yang jelas dan mudah dipahami.';
+    }
+    
+    const pillCat = document.getElementById('pillCat');
+    if (pillCat) {
+      pillCat.textContent = 'Tutorial • Tips • Teknologi';
+    }
+  } catch (e) {
+    console.warn('❌ Reset home header failed:', e);
+  }
 }
 
 // ====== FALLBACK HEURISTIC ======
@@ -1464,125 +1553,110 @@ function deriveCategoryFromContent(article) {
 // ====== CATEGORY RENDERER ======
 async function renderCategoryPage(slug) {
   try {
-    // Normalisasi slug permintaan
-    const requested = (slug || '').toString().trim().toLowerCase().replace(/\/$/, '');
-    
-    // Mapping sinonim
-    const getAliases = (categoryKey) => {
-      switch (categoryKey) {
-        case 'news':
-          return ['news', 'berita', 'berita-teknologi', 'tech-news', 'trending', 'tren', 'trend'];
-        case 'tutorial':
-          return ['tutorial', 'panduan', 'guide', 'how-to', 'howto', 'step-by-step', 'belajar'];
-        default:
-          return [categoryKey];
-      }
-    };
+    // Normalize slug permintaan
+    const normalizedSlug = normalize(slug || '');
+    if (!normalizedSlug) {
+      console.warn('Invalid category slug');
+      return;
+    }
 
-    const aliases = getAliases(requested);
-    console.log('Looking for category:', requested, '(aliases:', aliases, ')');
+    // Logging dengan aliases
+    const aliases = CATEGORY_ALIASES[normalizedSlug] || [normalizedSlug];
+    console.log("Looking for category:", normalizedSlug, "(aliases:", aliases, ")");
     
-    // Diagnostik metadata (sekali saat init)
-    const articles = window.ARTICLES || [];
+    // Akses ARTICLES dengan berbagai cara untuk memastikan tersedia
+    let articles;
+    if (typeof window !== 'undefined' && window.ARTICLES) {
+      articles = window.ARTICLES;
+    } else if (typeof ARTICLES !== 'undefined') {
+      articles = ARTICLES;
+    } else {
+      articles = [];
+    }
+    
+    console.log(`DEBUG: articles.length = ${articles.length}, typeof ARTICLES = ${typeof ARTICLES}, typeof window.ARTICLES = ${typeof window.ARTICLES}`);
+    
+    if (articles.length === 0) {
+      console.error('❌ No articles available for filtering!');
+      console.log('Available globals:', Object.keys(window).filter(k => k.includes('ARTICLE')));
+    }
+    
     if (articles.length > 0 && !window._metadataDiagnosed) {
       logArticleMetadata(articles);
       window._metadataDiagnosed = true;
     }
 
-    // Filter artikel menggunakan getter kategori yang robust
-    const list = (window.ARTICLES || []).filter((a) => {
+    // Filter menggunakan matchesCategory
+    const filtered = articles.filter(a => {
       // abaikan draft / unpublished bila ada flag
       if (a.draft === true || a.published === false) return false;
-
-      // Gunakan getter kategori yang robust
-      const articleCategories = getArticleCategories(a);
       
-      // Cek apakah ada kategori yang match dengan slug atau alias
-      return articleCategories.has(requested) || aliases.some(alias => articleCategories.has(alias));
+      return matchesCategory(a, normalizedSlug);
     });
 
-    console.log('Rendering articles list with', list.length, 'items (category:', requested, ')');
+    console.log("Category matched:", normalizedSlug, "count:", filtered.length);
     
-    // Logging hasil yang jelas
-    if (list.length > 0) {
-      const firstThreeTitles = list.slice(0, 3).map(a => a.title?.substring(0, 30) + '...');
-      console.log(`Category matched: ${requested} -> ${list.length} items (first 3 titles: [${firstThreeTitles.join(', ')}])`);
-    } else {
-      // Diagnosa yang actionable - cari field yang paling sering muncul
-      const fieldStats = {};
-      const sampleRawValues = [];
-      
-      articles.slice(0, 3).forEach(a => {
-        const paths = [
-          'category', 'categories', 'type', 'tag', 'tags', 'topic', 'topics', 
-          'label', 'labels', 'section', 'keywords',
-          'meta.category', 'meta.categories', 'meta.tags',
-          'frontmatter.category', 'frontmatter.categories', 'frontmatter.tags',
-          'data.category', 'data.categories', 'data.tags',
-          'slug', 'url', 'permalink', 'path', 'filePath', 'source'
-        ];
-        
-        paths.forEach(path => {
-          const value = path.split('.').reduce((obj, key) => obj?.[key], a);
-          if (value !== undefined && value !== null && value !== '') {
-            fieldStats[path] = (fieldStats[path] || 0) + 1;
-            if (sampleRawValues.length < 2) {
-              const rawValue = JSON.stringify(value).substring(0, 60);
-              sampleRawValues.push(`${path}: ${rawValue}`);
-            }
-          }
-        });
+    // Debug logging jika kosong
+    if (filtered.length === 0) {
+      console.warn(`Category empty: ${normalizedSlug} — fields checked: category/categories/type/tags`);
+      console.log('--- Debug: Sampel 3 artikel pertama ---');
+      console.log(`DEBUG: Total articles available: ${articles.length}`);
+      articles.slice(0, 3).forEach((a, idx) => {
+        const labels = getArticleCategories(a);
+        const fields = ['category', 'categories', 'type', 'tags'];
+        const fieldValues = fields.map(f => `${f}: ${JSON.stringify(a[f])}`).join(', ');
+        console.log(`[${idx}] ${a.title?.substring(0, 40)}...`);
+        console.log(`  Fields: ${fieldValues}`);
+        console.log(`  Normalized: [${Array.from(labels).join(', ')}]`);
+        console.log(`  Matches ${normalizedSlug}? ${matchesCategory(a, normalizedSlug)}`);
       });
-      
-      const topFields = Object.entries(fieldStats)
-        .sort(([,a], [,b]) => b - a)
-        .slice(0, 3)
-        .map(([field, count]) => `${field}(${count})`)
-        .join(', ');
-      
-      console.warn(`Category empty: ${requested} — top fields detected: ${topFields} — sample raw: ${sampleRawValues.join(' | ')}`);
     }
 
     // Sort descending by date jika tersedia
-    const sortedList = list.sort((a, b) => {
+    const sortedList = filtered.sort((a, b) => {
       const dateA = new Date(a.published || a.date || 0);
       const dateB = new Date(b.published || b.date || 0);
       return dateB - dateA; // descending
     });
 
-    // render kartu memakai renderer yang sudah ada
+    // Render kategori - show home section for container
     hideSection('about');
     hideSection('policy');
     hideSection('contact');
     hideSection('reader');
     showSection('home');          // kita pakai container list yang sama seperti home
+    
     const container = document.getElementById('list');
     if (container) container.innerHTML = ''; // clear list
-    renderArticlesList(sortedList, { shuffle: false }); // pakai fungsi existing untuk render kumpulan kartu
-
+    
+    // Set category header and SEO first
+    setCategoryHeader(normalizedSlug);
+    
+    // Get category copy for SEO
+    const copy = CATEGORY_COPY[normalizedSlug];
+    const seoTitle = copy ? copy.seoTitle : `Category: ${slug.charAt(0).toUpperCase() + slug.slice(1)} — Maneh`;
+    const seoDesc = copy ? copy.seoDesc : `Koleksi artikel kategori ${slug} dari Maneh.`;
+    
     // SEO sinkron sesuai kategori
-    syncSEO({
+    await syncSEO({
       type: 'page',
-      title: `Category: ${slug.charAt(0).toUpperCase() + slug.slice(1)} — Maneh`,
-      description:
-        requested === 'news'
-          ? 'Kumpulan berita & ulasan tren teknologi terbaru dari Maneh.'
-          : requested === 'tutorial'
-          ? 'Kumpulan tutorial & panduan praktis teknologi dari Maneh.'
-          : `Koleksi artikel kategori ${slug} dari Maneh.`,
+      title: seoTitle,
+      description: seoDesc,
       image: OG_DEFAULT
     });
-
-    // fallback empty state sederhana (tanpa komponen baru)
-    if (!list.length) {
-      console.warn('Category rendered but empty:', requested);
-      const container = document.getElementById('list');
+    
+    // Hanya render jika ada hasil filter, tidak ada fallback random
+    if (filtered.length > 0) {
+      // Panggil renderArticlesList dengan context category (no shuffle)
+      renderArticlesList(sortedList, { shuffle: false, context: 'category', slug: normalizedSlug });
+    } else {
+      // Empty state - tampilkan pesan tanpa fallback
       if (container) {
         container.innerHTML = `<div style="text-align: center; padding: 2rem; color: #666;">Belum ada artikel di kategori "${slug}".</div>`;
       }
     }
 
-    console.log(`📚 Category rendered: ${requested} (${list.length} items)`);
+    console.log(`📚 Category rendered: ${normalizedSlug} (${filtered.length} items)`);
   } catch (e) {
     console.error('renderCategoryPage error:', e);
   }
@@ -1604,7 +1678,8 @@ function renderArticlesList(list, opts={}) {
       const day = String(date.getDate()).padStart(2, '0');
 
       // Get order number based on category and published date
-      const categoryArticles = ARTICLES.filter(art => art.category === a.category)
+      const allArticles = window.ARTICLES || ARTICLES || [];
+      const categoryArticles = allArticles.filter(art => art.category === a.category)
         .sort((x, y) => new Date(y.published) - new Date(x.published));
       const order = categoryArticles.findIndex(art => art.slug === a.slug) + 1;
 
@@ -1634,7 +1709,8 @@ function renderArticlesList(list, opts={}) {
   }
 }
 
-function renderList(items=ARTICLES){
+function renderList(items){
+  items = items || window.ARTICLES || ARTICLES || [];
   console.log('Rendering list with', items.length, 'items');
   const box = document.getElementById('list');
   if (!box) {
@@ -1651,7 +1727,8 @@ function renderList(items=ARTICLES){
       const day = String(date.getDate()).padStart(2, '0');
 
       // Get order number based on category and published date
-      const categoryArticles = ARTICLES.filter(art => art.category === a.category)
+      const allArticles = window.ARTICLES || ARTICLES || [];
+      const categoryArticles = allArticles.filter(art => art.category === a.category)
         .sort((x, y) => new Date(y.published) - new Date(x.published));
       const order = categoryArticles.findIndex(art => art.slug === a.slug) + 1;
 
@@ -1660,10 +1737,10 @@ function renderList(items=ARTICLES){
       return `
         <a href="${newUrl}" data-slug="${a.slug}" class="card">
         <img class="thumb" loading="lazy" decoding="async" src="${a.cover || OG_DEFAULT}" alt="${a.title}" onerror="this.src='${OG_DEFAULT}'; this.onerror=null;">
-        <div class="h2">${a.title}</div>
-        <div class="meta"><time datetime="${a.published}">${fmtDate(a.published)}</time></div>
-        <p class="desc">${a.summary}</p>
-      </a>
+      <div class="h2">${a.title}</div>
+      <div class="meta"><time datetime="${a.published}">${fmtDate(a.published)}</time></div>
+      <p class="desc">${a.summary}</p>
+    </a>
       `;
     }).join('');
 
@@ -1683,13 +1760,38 @@ function renderList(items=ARTICLES){
 
 /* Intercept semua <a data-slug> untuk URL baru */
 function setupClickHandlers() {
-document.addEventListener('click', (e)=>{
+document.addEventListener('click', async (e)=>{
     const a = e.target.closest('a');
     if (!a) return;
     const href = a.getAttribute('href') || '';
     
-    // izinkan hash routes
-    if (href.startsWith('#')) return; // allow default, biar hashchange picu route()
+    // Handle hash routes through navigateTo for proper normalization
+    if (href.startsWith('#')) {
+      console.log('Hash navigation detected:', href);
+      e.preventDefault();
+      
+      // Handle ToC links (in-page scroll)
+      if (a.hasAttribute('data-toc')) {
+        const targetId = href.substring(1); // Remove #
+        const targetEl = document.getElementById(targetId);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // Update hash for bookmarking without affecting router
+          history.replaceState(null, '', href);
+          return;
+        }
+      }
+      
+      // Handle related article links (SPA navigation)
+      if (a.hasAttribute('data-rel') && a.getAttribute('data-rel') === 'related') {
+        navigateTo(href);
+        return;
+      }
+      
+      // Handle other hash routes
+      navigateTo(href);
+      return;
+    }
     
     console.log('Click detected on:', e.target);
     
@@ -1710,8 +1812,8 @@ document.addEventListener('click', (e)=>{
       // Use History API to navigate
       history.pushState({ type: 'home' }, '', normalizedHref);
       
-      // Trigger debounced route function
-      debouncedRoute();
+      // Trigger route function
+      await route();
       return;
     }
   }
@@ -1732,8 +1834,8 @@ document.addEventListener('click', (e)=>{
       // Use History API to navigate
       history.pushState({ type: 'post', slug: slug }, '', href);
       
-      // Trigger debounced route function to handle the new pathname
-      debouncedRoute();
+      // Trigger route function to handle the new pathname
+      await route();
     } else {
       console.warn('Invalid article link - missing href or slug');
     }
@@ -1776,36 +1878,20 @@ document.addEventListener('click', (e)=>{
   });
 }
 
-/* ======= Router + Reader ======= */
-function show(sectionId){
-  console.log('Showing section:', sectionId);
-  document.querySelectorAll('.page').forEach(s=>{
-    console.log('Hiding page:', s.id, 'current display:', s.style.display);
-    s.style.display='none';
+/* ======= SECTION SWITCHING ======= */
+function switchSection(targetId) {
+  console.log('[SECTION]', targetId);
+  
+  // Hide all sections first
+  const allSections = ['home', 'reader', 'about', 'policy', 'contact'];
+  allSections.forEach(id => {
+    if (id !== targetId) {
+      hideSection(id);
+    }
   });
-  const targetSection = document.getElementById(sectionId);
-  if (targetSection) {
-    targetSection.style.display='block';
-    targetSection.style.visibility='visible';
-    targetSection.style.opacity='1';
-    console.log('Section displayed:', sectionId, 'new display:', targetSection.style.display);
-    console.log('Section visibility:', window.getComputedStyle(targetSection).display);
-    
-    // Force reflow to ensure display change takes effect
-    targetSection.offsetHeight;
-    
-    // Double check after a short delay
-    setTimeout(() => {
-      const computedStyle = window.getComputedStyle(targetSection);
-      console.log('Final section state:', {
-        display: computedStyle.display,
-        visibility: computedStyle.visibility,
-        opacity: computedStyle.opacity
-      });
-    }, 100);
-  } else {
-    console.error('Section not found:', sectionId);
-  }
+  
+  // Show target section
+  showSection(targetId);
 }
 function renderReader(slug, queryStr) {
   try {
@@ -1819,10 +1905,9 @@ function renderReader(slug, queryStr) {
       return;
     }
     
-    const a = ARTICLES?.find(x => x.slug === slug);
+    const a = getArticleBySlug(slug);
     if (!a) { 
       console.warn('Article not found for slug:', slug);
-      console.log('Available slugs:', ARTICLES?.map(x => x.slug) || []);
       location.hash = '#';
       return; 
     }
@@ -1890,21 +1975,15 @@ function renderReader(slug, queryStr) {
     // Secure DOM update with proper order: H1 → Meta → Figure → Body
     post.innerHTML = `
       <h1 class="post-title" id="post-top">${cleanTitle}</h1>
-      <div class="post-meta author">
-        <img src="${AVATAR_URL}" 
-             alt="Avatar Penjaga" 
-             class="author-avatar"
-             loading="lazy">
-        <div>
-          <div class="author-name">
-            Penjaga 
-            <svg class="verified-badge" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="12" r="10" fill="currentColor"/>
-              <path d="M9 12l2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            </svg>
-          </div>
-          <time datetime="${a.published}">${fmtDate(a.published)}</time>
-        </div>
+      <div class="post-meta" role="contentinfo" aria-label="Informasi penulis dan tanggal">
+        <span class="post-verified" title="Verified" aria-label="Verified">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" fill="currentColor"/>
+            <path d="M9 12L11 14L15 10" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </span>
+        <span class="post-author">Penjaga</span>
+        <time class="post-date" datetime="${a.published}">${fmtDate(a.published)}</time>
       </div>
       <figure class="post-hero">
         <img class="thumb" src="${a.cover}" alt="${a.title}" loading="eager" decoding="async" fetchpriority="high">
@@ -2016,7 +2095,7 @@ function renderReader(slug, queryStr) {
   history.replaceState(null, '', window.location.pathname + window.location.search + `#p/${slug}`);
   }
   // SEO already updated in renderPost, don't update again
-  show('reader');
+  switchSection('reader');
   console.log('✅ Reader page should now be visible');
   
   } catch (error) {
@@ -2040,7 +2119,7 @@ async function renderPost(article) {
     renderReader(article.slug);
     
     // Show reader section
-    show('reader');
+    switchSection('reader');
     
     // Scroll to top
     window.scrollTo(0, 0);
@@ -2091,8 +2170,9 @@ function renderInternalLinks(article) {
     
     return `
       <div class="related-article">
-        <a href="/${relatedArticle.published.replace(/-/g, '/')}/${relatedArticle.slug}" 
-           class="related-link">
+        <a href="#p/${relatedArticle.slug}" 
+           class="related-link"
+           data-rel="related">
           <h4>${relatedArticle.title}</h4>
           <p>${relatedArticle.summary}</p>
         </a>
@@ -2146,36 +2226,76 @@ function render404() {
 }
 
 // ====== ROUTER ======
+let isRouting = false;
+
 async function route() {
+  // Prevent concurrent routing
+  if (isRouting) {
+    console.log('⚠️ Route already in progress, skipping...');
+    return;
+  }
+  
+  isRouting = true;
   console.log('🔄 Starting route...');
-  initSectionsCache(); // pastikan cache siap
-  const { name, params } = getRoute();
-  console.log('Routing ->', name, params);
-
-  // Sembunyikan semua dulu
-  hideSection('home'); hideSection('reader');
-  hideSection('about'); hideSection('policy'); hideSection('contact');
-
+  
   try {
+    initSectionsCache(); // pastikan cache siap
+    const { name, params } = getRoute();
+    console.log('[ROUTE]', location.hash, '→', name, params);
+
     if (name === 'home') {
+      switchSection('home');
       await renderHomeSafe();
-      console.log('✅ Route executed');
+      console.log('✅ Home route executed');
       return;
     }
     if (name === 'category') {
-      await renderCategoryPage(params.slug); // implement di bawah
-      console.log('✅ Route executed');
+      switchSection('home'); // Category uses home section
+      await renderCategoryPage(params.slug);
+      console.log('✅ Category route executed');
       return;
     }
-    if (name === 'about')  { showSection('about');  syncSEO({type:'page', title:'Tentang Maneh — Maneh', description:SITE_DESC}); return; }
-    if (name === 'policy') { showSection('policy'); syncSEO({type:'page', title:'Kebijakan Privasi Maneh — Maneh', description:'Kebijakan privasi Maneh'}); return; }
-    if (name === 'contact'){ showSection('contact'); syncSEO({type:'page', title:'Hubungi Tim Maneh — Maneh', description:'Hubungi redaksi/teknis Maneh'}); return; }
+    if (name === 'article') {
+      console.log('Routing -> article', { slug: params.slug });
+      const article = getArticleBySlug(params.slug);
+      if (article) {
+        await renderPost(article);
+        console.log('✅ Article route executed');
+      } else {
+        console.warn('Article not found, redirecting to home');
+        navigateTo('#');
+      }
+      return;
+    }
+    if (name === 'about')  { 
+      switchSection('about');  
+      syncSEO({type:'page', title:'Tentang Maneh — Maneh', description:SITE_DESC}); 
+      console.log('✅ About route executed');
+      return; 
+    }
+    if (name === 'policy') { 
+      switchSection('policy'); 
+      syncSEO({type:'page', title:'Kebijakan Privasi Maneh — Maneh', description:'Kebijakan privasi Maneh'}); 
+      console.log('✅ Policy route executed');
+      return; 
+    }
+    if (name === 'contact'){ 
+      switchSection('contact'); 
+      syncSEO({type:'page', title:'Hubungi Tim Maneh — Maneh', description:'Hubungi redaksi/teknis Maneh'}); 
+      console.log('✅ Contact route executed');
+      return; 
+    }
 
+    // Fallback to home
+    switchSection('home');
     await renderHomeSafe();
+    console.log('✅ Fallback route executed');
   } catch (err) {
     console.error('route error', err);
+    switchSection('home');
     await renderHomeSafe();
   } finally {
+    isRouting = false;
     console.log('✅ Route completed');
   }
 }
@@ -2220,51 +2340,25 @@ if (window.location.hostname === 'localhost' || window.location.hostname === '12
   console.log('💡 Call testRouting() to run routing tests');
 }
 
-// Debounced route handler to prevent double rendering
-let routeInProgress = false;
-const debouncedRoute = debounce(async () => {
-  if (routeInProgress) {
-    console.log('⚠️ Route already in progress, skipping...');
-    return;
-  }
-  
-  routeInProgress = true;
-  console.log('🔄 Starting route...');
-  
-  try {
-    await route();
-  } finally {
-    // Reset flag after a short delay to allow for async operations
-    setTimeout(() => {
-      routeInProgress = false;
-      console.log('✅ Route completed');
-    }, 100);
-  }
-}, 120);
-
-// Debounced hashchange handler for better performance
-const debouncedHashChange = debounce(() => {
-  console.log('Hash changed to:', location.hash);
-  debouncedRoute();
-}, 120);
-
-// Debounced popstate handler for better performance
-const debouncedPopstate = debounce(() => {
-  console.log('Popstate event, path:', location.pathname);
-  debouncedRoute();
-}, 120);
-
+// ====== ROUTER INITIALIZATION ======
 // Add event listeners only once
 if (!window.routeListenersAdded) {
-  window.addEventListener('hashchange', debouncedHashChange);
-  window.addEventListener('popstate', debouncedPopstate);
-  window.onpopstate = debouncedPopstate;
+  window.addEventListener('hashchange', () => {
+    console.log('Hash changed to:', location.hash.replace(/^#/, ''));
+    route();
+  });
+  
+  window.addEventListener('popstate', () => {
+    console.log('Popstate event:', location.pathname, location.hash);
+    route();
+  });
+  
   window.routeListenersAdded = true;
   console.log('✅ Route listeners added');
 }
 
 // Global interceptor for all internal links to prevent full page reloads
-document.addEventListener('click', function(e) {
+document.addEventListener('click', async function(e) {
   const link = e.target.closest('a[href]');
   if (!link) return;
   
@@ -2289,8 +2383,8 @@ document.addEventListener('click', function(e) {
     // Use History API
     history.pushState({ type: 'internal' }, '', normalizedHref);
     
-    // Trigger debounced route
-    debouncedRoute();
+    // Trigger route
+    await route();
   }
 });
 
@@ -2411,9 +2505,23 @@ function closeDrawer() {
   const drawer = DOMCache.get('drawer');
   if (!drawer) return;
   
+  // Check if drawer was open
+  if (drawer.classList.contains('show')) {
+    console.warn('Overlay/backdrop was open. Closing.');
+  }
+  
   drawer.classList.remove('show');
   drawer.setAttribute('aria-hidden', 'true');
   document.body.classList.remove('noscroll');
+  
+  // Additional backdrop cleanup
+  const backdrop = drawer.querySelector('.backdrop');
+  if (backdrop) {
+    if (backdrop.style.pointerEvents !== 'none') {
+      console.warn('Backdrop still active, disabling.');
+      backdrop.style.pointerEvents = 'none';
+    }
+  }
 }
 
 // Event listeners with null checks
@@ -2427,6 +2535,44 @@ if (drawer) {
   const backdrop = drawer.querySelector('.backdrop');
   if (backdrop) backdrop.onclick = closeDrawer;
 }
+
+// Auto-close menu on navigation
+function addMenuNavigationHandlers() {
+  const menuLinks = document.querySelectorAll('.menu .link');
+  menuLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      
+      // Handle hash navigation
+      if (href && href.startsWith('#')) {
+        console.log('Menu navigation to:', href);
+        
+        // Close menu FIRST to prevent backdrop interference
+        closeDrawer();
+        
+        // Prevent default to let our global hash handler take over
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Use navigateTo for consistent navigation with normalization
+        navigateTo(href);
+      } else {
+        // For other links, close menu after small delay
+        setTimeout(() => {
+          closeDrawer();
+        }, 100);
+      }
+    });
+  });
+}
+
+// Initialize menu handlers after DOM ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', addMenuNavigationHandlers);
+} else {
+  addMenuNavigationHandlers();
+}
+
 window.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     closeDrawer();
@@ -2559,10 +2705,10 @@ window.addEventListener('hashchange', debouncedHealthCheck);
   const btnTheme = document.getElementById('btnTheme');
   if (!btnTheme) return;
 
-  // Check for saved theme or system preference
+  // Default to light theme, check for saved theme preference
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
   const savedTheme = localStorage.getItem('theme');
-  let isDark = savedTheme ? savedTheme === 'dark' : prefersDark.matches;
+  let isDark = savedTheme ? savedTheme === 'dark' : false; // Default to light
 
   function updateThemeUI(dark) {
     // Update document theme
@@ -2685,18 +2831,53 @@ detectAndApplyLocale(); // Run locale detection and initial render
   }
 })();
 
-// ====== NAV LISTENERS ======
-window.addEventListener('hashchange', () => {
-  console.log('Hash changed to:', location.hash.replace(/^#/, ''));
-  route();
-});
-window.addEventListener('popstate', () => {
-  console.log('Popstate event:', location.pathname, location.hash);
-  route();
-});
+// ====== PATH HELPERS ======
+function isArticlePath(pathname) {
+  // Match pattern: /2025/01/01/1-article-slug
+  return /^\/\d{4}\/\d{2}\/\d{2}\/[^\/]+\/?$/.test(pathname);
+}
+
+function rootBase() {
+  // Use APP_BASE if available, otherwise default to '/'
+  return (window.APP_BASE || '/');
+}
+
+// ====== NAVIGATION HELPER ======
+function navigateTo(targetHash) {
+  if (!targetHash) {
+    console.warn('navigateTo called with empty hash');
+    return;
+  }
+  
+  // Ensure hash starts with #
+  if (!targetHash.startsWith('#')) {
+    targetHash = '#' + targetHash;
+  }
+  
+  console.log('[NAV]', targetHash);
+  
+  // If we're on an article path OR not on root base, force redirect to root + hash
+  if (isArticlePath(location.pathname) || location.pathname !== rootBase()) {
+    const rootUrl = rootBase() + targetHash;
+    console.log('[NAV] Normalizing from article path to:', rootUrl);
+    location.assign(rootUrl);
+    return;
+  }
+  
+  // Already on root → just update hash
+  if (location.hash !== targetHash) {
+    location.hash = targetHash;
+  } else {
+    console.log('[NAV] Hash unchanged, triggering route manually');
+    route(); // Trigger route if hash is same but we need to re-render
+  }
+}
+
+// ====== NAV LISTENERS (Removed duplicates) ======
+// Event listeners are now handled in the consolidated section above
 
 // Handler klik global: jangan block <a href="#...">
-document.addEventListener('click', (e) => {
+document.addEventListener('click', async (e) => {
   const a = e.target.closest('a');
   if (!a) return;
   const href = a.getAttribute('href') || '';
@@ -2712,7 +2893,10 @@ function waitUntilSafe({ timeout = 3500 } = {}) {
       const ready = !!(window.ARTICLES && document.readyState !== 'loading');
       if (ready || Date.now() - t0 > timeout) {
         clearInterval(timer);
-        if (!ready) console.warn(`⚠️ ARTICLES/I18N: timeout after ${timeout}ms — continue anyway`);
+        // Only show timeout warning if data is actually not ready
+        if (!ready && Date.now() - t0 >= timeout) {
+          console.warn(`⚠️ ARTICLES/I18N: timeout after ${timeout}ms — continue anyway`);
+        }
         resolve();
       }
     }, 50);
@@ -2720,10 +2904,17 @@ function waitUntilSafe({ timeout = 3500 } = {}) {
 }
 
 async function safeStart() {
+  // Guard: prevent double bootstrap
+  if (window.__APP_BOOTSTRAPPED) {
+    console.log('⚠️ Bootstrap already completed, skipping...');
+    return;
+  }
+  
   try {
     initSectionsCache();                   // <-- penting: definisikan cache dulu!
     await waitUntilSafe({ timeout: 3500 }); // atau 4000 jika perlu
     await route();
+    window.__APP_BOOTSTRAPPED = true;
     console.log('✅ Bootstrap completed');
   } catch (e) {
     console.error('❌ Bootstrap error:', e);
@@ -2772,11 +2963,13 @@ document.addEventListener('DOMContentLoaded', () => {
       while(it.level>curLevel){ const ol=document.createElement('ol'); ol.className='toc-ol'; stack[stack.length-1].lastElementChild?.appendChild(ol); stack.push(ol); curLevel++; }
       while(it.level<curLevel){ stack.pop(); curLevel--; }
       const li=document.createElement('li');
-      const a=document.createElement('a'); a.href='#'; a.textContent = `${it.label} ${it.text}`;
+      const a=document.createElement('a'); a.href=`#${it.id}`; a.textContent = `${it.label} ${it.text}`;
+      a.setAttribute('data-toc', 'true');
       a.addEventListener('click',(ev)=>{ 
         ev.preventDefault(); 
         scrollToId(it.id); 
-        if(slug){ history.replaceState(null,'',`${canonicalPath(ARTICLES.find(x=>x.slug===slug))}#p/${slug}?s=${encodeURIComponent(it.id)}`);} 
+        // Update URL hash for bookmarking without affecting router
+        history.replaceState(null, '', `#${it.id}`);
       });
       li.appendChild(a); stack[stack.length-1].appendChild(li);
     });

@@ -29,18 +29,19 @@
 }
 
 [data-theme="dark"] {
-  --bg: #0b1420;
-  --fg: #e7eef8;
-  --muted: #9fb0c7;
-  --line: #142235;
-  --heading: #eaf3ff;
-  --card: #0e1f33;
-  --accent: #0f2742;
-  --shadow: 0 8px 26px rgba(0,0,0,.2);
+  --bg: #121418;
+  --fg: #EDEDED;
+  --muted: #C8C8C8;
+  --line: #2a2f35;
+  --heading: #FFFFFF;
+  --card: #1a1f24;
+  --accent: #242933;
+  --shadow: 0 8px 26px rgba(0,0,0,.3);
   --link: #7fb0ff;
-  --card-text: #e7eef8;
-  --title-text: #eaf3ff;
-  --desc-text: #9fb0c7;
+  --card-text: #EDEDED;
+  --title-text: #FFFFFF;
+  --desc-text: #C8C8C8;
+  --text: #EDEDED;
 }
 
 /* Reset & Base Styles - Hyper-Optimized */
@@ -196,6 +197,15 @@ body.noscroll{overflow:hidden}
   font-size:26px;
 }
 .hero-sub { margin:0; color:var(--muted); }
+.pill { 
+  display: inline-block; 
+  margin-bottom: 8px; 
+  color: var(--muted); 
+  font-size: 14px;
+  font-weight: 500;
+}
+/* Hide pill on category pages */
+.category-page .pill { display: none; }
 .grid{margin-top: 20px;}
 .grid{display:grid;gap:18px}
 @media(min-width:860px){.grid{grid-template-columns:1fr 1fr}}
@@ -264,10 +274,50 @@ body.noscroll{overflow:hidden}
 .toc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:16px 0;position:relative}
 .toc .toc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .toc .toc-title{font-weight:800;font-size:20px;color:var(--heading)}
-.toc .burger{border:1px solid var(--line);background:#fff;border-radius:10px;padding:6px 10px;cursor:pointer;display:grid;place-items:center}
-@media (prefers-color-scheme: dark){ .toc .burger{background:#0b1420} }
-.toc .burger svg:not(.verified-badge){width:18px;height:18px;stroke:#0f2642;stroke-width:2;fill:none;stroke-linecap:round}
-.toc .burger svg:not(.verified-badge){width:18px;height:18px;stroke:var(--fg);stroke-width:2;fill:none;stroke-linecap:round}
+.toc .burger{
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  color: var(--text-2);
+  border-radius: 10px;
+  padding: 6px 10px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+  transition: all 0.2s ease;
+}
+
+.toc .burger:hover,
+.toc .burger:focus{
+  background: var(--surface-1);
+  color: var(--text-1);
+  outline: none;
+  box-shadow: 0 2px 4px rgba(0,0,0,.08);
+}
+
+.toc .burger svg{
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .toc .burger{
+  background: var(--surface-3);
+  color: var(--text-1);
+  border-color: var(--surface-4);
+  box-shadow: 0 1px 2px rgba(0,0,0,.35);
+}
+
+[data-theme="dark"] .toc .burger:hover,
+[data-theme="dark"] .toc .burger:focus{
+  background: var(--surface-2);
+  color: var(--text-1);
+  box-shadow: 0 2px 6px rgba(0,0,0,.4);
+}
 .toc-ol{list-style:none;margin:0 0 0 18px;padding:0}
 .toc-ol li{display:block;margin:6px 0}
 .toc-ol li:before{content:none}
@@ -654,10 +704,70 @@ footer{border-top:1px solid var(--line);margin-top:28px;padding:22px 0 40px;colo
 .copyright a{font-weight:700}
 .copyright{margin-top:4px}
 
+/* Post Meta Styling */
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted-foreground);
+  font-weight: 600;
+  margin: 12px 0 20px 0;
+}
+
+.post-author {
+  color: var(--foreground);
+  font-weight: 700;
+}
+
+.post-verified {
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+  color: #1d9bf0;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  line-height: 1;
+  margin-right: 6px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+.post-verified svg {
+  width: 18px;
+  height: 18px;
+}
+
+.post-date {
+  opacity: 0.85;
+  font-size: 14px;
+}
+
+/* Dark mode adjustments for post-meta */
+[data-theme="dark"] .post-verified {
+  color: #1d9bf0;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3));
+}
+
 /* Search responsive tweaks */
 @media(max-width:640px){
   .searchwrap{padding:8px 12px;gap:8px}
   .searchwrap input{padding:10px 12px;font-size:15px;border-radius:10px}
   .pill{display:none}
   .qresults{left:12px;right:12px;top:52px}
+  
+  .post-meta {
+    gap: 0.4rem;
+    font-size: 14px;
+  }
+  
+  .post-verified {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+  }
+  
+  .post-verified svg {
+    width: 16px;
+    height: 16px;
+  }
 }
