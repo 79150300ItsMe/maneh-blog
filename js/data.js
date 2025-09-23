@@ -8,11 +8,13 @@ const ARTICLES = [
     slug: "setup-vscode-web-development-panduan-lengkap",
     published: "2025-01-22",
     category: "tutorial",
-    title: "Cara Setup VSCode untuk Web Development: Panduan Lengkap dari Nol",
+    title: "Setup VSCode untuk Web Development: Panduan Lengkap 2025",
     tags: ["VSCode", "Web Development", "Setup", "Tutorial", "Tools"],
     cover: "https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=800&q=80&auto=format",
     minutes: 12,
-    summary: "Panduan komprehensif untuk mengkonfigurasi Visual Studio Code menjadi environment development yang powerful untuk web development, termasuk extension, settings, dan workflow yang optimal.",
+    summary: "Panduan lengkap setup VSCode untuk web development dengan extension terbaik, settings optimal, dan workflow produktif untuk developer modern.",
+    alt: "Antarmuka VSCode untuk web development",
+    links: ["cara-membuat-website-dengan-chatgpt-ai-tools", "panduan-lengkap-belajar-python-untuk-pemula", "panduan-karir-developer-2025"],
     html: `
       <p><b>Maneh &mdash;</b> Visual Studio Code telah menjadi editor pilihan utama bagi jutaan developer di seluruh dunia. Dengan ekosistem extension yang luas, performa yang solid, dan integrasi yang mulus dengan berbagai tools development, VSCode menawarkan pengalaman coding yang tak tertandingi. Namun, untuk memaksimalkan potensinya dalam web development, diperlukan konfigurasi yang tepat dan pemilihan extension yang sesuai dengan kebutuhan proyek Anda.</p>
 
@@ -227,11 +229,13 @@ const ARTICLES = [
     slug: "cara-membuat-website-dengan-chatgpt-ai-tools",
     published: "2025-01-23",
     category: "tutorial",
-    title: "Cara Membuat Website dengan ChatGPT dan AI Tools: Panduan Lengkap 2025",
+    title: "Cara Membuat Website dengan ChatGPT & AI Tools (2025)",
     tags: ["ChatGPT", "AI Tools", "Web Development", "Tutorial", "Website"],
     cover: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80&auto=format",
     minutes: 8,
-    summary: "Panduan step-by-step membuat website profesional menggunakan ChatGPT dan berbagai AI tools modern. Dari konsep hingga deployment, semuanya bisa dilakukan dengan bantuan kecerdasan buatan.",
+    summary: "Panduan step-by-step membuat website profesional menggunakan ChatGPT dan AI tools modern. Dari konsep hingga deployment dengan bantuan kecerdasan buatan.",
+    alt: "ChatGPT dan AI tools untuk pembuatan website",
+    links: ["setup-vscode-web-development-panduan-lengkap", "panduan-lengkap-belajar-python-untuk-pemula", "panduan-karir-developer-2025"],
     html: `
       <p><b>Maneh &mdash;</b> Era kecerdasan buatan telah membuka peluang baru bagi siapa saja yang ingin membuat website tanpa harus menjadi programmer handal. Dengan tools seperti ChatGPT, Claude, dan berbagai AI coding assistants, proses pembuatan website menjadi lebih mudah, cepat, dan efisien. Dalam panduan ini, kita akan mempelajari cara memanfaatkan AI untuk membuat website profesional dari nol hingga online.</p>
 
@@ -343,11 +347,13 @@ const ARTICLES = [
     slug: "panduan-lengkap-setup-home-office-remote-work",
     published: "2025-01-24",
     category: "tutorial",
-    title: "Panduan Lengkap Setup Home Office untuk Remote Work: Tips Produktif 2025",
+    title: "Setup Home Office Ergonomis: Panduan Remote Work 2025",
     tags: ["Home Office", "Remote Work", "Productivity", "Tutorial", "Work Setup"],
     cover: "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=800&q=80&auto=format",
     minutes: 10,
-    summary: "Panduan komprehensif untuk membuat home office yang nyaman, produktif, dan ergonomis. Dari perencanaan ruang hingga pilihan peralatan yang tepat untuk remote work yang optimal.",
+    summary: "Panduan komprehensif setup home office yang ergonomis dan produktif untuk remote work. Tips furniture, lighting, dan teknologi optimal.",
+    alt: "Setup home office ergonomis modern",
+    links: ["panduan-karir-developer-2025", "panduan-laptop-gaming-2025", "tips-optimasi-android-terbaru"],
     html: `
       <p><b>Maneh &mdash;</b> Remote work telah menjadi bagian tak terpisahkan dari dunia kerja modern. Dengan semakin banyaknya perusahaan yang mengadopsi model kerja hybrid atau fully remote, memiliki home office yang nyaman dan produktif menjadi kebutuhan penting. Setup yang tepat tidak hanya meningkatkan produktivitas, tetapi juga menjaga kesehatan fisik dan mental dalam jangka panjang.</p>
 
@@ -454,11 +460,13 @@ const ARTICLES = [
     slug: "tutorial-lengkap-membuat-aplikasi-mobile-flutter",
     published: "2025-01-25",
     category: "tutorial",
-    title: "Tutorial Lengkap Membuat Aplikasi Mobile dengan Flutter: Dari Nol hingga Play Store",
+    title: "Tutorial Flutter: Buat Aplikasi Mobile Cross-Platform 2025",
     tags: ["Flutter", "Mobile App", "Dart", "Tutorial", "Development"],
     cover: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80&auto=format",
     minutes: 12,
-    summary: "Panduan step-by-step membuat aplikasi mobile cross-platform menggunakan Flutter. Dari setup environment hingga deployment ke Play Store dan App Store.",
+    summary: "Tutorial lengkap membuat aplikasi mobile cross-platform dengan Flutter. Dari instalasi hingga publish di Play Store dan App Store.",
+    alt: "Antarmuka pengembangan aplikasi Flutter",
+    links: ["panduan-lengkap-belajar-python-untuk-pemula", "panduan-karir-developer-2025", "setup-vscode-web-development-panduan-lengkap"],
     html: `
       <p><b>Maneh &mdash;</b> Flutter telah menjadi framework pilihan utama untuk pengembangan aplikasi mobile cross-platform. Dengan satu codebase, developer bisa membuat aplikasi yang berjalan di Android dan iOS dengan performa native. Google's Flutter menawarkan widget yang kaya, hot reload untuk development yang cepat, dan komunitas yang aktif. Dalam tutorial ini, kita akan mempelajari cara membuat aplikasi mobile dari awal hingga siap dipublikasikan.</p>
 
@@ -578,11 +586,13 @@ const ARTICLES = [
     slug: "panduan-lengkap-belajar-python-untuk-pemula",
     published: "2025-01-26",
     category: "tutorial",
-    title: "Panduan Lengkap Belajar Python untuk Pemula: Dari Nol hingga Mahir 2025",
+    title: "Belajar Python untuk Pemula: Panduan Lengkap 2025",
     tags: ["Python", "Programming", "Tutorial", "Coding", "Beginner"],
     cover: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=800&q=80&auto=format",
     minutes: 11,
-    summary: "Panduan komprehensif belajar Python dari dasar hingga advanced. Cocok untuk pemula yang ingin memulai karir di dunia programming dengan bahasa yang mudah dipelajari dan powerful.",
+    summary: "Panduan komprehensif belajar Python dari dasar hingga advanced. Cocok untuk pemula yang ingin memulai karir programming dan data science.",
+    alt: "Kode Python pada layar editor",
+    links: ["panduan-karir-developer-2025", "setup-vscode-web-development-panduan-lengkap", "tutorial-lengkap-membuat-aplikasi-mobile-flutter"],
     html: `
       <p><b>Maneh &mdash;</b> Python telah menjadi salah satu bahasa pemrograman paling populer di dunia, dan untuk alasan yang sangat baik. Dengan syntax yang clean dan mudah dibaca, Python adalah pilihan ideal untuk pemula yang ingin memulai perjalanan programming. Bahasa ini digunakan di berbagai bidang, mulai dari web development, data science, artificial intelligence, hingga automation. Dalam panduan ini, kita akan mempelajari Python dari dasar hingga level yang cukup untuk membangun aplikasi real-world.</p>
 
@@ -715,11 +725,13 @@ const ARTICLES = [
     slug: "era-baru-sinema-ai-sora",
     published: "2025-09-25",
     category: "news",
-    title: "Era Baru Sinema: Bagaimana AI Seperti Sora Mengubah Wajah Industri Film",
+    title: "AI Sora: Revolusi Video Generation 2025",
     tags: ["AI", "Sora", "Generative Video", "Teknologi"],
     cover: "https://images.unsplash.com/photo-1489599808417-5b4b0b0b0b0b?w=800&q=80&auto=format",
     minutes: 18,
-    summary: "Analisis mendalam tentang bagaimana model AI text-to-video seperti Sora dari OpenAI merevolusi industri perfilman, mulai dari pra-produksi hingga efek visual, serta tantangan etis yang menyertainya.",
+    summary: "Analisis mendalam dampak AI Sora pada industri film dan content creation. Bagaimana kecerdasan buatan mengubah cara kita membuat video.",
+    alt: "Tampilan AI Sora untuk video generation",
+    links: ["cara-membuat-website-dengan-chatgpt-ai-tools", "optimasi-chatgpt-panduan-prompts", "dampak-jangka-panjang-remote-work"],
     html: `
       <p><b>Maneh &mdash;</b> Industri kreatif, khususnya perfilman, berada di ambang sebuah revolusi yang belum pernah terjadi sebelumnya. Kehadiran model kecerdasan buatan (AI) generatif yang mampu mengubah teks menjadi video fotorealistik, seperti Sora dari OpenAI, telah memicu gelombang antusiasme sekaligus kekhawatiran. Teknologi ini tidak lagi hanya sebatas eksperimen di laboratorium; ia mulai menunjukkan potensi nyata untuk mendefinisikan ulang setiap aspek dalam siklus hidup produksi film, dari pembuatan konsep hingga pasca-produksi.</p>
 
@@ -771,11 +783,13 @@ const ARTICLES = [
     slug: "perlombaan-antariksa-generasi-baru",
     published: "2025-09-24",
     category: "news",
-    title: "Perlombaan Antariksa Generasi Baru: Swasta vs. Negara dalam Menaklukkan Mars dan Bulan",
+    title: "Space Race 2025: Swasta vs Negara ke Mars",
     tags: ["Antariksa", "SpaceX", "NASA", "Mars"],
     cover: "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=800&q=80&auto=format",
     minutes: 19,
-    summary: "Eksplorasi dinamika baru dalam penjelajahan antariksa, di mana perusahaan swasta seperti SpaceX dan Blue Origin kini bersaing dan berkolaborasi dengan badan antariksa negara seperti NASA dan CNSA.",
+    summary: "Analisis perlombaan antariksa generasi baru antara sektor swasta dan negara. Misi Mars, Bulan, dan masa depan eksplorasi ruang angkasa.",
+    alt: "Roket dan misi antariksa ke Mars",
+    links: ["era-baru-sinema-ai-sora", "revolusi-energi-hijau-baterai-solid-state", "kedokteran-presisi-crispr-terapi-gen"],
     html: `
       <p><b>Maneh &mdash;</b> Gema Perang Dingin yang mendorong Neil Armstrong menjejakkan kaki di Bulan kini terasa jauh di masa lalu. Panggung eksplorasi antariksa telah berubah secara dramatis. Monopoli negara-bangsa yang didanai anggaran publik telah terkikis oleh gelombang inovasi dari sektor swasta. Hari ini, kita menyaksikan sebuah perlombaan antariksa generasi baru—sebuah tarian kompleks antara kompetisi dan kolaborasi yang melibatkan raksasa teknologi, miliarder visioner, dan badan antariksa nasional yang beradaptasi dengan realitas baru.</p>
 
@@ -830,11 +844,13 @@ const ARTICLES = [
     slug: "revolusi-energi-hijau-baterai-solid-state",
     published: "2025-09-23",
     category: "news",
-    title: "Revolusi Energi Hijau: Terobosan Baterai Solid-State dan Masa Depan Kendaraan Listrik",
+    title: "Baterai Solid-State: Game Changer EV 2025",
     tags: ["Energi Terbarukan", "EV", "Baterai", "Lingkungan"],
     cover: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format",
     minutes: 17,
-    summary: "Mengapa baterai solid-state dianggap sebagai 'cawan suci' untuk kendaraan listrik (EV) dan penyimpanan energi terbarukan, serta tantangan manufaktur yang harus diatasi.",
+    summary: "Analisis terobosan baterai solid-state dan dampaknya pada masa depan kendaraan listrik. Revolusi energi hijau yang mengubah industri otomotif.",
+    alt: "Baterai solid-state untuk kendaraan listrik",
+    links: ["perlombaan-antariksa-generasi-baru", "kedokteran-presisi-crispr-terapi-gen", "perang-dingin-digital-keamanan-siber"],
     html: `
       <p><b>Maneh &mdash;</b> Transisi global menuju energi berkelanjutan menghadapi satu rintangan fundamental: penyimpanan. Tenaga surya dan angin bersifat intermiten, dan kendaraan listrik (EV) masih dibatasi oleh kecemasan akan jangkauan (range anxiety), waktu pengisian yang lama, dan risiko keamanan baterai. Namun, di laboratorium penelitian dan startup teknologi di seluruh dunia, sebuah terobosan besar sedang mendekati kenyataan: baterai solid-state. Teknologi ini dijanjikan tidak hanya sebagai perbaikan bertahap, tetapi sebagai lompatan kuantum yang dapat mempercepat adopsi energi hijau secara eksponensial.</p>
 
@@ -889,11 +905,13 @@ const ARTICLES = [
     slug: "dampak-jangka-panjang-remote-work",
     published: "2025-09-22",
     category: "news",
-    title: "Pasca-Pandemi, Pasca-Kantor: Menganalisis Dampak Jangka Panjang Remote Work pada Ekonomi Global",
+    title: "Remote Work: Dampak Ekonomi Global 2025",
     tags: ["Remote Work", "Ekonomi", "Masa Depan Kerja", "WFH"],
     cover: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&q=80&auto=format",
     minutes: 20,
-    summary: "Studi komprehensif tentang bagaimana eksperimen kerja jarak jauh terbesar dalam sejarah membentuk kembali pasar tenaga kerja, real estat komersial, dan geografi ekonomi.",
+    summary: "Analisis mendalam dampak jangka panjang remote work pada ekonomi global. Bagaimana pandemi mengubah dunia kerja secara permanen.",
+    alt: "Ilustrasi kerja jarak jauh dan ekonomi digital",
+    links: ["panduan-lengkap-setup-home-office-remote-work", "panduan-karir-developer-2025", "perang-dingin-digital-keamanan-siber"],
     html: `
       <p><b>Maneh &mdash;</b> Pandemi COVID-19 tidak hanya krisis kesehatan global; itu adalah akselerator perubahan sosial dan ekonomi yang radikal. Salah satu pergeseran paling mendalam adalah adopsi kerja jarak jauh (remote work) dalam skala massal. Apa yang dimulai sebagai tindakan darurat kini telah mengakar menjadi model kerja yang permanen bagi jutaan orang di seluruh dunia. Beberapa tahun setelah puncak pandemi, kita mulai dapat menganalisis dampak jangka panjang dari eksperimen kerja terbesar dalam sejarah ini, dan konsekuensinya jauh melampaui sekadar mengubah tempat kita bekerja.</p>
 
@@ -943,11 +961,13 @@ const ARTICLES = [
     slug: "kedokteran-presisi-crispr-terapi-gen",
     published: "2025-09-21",
     category: "news",
-    title: "Kedokteran Presisi: Bagaimana CRISPR dan Terapi Gen Menulis Ulang Masa Depan Kesehatan Manusia",
+    title: "CRISPR: Revolusi Kedokteran Presisi 2025",
     tags: ["Bioteknologi", "CRISPR", "Kesehatan", "Genetika"],
     cover: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=80&auto=format",
     minutes: 18,
-    summary: "Tinjauan mendalam tentang revolusi bioteknologi yang dipimpin oleh alat pengeditan gen CRISPR-Cas9, potensinya untuk menyembuhkan penyakit genetik, dan dilema etis yang kompleks.",
+    summary: "Analisis mendalam teknologi CRISPR dan terapi gen yang mengubah masa depan kedokteran. Kedokteran presisi dan revolusi kesehatan manusia.",
+    alt: "Ilustrasi penyuntingan gen CRISPR",
+    links: ["revolusi-energi-hijau-baterai-solid-state", "perang-dingin-digital-keamanan-siber", "era-baru-sinema-ai-sora"],
     html: `
       <p><b>Maneh &mdash;</b> Selama berabad-abad, kedokteran beroperasi dengan pendekatan "satu ukuran untuk semua". Penyakit diobati berdasarkan gejala umum, dengan tingkat keberhasilan yang bervariasi dari satu individu ke individu lainnya. Kini, kita berada di fajar era baru: kedokteran presisi. Didorong oleh kemajuan dalam sekuensing genom dan penemuan revolusioner alat pengeditan gen seperti CRISPR-Cas9, dokter mulai dapat mengobati penyakit pada tingkat yang paling fundamental—kode genetik kita sendiri.</p>
 
@@ -999,11 +1019,13 @@ const ARTICLES = [
     slug: "perang-dingin-digital-keamanan-siber",
     published: "2025-09-20",
     category: "news",
-    title: "Perang Dingin Digital: Eskalasi Ancaman Siber Berbasis Negara dan Tantangan Kedaulatan Data",
+    title: "Cyber War: Ancaman Siber Berbasis Negara 2025",
     tags: ["Keamanan Siber", "Privasi Data", "Perang Siber", "Regulasi"],
     cover: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80&auto=format",
     minutes: 16,
-    summary: "Analisis tentang bagaimana spionase dan sabotase siber yang disponsori negara telah menjadi alat utama dalam geopolitik modern, mengancam infrastruktur kritis dan privasi warga negara.",
+    summary: "Analisis eskalasi ancaman siber berbasis negara dan tantangan kedaulatan data. Perang dingin digital di era modern.",
+    alt: "Ilustrasi keamanan siber dan serangan negara",
+    links: ["panduan-keamanan-siber-2025", "dampak-jangka-panjang-remote-work", "kedokteran-presisi-crispr-terapi-gen"],
     html: `
       <p><b>Maneh &mdash;</b> Jauh dari medan perang konvensional dengan tank dan tentara, sebuah konflik global yang tak terlihat sedang berkecamuk setiap detiknya. Ini adalah Perang Dingin Digital, sebuah arena di mana negara-bangsa menggunakan keyboard dan kode sebagai senjata untuk melakukan spionase, sabotase, dan menyebarkan pengaruh. Serangan siber yang disponsori negara (state-sponsored cyberattacks) telah berevolusi dari sekadar gangguan menjadi ancaman strategis terhadap keamanan nasional, stabilitas ekonomi, dan fondasi demokrasi itu sendiri.</p>
 
@@ -1043,11 +1065,13 @@ const ARTICLES = [
     slug: "optimasi-chatgpt-panduan-prompts",
     published: "2025-09-19",
     category: "tutorial",
-    title: "Optimasi ChatGPT: Panduan Lengkap Menghasilkan Prompts yang Lebih Baik",
+    title: "Cara Optimasi ChatGPT: Panduan Prompts Terbaik",
     tags: ["AI", "ChatGPT", "Prompt Engineering"],
     cover: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80&auto=format",
     minutes: 18,
-    summary: "Tips dan teknik terbaru untuk mengoptimalkan hasil ChatGPT dengan struktur prompt yang efektif, context setting, dan chain-of-thought prompting.",
+    summary: "Panduan lengkap optimasi ChatGPT dengan prompts yang efektif. Tips dan trik menghasilkan respons AI yang lebih akurat dan relevan.",
+    alt: "ChatGPT interface dan prompt optimization",
+    links: ["cara-membuat-website-dengan-chatgpt-ai-tools", "era-baru-sinema-ai-sora", "panduan-karir-developer-2025"],
     html: `
       <p><b>Maneh &mdash;</b> Di era transformasi digital yang pesat ini, ChatGPT telah menghadirkan revolusi dalam cara kita berinteraksi dengan teknologi kecerdasan buatan. Sebagai model bahasa AI generatif paling canggih saat ini, ChatGPT membuka berbagai kemungkinan baru dalam penyelesaian tugas, mulai dari penulisan kreatif hingga pemecahan masalah kompleks. Namun, seperti halnya alat canggih lainnya, efektivitas ChatGPT sangat bergantung pada keahlian penggunanya dalam memberikan instruksi atau "prompt" yang tepat.</p>
 
@@ -1245,10 +1269,12 @@ const ARTICLES = [
     published: "2025-09-18",
     category: "tutorial",
     tags: ["Keamanan", "Siber", "Hacker"],
-    title: "Cara Mengamankan Akun Digital dari Serangan Hacker: Panduan Keamanan Siber 2025",
+    title: "Keamanan Digital: Lindungi Akun dari Hacker 2025",
     cover: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&q=80&auto=format",
     minutes: 17,
-    summary: "Strategi komprehensif untuk melindungi akun online dari ancaman siber modern, termasuk MFA, password manager, dan deteksi phishing.",
+    summary: "Panduan komprehensif mengamankan akun digital dari serangan hacker. Tips keamanan siber praktis untuk melindungi data pribadi.",
+    alt: "Cyber security dan perlindungan data digital",
+    links: ["perang-dingin-digital-keamanan-siber", "optimasi-chatgpt-panduan-prompts", "tips-optimasi-android-terbaru"],
     html: `
       <p><b>Maneh &mdash;</b> Di era digital 2025, ancaman siber telah berkembang menjadi lebih canggih dan berbahaya dari sebelumnya. Menurut laporan terbaru dari Global Cybersecurity Index, serangan siber meningkat 40% dibandingkan tahun lalu, dengan kerugian global mencapai triliunan dollar. Artikel ini akan membahas secara mendalam strategi dan praktik terbaik untuk mengamankan identitas digital Anda dari berbagai ancaman modern.</p>
 
@@ -1476,10 +1502,12 @@ const ARTICLES = [
     published: "2025-09-16",
     category: "tutorial",
     tags: ["Android", "Tips", "Performa"],
-    title: "Tips dan Trik Mengoptimalkan Kinerja Smartphone Android Terbaru",
+    title: "Optimasi Android: Tips Performa Smartphone 2025",
     cover: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=800&q=80&auto=format",
     minutes: 15,
-    summary: "Panduan lengkap mengoptimalkan performa smartphone Android, dari manajemen RAM, baterai, storage, hingga kustomisasi UI untuk pengalaman lebih baik.",
+    summary: "Tips dan trik mengoptimalkan kinerja smartphone Android terbaru. Panduan praktis untuk performa maksimal dan baterai tahan lama.",
+    alt: "Android smartphone optimization settings",
+    links: ["panduan-laptop-gaming-2025", "keamanan-digital-hacker-2025", "setup-home-office-ergonomis"],
     html: `
       <p><b>Maneh &mdash;</b> Di era smartphone 2025, perangkat Android telah mencapai tingkat kompleksitas yang luar biasa. Dengan hadirnya teknologi AI on-device, layar dengan refresh rate tinggi, dan kemampuan multitasking yang semakin advanced, optimasi yang tepat menjadi kunci untuk memaksimalkan potensi perangkat Android Anda. Artikel ini akan membahas secara mendalam strategi optimasi yang mencakup aspek teknis hingga praktik terbaik untuk penggunaan sehari-hari.</p>
 
@@ -1704,10 +1732,12 @@ const ARTICLES = [
     published: "2025-09-15",
     category: "tutorial",
     tags: ["Karir", "Developer", "Pemrograman"],
-    title: "Cara Memulai Karir sebagai Developer: Roadmap Lengkap 2025",
+    title: "Karir Developer: Roadmap Lengkap 2025",
     cover: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&q=80&auto=format",
     minutes: 19,
-    summary: "Panduan komprehensif untuk memulai karir di dunia pengembangan software, dari dasar pemrograman hingga spesialisasi dan tips mendapatkan pekerjaan pertama.",
+    summary: "Roadmap lengkap memulai karir sebagai developer di 2025. Panduan skill, tools, dan langkah-langkah menjadi programmer profesional.",
+    alt: "Developer workspace dengan multiple monitors",
+    links: ["belajar-python-pemula-lengkap-2025", "setup-vscode-web-development-2025", "tutorial-flutter-mobile-app-2025"],
     html: `
       <p><b>Maneh &mdash;</b> Dalam lanskap teknologi yang terus berevolusi di tahun 2025, karir sebagai developer tidak hanya menjanjikan secara finansial, tetapi juga menawarkan peluang inovasi yang tak terbatas. Dengan masifnya adopsi AI, cloud computing, dan teknologi emerging lainnya, peran developer telah bertransformasi menjadi lebih strategis dan multifaset. Artikel ini akan membahas secara komprehensif bagaimana membangun dan mengembangkan karir sebagai developer modern.</p>
 
@@ -2035,10 +2065,12 @@ const ARTICLES = [
     published: "2025-09-14",
     category: "tutorial",
     tags: ["Produktifitas", "WFH", "Ergonomis"],
-    title: "Panduan Lengkap Setup Home Office yang Ergonomis dan Produktif",
+    title: "Setup Home Office Ergonomis: Panduan Produktif",
     cover: "https://images.unsplash.com/photo-1486946255434-2466348c2166?w=800&q=80&auto=format",
     minutes: 16,
-    summary: "Tips lengkap menata ruang kerja di rumah yang nyaman dan sehat, dari pemilihan furniture hingga pengaturan pencahayaan dan produktivitas.",
+    summary: "Panduan lengkap setup home office yang ergonomis dan produktif. Tips furniture, lighting, dan teknologi untuk workspace optimal.",
+    alt: "Ergonomic home office setup dengan proper lighting",
+    links: ["dampak-remote-work-ekonomi-2025", "optimasi-android-smartphone-2025", "panduan-laptop-gaming-2025"],
     html: `
       <p><b>Maneh &mdash;</b> Di era digital 2025, home office bukan lagi sekedar ruang kerja sederhana, tetapi telah berevolusi menjadi pusat produktivitas yang mengintegrasikan ergonomi, teknologi, dan wellness. Artikel ini akan membahas secara mendalam bagaimana membangun home office yang optimal untuk produktivitas dan kesehatan jangka panjang.</p>
 
@@ -2298,10 +2330,12 @@ const ARTICLES = [
     published: "2025-09-17",
     category: "tutorial",
     tags: ["Hardware", "Gaming", "Laptop"],
-    title: "Panduan Lengkap Memilih dan Membeli Laptop Gaming 2025",
+    title: "Pilih Laptop Gaming Terbaik: Panduan 2025",
     cover: "https://images.unsplash.com/photo-1593640495253-23196b27a87f?w=800&q=80&auto=format",
     minutes: 16,
-    summary: "Paduan selera dan teknis: dari spesifikasi hardware, performa gaming, pertimbangan budget, hingga fitur-fitur terkini laptop gaming.",
+    summary: "Panduan lengkap memilih dan membeli laptop gaming terbaik di 2025. Review GPU, CPU, dan tips budget untuk performa optimal.",
+    alt: "Gaming laptop dengan RGB keyboard dan high-end specs",
+    links: ["optimasi-android-smartphone-2025", "home-office-ergonomis-produktif", "karir-developer-roadmap-2025"],
     html: `
       <p><b>Maneh &mdash;</b> Di era gaming 2025, laptop gaming telah mengalami evolusi signifikan dengan hadirnya teknologi seperti AI-enhanced graphics, ray tracing generasi terbaru, dan display teknologi quantum dot. Artikel ini akan membahas secara mendalam bagaimana memilih laptop gaming yang optimal sesuai kebutuhan dan anggaran Anda, dengan mempertimbangkan teknologi terkini dan tren gaming modern.</p>
 
@@ -2641,455 +2675,287 @@ const ARTICLES = [
         <li>Evaluasi potensi upgrade di masa depan</li>
       </ul>
     `
-  },
-  {
-    slug: "cara-membuat-website-dengan-chatgpt-ai-tools",
-    published: "2025-01-23",
-    category: "tutorial",
-    title: "Cara Membuat Website dengan ChatGPT dan AI Tools: Panduan Lengkap 2025",
-    tags: ["ChatGPT", "AI Tools", "Web Development", "Tutorial", "Website"],
-    cover: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80&auto=format",
-    minutes: 15,
-    summary: "Panduan lengkap membuat website profesional menggunakan ChatGPT dan berbagai AI tools modern. Dari konsep hingga deployment, semuanya bisa dilakukan dengan bantuan artificial intelligence.",
-    html: `
-      <p><b>Maneh &mdash;</b> Era artificial intelligence telah mengubah cara kita mengembangkan website. Dengan tools seperti ChatGPT, Claude, dan berbagai AI-powered platforms, siapa pun sekarang bisa membuat website profesional tanpa perlu keahlian coding yang mendalam. Dalam panduan ini, kita akan mengeksplorasi bagaimana memanfaatkan kekuatan AI untuk membuat website yang tidak hanya fungsional, tetapi juga modern dan user-friendly.</p>
-
-      <p>Kombinasi AI tools yang tepat dapat mempercepat proses development hingga 70%, sambil tetap mempertahankan kualitas dan kreativitas. Mari kita mulai perjalanan ini dengan memahami tools apa saja yang tersedia dan bagaimana menggunakannya secara efektif.</p>
-
-      <h2>Persiapan dan Tools yang Dibutuhkan</h2>
-      <p>Sebelum memulai, pastikan Anda memiliki akses ke beberapa tools berikut:</p>
-      <ul>
-        <li><strong>ChatGPT Plus atau Claude Pro:</strong> Untuk generating code dan content</li>
-        <li><strong>GitHub Copilot:</strong> Untuk assistance dalam coding</li>
-        <li><strong>Figma AI atau Canva:</strong> Untuk design mockups</li>
-        <li><strong>Vercel atau Netlify:</strong> Untuk deployment</li>
-        <li><strong>VS Code dengan AI extensions:</strong> Sebagai development environment</li>
-      </ul>
-
-      <h2>Langkah 1: Planning dan Ideation dengan AI</h2>
-      <p>Mulailah dengan meminta ChatGPT untuk membantu merencanakan website Anda. Berikan prompt yang spesifik tentang tujuan website, target audience, dan fitur yang diinginkan. AI akan membantu Anda membuat struktur yang logis dan user experience yang optimal.</p>
-
-      <h2>Langkah 2: Design dan Wireframing</h2>
-      <p>Gunakan AI tools untuk membuat wireframe dan mockup. Tools seperti Figma AI dapat membantu Anda membuat design yang responsive dan modern berdasarkan input text description.</p>
-
-      <h2>Langkah 3: Development dengan AI Assistance</h2>
-      <p>Ini adalah bagian yang paling menarik. Dengan bantuan ChatGPT dan GitHub Copilot, Anda dapat membuat website dari nol dengan efisiensi yang luar biasa. AI akan membantu Anda menulis HTML, CSS, dan JavaScript yang clean dan modern.</p>
-
-      <h2>Langkah 4: Content Generation</h2>
-      <p>AI tidak hanya membantu dalam coding, tetapi juga dalam content creation. Gunakan ChatGPT untuk membuat copywriting yang engaging, SEO-friendly, dan sesuai dengan brand voice Anda.</p>
-
-      <h2>Langkah 5: Testing dan Optimization</h2>
-      <p>AI tools juga dapat membantu dalam testing dan optimization. Gunakan tools seperti Lighthouse AI untuk menganalisis performance dan memberikan rekomendasi perbaikan.</p>
-
-      <h2>Kesimpulan</h2>
-      <p>Dengan AI tools yang tepat, membuat website profesional bukan lagi hal yang mustahil untuk pemula. Kunci suksesnya adalah memahami bagaimana menggunakan setiap tool secara efektif dan mengombinasikannya dengan kreativitas manusia.</p>
-    `
-  },
-  {
-    slug: "panduan-lengkap-setup-home-office-remote-work",
-    published: "2025-01-24",
-    category: "tutorial",
-    title: "Panduan Lengkap Setup Home Office untuk Remote Work: Tips Produktif 2025",
-    tags: ["Remote Work", "Home Office", "Produktivitas", "Tutorial", "Work From Home"],
-    cover: "https://images.unsplash.com/photo-1587560699334-cc4ff634909a?w=800&q=80&auto=format",
-    minutes: 18,
-    summary: "Panduan komprehensif untuk membuat home office yang ergonomis dan produktif. Dari setup hardware hingga tips menjaga work-life balance, semuanya dibahas detail.",
-    html: `
-      <p><b>Maneh &mdash;</b> Remote work telah menjadi bagian integral dari dunia kerja modern. Dengan semakin banyak perusahaan yang mengadopsi model kerja hybrid atau fully remote, memiliki home office yang optimal menjadi kunci sukses dalam produktivitas dan kesejahteraan kerja. Panduan ini akan membantu Anda menciptakan ruang kerja yang tidak hanya fungsional, tetapi juga mendukung kesehatan fisik dan mental jangka panjang.</p>
-
-      <p>Setup home office yang baik tidak hanya tentang memiliki meja dan kursi yang nyaman. Ini tentang menciptakan lingkungan yang mendukung fokus, kreativitas, dan keseimbangan antara kerja dan kehidupan pribadi. Mari kita eksplorasi setiap aspek yang perlu dipertimbangkan.</p>
-
-      <h2>Pemilihan Ruang dan Layout</h2>
-      <p>Langkah pertama adalah memilih ruang yang tepat. Idealnya, pilih ruangan yang terpisah dari area aktivitas keluarga, memiliki pencahayaan alami yang baik, dan ventilasi yang memadai. Jika tidak memungkinkan, gunakan partisi atau screen untuk memisahkan area kerja.</p>
-
-      <h2>Furniture dan Ergonomi</h2>
-      <p>Investasi pada furniture yang ergonomis adalah investasi pada kesehatan Anda. Pilih kursi yang mendukung postur tubuh yang baik, meja dengan tinggi yang tepat, dan monitor yang dapat disesuaikan ketinggiannya.</p>
-
-      <h2>Lighting dan Ambience</h2>
-      <p>Pencahayaan yang tepat sangat penting untuk mengurangi kelelahan mata dan meningkatkan mood. Kombinasikan pencahayaan alami dengan lampu LED yang dapat disesuaikan intensitasnya.</p>
-
-      <h2>Technology Setup</h2>
-      <p>Pastikan Anda memiliki koneksi internet yang stabil, backup power supply, dan peralatan audio-visual yang memadai untuk meeting online. Investasi pada webcam dan microphone berkualitas baik akan meningkatkan pengalaman komunikasi.</p>
-
-      <h2>Tips Produktivitas</h2>
-      <p>Buat rutinitas yang konsisten, gunakan teknik time management seperti Pomodoro, dan pastikan untuk mengambil istirahat yang teratur. Jangan lupa untuk memisahkan waktu kerja dan waktu pribadi.</p>
-
-      <h2>Kesimpulan</h2>
-      <p>Home office yang baik adalah investasi jangka panjang yang akan meningkatkan produktivitas dan kesejahteraan Anda. Mulailah dengan perubahan kecil dan terus tingkatkan seiring waktu.</p>
-    `
-  },
-  {
-    slug: "tutorial-lengkap-membuat-aplikasi-mobile-flutter",
-    published: "2025-01-25",
-    category: "tutorial",
-    title: "Tutorial Lengkap Membuat Aplikasi Mobile dengan Flutter: Dari Nol hingga Play Store",
-    tags: ["Flutter", "Mobile Development", "Dart", "Tutorial", "App Development"],
-    cover: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80&auto=format",
-    minutes: 25,
-    summary: "Panduan step-by-step membuat aplikasi mobile cross-platform dengan Flutter. Dari instalasi hingga publish di Play Store dan App Store.",
-    html: `
-      <p><b>Maneh &mdash;</b> Flutter telah menjadi salah satu framework mobile development yang paling populer saat ini. Dengan kemampuan untuk membuat aplikasi yang berjalan di Android dan iOS menggunakan satu codebase, Flutter menawarkan efisiensi dan performa yang luar biasa. Dalam tutorial ini, kita akan belajar membuat aplikasi mobile dari awal hingga siap dipublish di store.</p>
-
-      <p>Flutter menggunakan bahasa Dart yang mudah dipelajari, terutama jika Anda sudah familiar dengan Java, C#, atau JavaScript. Framework ini juga dilengkapi dengan widget yang kaya dan hot reload yang memungkinkan development yang sangat cepat.</p>
-
-      <h2>Instalasi dan Setup Environment</h2>
-      <p>Langkah pertama adalah menginstall Flutter SDK dan Android Studio. Pastikan juga menginstall Dart SDK dan mengkonfigurasi environment variables dengan benar. Flutter juga memerlukan Android SDK untuk development Android dan Xcode untuk iOS (jika menggunakan macOS).</p>
-
-      <h2>Membuat Project Pertama</h2>
-      <p>Gunakan command 'flutter create' untuk membuat project baru. Flutter akan membuat struktur project yang lengkap dengan file-file yang diperlukan. Pelajari struktur folder dan file-file penting seperti main.dart, pubspec.yaml, dan folder lib.</p>
-
-      <h2>Memahami Widget dan Layout</h2>
-      <p>Flutter menggunakan konsep widget untuk membangun UI. Pelajari widget-widget dasar seperti Container, Column, Row, dan Text. Pahami juga konsep StatefulWidget dan StatelessWidget untuk mengelola state aplikasi.</p>
-
-      <h2>Navigation dan Routing</h2>
-      <p>Pelajari cara membuat navigation antar halaman menggunakan Navigator dan Routes. Flutter juga mendukung named routes yang membuat navigation lebih mudah dikelola.</p>
-
-      <h2>State Management</h2>
-      <p>Untuk aplikasi yang kompleks, Anda perlu memahami state management. Flutter menyediakan beberapa pilihan seperti Provider, Bloc, atau Riverpod. Pilih yang sesuai dengan kebutuhan project Anda.</p>
-
-      <h2>Testing dan Debugging</h2>
-      <p>Flutter menyediakan tools testing yang komprehensif. Pelajari unit testing, widget testing, dan integration testing. Gunakan Flutter Inspector untuk debugging UI dan performance.</p>
-
-      <h2>Build dan Deploy</h2>
-      <p>Setelah aplikasi selesai, build untuk production menggunakan 'flutter build apk' atau 'flutter build ios'. Untuk publish, siapkan keystore untuk Android dan provisioning profile untuk iOS.</p>
-
-      <h2>Kesimpulan</h2>
-      <p>Flutter adalah pilihan yang excellent untuk mobile development, terutama jika Anda ingin membuat aplikasi cross-platform dengan performa native. Dengan ecosystem yang terus berkembang dan dukungan Google yang kuat, Flutter akan menjadi skill yang sangat berharga.</p>
-    `
-  },
-  {
-    slug: "panduan-lengkap-belajar-python-untuk-pemula",
-    published: "2025-01-26",
-    category: "tutorial",
-    title: "Panduan Lengkap Belajar Python untuk Pemula: Dari Nol hingga Mahir 2025",
-    tags: ["Python", "Programming", "Tutorial", "Pemula", "Coding"],
-    cover: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=800&q=80&auto=format",
-    minutes: 20,
-    summary: "Panduan komprehensif belajar Python dari dasar hingga advanced. Cocok untuk pemula yang ingin memulai karir di bidang programming dan data science.",
-    html: `
-      <p><b>Maneh &mdash;</b> Python telah menjadi salah satu bahasa pemrograman yang paling populer dan mudah dipelajari di dunia. Dengan syntax yang clean dan readable, Python cocok untuk pemula yang ingin memulai perjalanan di dunia programming. Dalam panduan ini, kita akan belajar Python dari dasar hingga level yang cukup untuk mengerjakan project-project real.</p>
-
-      <p>Python tidak hanya digunakan untuk web development, tetapi juga sangat powerful untuk data science, machine learning, automation, dan bahkan game development. Fleksibilitas ini membuat Python menjadi pilihan yang excellent untuk berbagai macam karir di bidang teknologi.</p>
-
-      <h2>Instalasi dan Setup Environment</h2>
-      <p>Mulailah dengan menginstall Python dari python.org atau menggunakan package manager seperti Anaconda. Pilih Python 3.x yang merupakan versi terbaru dan paling stabil. Setelah instalasi, pastikan Python dapat diakses dari command line.</p>
-
-      <h2>Dasar-dasar Python</h2>
-      <p>Pelajari konsep dasar seperti variables, data types (string, integer, float, boolean), dan operators. Python menggunakan dynamic typing yang membuatnya lebih mudah dipelajari dibanding bahasa lain.</p>
-
-      <h2>Control Flow</h2>
-      <p>Pahami penggunaan if-else statements, loops (for dan while), dan exception handling. Ini adalah fondasi yang penting untuk logic programming.</p>
-
-      <h2>Data Structures</h2>
-      <p>Pelajari list, tuple, dictionary, dan set. Struktur data ini sangat penting untuk mengorganisir dan memanipulasi data dalam Python.</p>
-
-      <h2>Functions dan Modules</h2>
-      <p>Belajar membuat dan menggunakan functions, serta cara mengorganisir code menggunakan modules dan packages. Ini akan membuat code Anda lebih modular dan reusable.</p>
-
-      <h2>Object-Oriented Programming</h2>
-      <p>Meskipun Python mendukung OOP, Anda tidak harus menggunakannya untuk project sederhana. Namun, memahami konsep class dan object akan sangat membantu untuk project yang lebih kompleks.</p>
-
-      <h2>Libraries Populer</h2>
-      <p>Eksplorasi libraries seperti NumPy untuk scientific computing, Pandas untuk data manipulation, dan Matplotlib untuk data visualization. Ini adalah tools yang sangat powerful untuk data science.</p>
-
-      <h2>Project Praktis</h2>
-      <p>Mulai dengan project sederhana seperti calculator, file organizer, atau web scraper. Project praktis akan membantu Anda memahami konsep yang telah dipelajari.</p>
-
-      <h2>Kesimpulan</h2>
-      <p>Python adalah bahasa yang sangat beginner-friendly namun powerful. Dengan konsistensi dan praktik yang teratur, Anda dapat menguasai Python dalam waktu yang relatif singkat dan membuka banyak peluang karir di bidang teknologi.</p>
-    `
-  },
-  {
-    slug: "perlombaan-antariksa-generasi-baru",
-    published: "2025-09-24",
-    category: "news",
-    title: "Perlombaan Antariksa Generasi Baru: Mars, Bulan, dan Beyond",
-    tags: ["Antariksa", "Mars", "Bulan", "SpaceX", "NASA"],
-    cover: "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=800&q=80&auto=format",
-    minutes: 10,
-    summary: "Era baru eksplorasi antariksa dimulai dengan misi Mars yang ambisius dan program Artemis ke Bulan. Bagaimana ini akan membentuk masa depan umat manusia?",
-    html: `
-      <p><b>Maneh &mdash;</b> Kita sedang menyaksikan kebangkitan era baru dalam eksplorasi antariksa. Dengan misi Mars yang semakin dekat dan program Artemis yang berjalan, umat manusia sedang menapaki langkah besar menuju menjadi spesies multi-planet.</p>
-
-      <p>Berbeda dengan space race era 1960-an yang didominasi oleh persaingan politik, space race modern ini didorong oleh kolaborasi internasional dan inovasi teknologi swasta yang luar biasa.</p>
-
-      <h2>Program Artemis dan Kembali ke Bulan</h2>
-      <p>NASA's Artemis program bertujuan untuk mendaratkan manusia di Bulan pada 2025, termasuk astronot wanita pertama. Program ini juga akan membangun Lunar Gateway sebagai stasiun ruang angkasa di orbit Bulan.</p>
-
-      <h2>Misi Mars yang Ambisius</h2>
-      <p>SpaceX dengan Starship-nya dan NASA dengan program Mars Sample Return sedang bersiap untuk misi berawak ke Mars. Targetnya adalah dekade 2030-an, yang akan menjadi pencapaian terbesar umat manusia.</p>
-
-      <h2>Peran Sektor Swasta</h2>
-      <p>Perusahaan seperti SpaceX, Blue Origin, dan Virgin Galactic telah mengubah landscape antariksa dengan teknologi yang lebih efisien dan biaya yang lebih terjangkau.</p>
-
-      <h2>Kolaborasi Internasional</h2>
-      <p>Eksplorasi antariksa modern didasarkan pada kolaborasi, bukan kompetisi. International Space Station adalah contoh sempurna bagaimana negara-negara dapat bekerja sama untuk tujuan yang lebih besar.</p>
-
-      <h2>Dampak pada Teknologi Bumi</h2>
-      <p>Teknologi yang dikembangkan untuk antariksa seringkali menemukan aplikasi di Bumi, dari GPS hingga material yang lebih kuat dan ringan.</p>
-    `
   }
 ];
 
 /* ======= I18N (ringkas) ======= */
 const ABOUT_ID = `
-<h2>Tentang Maneh: Platform Teknologi Terpercaya untuk Masa Depan</h2>
-<p><strong>Maneh</strong> adalah platform teknologi independen yang didedikasikan untuk memberikan wawasan mendalam, analisis terkini, dan panduan praktis dalam dunia teknologi yang terus berkembang. Didirikan pada tahun 2025, kami hadir dengan misi sederhana namun kuat: menjembatani kesenjangan antara kemajuan teknologi yang pesat dan kebutuhan masyarakat Indonesia untuk memahami dampaknya dalam kehidupan sehari-hari.</p>
+<h1>Tentang Maneh: Platform Teknologi Terpercaya</h1>
 
-<p>Di era di mana teknologi berkembang dengan kecepatan yang belum pernah terjadi sebelumnya—dari revolusi AI generatif seperti Sora hingga eksplorasi antariksa generasi baru—informasi yang dangkal dan terfragmentasi tidak lagi memadai. Maneh hadir untuk memotong kebisingan informasi, menyajikan analisis yang mendalam dan tutorial yang dapat langsung diterapkan, tidak hanya menjawab "apa" tetapi juga menjelaskan "mengapa" dan menunjukkan "bagaimana".</p>
+<p>Selamat datang di <strong>Maneh</strong> — tempat di mana teknologi yang rumit dijelaskan dengan cara yang mudah dipahami. Kami percaya bahwa setiap orang berhak menguasai teknologi modern, tanpa harus menjadi ahli komputer terlebih dahulu.</p>
 
-<h3>Visi dan Misi Kami</h3>
-<p>Kami percaya bahwa teknologi yang dipahami dengan baik adalah kunci untuk masa depan yang lebih cerah. Oleh karena itu, komitmen kami dibangun di atas tiga pilar fundamental:</p>
-<ol>
-  <li><strong>Analisis Mendalam:</strong> Kami tidak puas hanya menyampaikan berita permukaan. Setiap artikel di Maneh adalah hasil riset mendalam yang menghubungkan berbagai tren teknologi, menganalisis implikasi jangka panjang, dan menyajikan gambaran utuh dari setiap perkembangan teknologi yang membentuk masa depan kita.</li>
-  <li><strong>Kejelasan dalam Kompleksitas:</strong> Teknologi bisa rumit, tetapi penjelasannya tidak harus demikian. Kami berkomitmen untuk memecah konsep-konsep paling kompleks menjadi bahasa yang mudah dipahami, mulai dari mahasiswa yang baru memulai hingga profesional yang ingin memperluas wawasan mereka.</li>
-  <li><strong>Pemberdayaan Nyata:</strong> Pengetahuan menjadi berharga ketika dapat diterapkan. Setiap tutorial dan panduan di Maneh dirancang untuk memberdayakan Anda dengan keterampilan praktis yang dapat langsung digunakan untuk meningkatkan produktivitas, mengamankan kehidupan digital, atau bahkan memulai karir baru di bidang teknologi.</li>
-</ol>
+<h2>Misi Kami</h2>
+<p>Dunia teknologi berkembang dengan kecepatan luar biasa. Setiap hari muncul tools baru, framework terbaru, dan cara-cara inovatif untuk menyelesaikan masalah. Namun, informasi yang tersedia seringkali terlalu teknis atau tersebar di berbagai tempat. Maneh hadir untuk mengatasi masalah ini.</p>
 
-<h2>Konten Unggulan Maneh</h2>
-<p>Platform Maneh menyajikan konten berkualitas tinggi yang terbagi dalam dua kategori utama, masing-masing dirancang untuk memenuhi kebutuhan pembelajaran dan informasi teknologi Anda:</p>
+<p>Kami berkomitmen menyajikan panduan teknologi yang <strong>praktis, mudah diikuti, dan langsung bisa diterapkan</strong>. Setiap artikel yang kami tulis dirancang untuk memberikan nilai nyata bagi pembaca, baik yang baru memulai perjalanan teknologi maupun yang ingin memperdalam pengetahuan mereka.</p>
 
-<h3>Kategori Berita: Analisis Mendalam Perkembangan Teknologi</h3>
-<p>Di bagian Berita, Anda akan menemukan analisis komprehensif yang mengeksplorasi kekuatan transformatif di balik headline teknologi terbaru. Kami fokus pada area yang secara fundamental membentuk masa depan kita:</p>
+<h2>Cakupan Topik</h2>
+<p>Maneh fokus pada area teknologi yang paling relevan dengan kebutuhan sehari-hari:</p>
+
 <ul>
-  <li><strong>Kecerdasan Buatan & Pembelajaran Mesin:</strong> Dari model video generatif seperti Sora hingga implikasi etis AI di berbagai sektor, kami membongkar bagaimana algoritma cerdas menulis ulang aturan permainan dalam industri dan masyarakat.</li>
-  <li><strong>Eksplorasi Antariksa & Bioteknologi:</strong> Kami meliput perlombaan baru ke Mars dan Bulan, serta revolusi dalam pengobatan presisi yang dipimpin oleh teknologi seperti CRISPR, menjelaskan sains di balik pencapaian luar biasa ini dan dampaknya bagi umat manusia.</li>
-  <li><strong>Keamanan Siber & Privasi Data:</strong> Di era perang dingin digital, kami menganalisis ancaman siber yang disponsori negara, tantangan kedaulatan data, dan apa artinya bagi keamanan infrastruktur kritis dan privasi pribadi Anda.</li>
-  <li><strong>Masa Depan Kerja & Ekonomi Digital:</strong> Kami menyelidiki bagaimana tren seperti kerja jarak jauh dan otomasi secara permanen membentuk kembali ekonomi global dan pasar tenaga kerja, serta strategi untuk beradaptasi.</li>
+<li><strong>Web Development:</strong> Dari HTML dasar hingga framework modern seperti React dan Vue.js</li>
+<li><strong>Mobile Development:</strong> Panduan membuat aplikasi Android dan iOS dengan Flutter</li>
+<li><strong>AI Tools:</strong> Cara memanfaatkan ChatGPT, Claude, dan tools kecerdasan buatan lainnya</li>
+<li><strong>Keamanan Digital:</strong> Tips melindungi data pribadi dan akun online</li>
+<li><strong>Produktivitas:</strong> Setup workspace, tools kolaborasi, dan teknik manajemen waktu</li>
 </ul>
 
-<h3>Kategori Tutorial: Panduan Praktis untuk Dunia Digital</h3>
-<p>Bagian Tutorial adalah perwujudan filosofi pemberdayaan kami. Di sinilah teori bertemu praktik. Setiap tutorial adalah hasil dari penelitian mendalam, pengujian langsung, dan komitmen untuk menyajikan langkah-langkah yang paling efisien dan jelas. Area fokus kami meliputi:</p>
+<h2>Standar Kualitas Konten</h2>
+<p>Setiap artikel di Maneh melewati proses kurasi yang ketat. Kami menerapkan prinsip <strong>E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness)</strong> dalam setiap konten yang kami publikasikan.</p>
+
+<h3>Proses Penulisan</h3>
+<p>Kami tidak sekadar menulis berdasarkan teori. Setiap panduan yang kami buat:</p>
 <ul>
-  <li><strong>Pengembangan Pribadi & Karir:</strong> Roadmap komprehensif untuk memulai karir sebagai developer, menguasai alat produktivitas, dan membangun kebiasaan kerja yang efektif di era digital.</li>
-  <li><strong>Optimasi Perangkat Keras & Perangkat Lunak:</strong> Dari memilih laptop gaming yang tepat hingga menyetel performa smartphone Android Anda, kami membantu Anda memaksimalkan teknologi yang Anda miliki.</li>
-  <li><strong>Pemrograman & Pengembangan Web:</strong> Tutorial step-by-step untuk mempelajari bahasa pemrograman populer, framework modern, dan praktik terbaik dalam pengembangan aplikasi.</li>
-  <li><strong>Keamanan Digital & Privasi:</strong> Panduan praktis untuk melindungi data pribadi, mengenali ancaman siber, dan mengamankan perangkat digital Anda dari berbagai risiko.</li>
-  <li><strong>Produktivitas & Kolaborasi Digital:</strong> Tips dan trik untuk mengoptimalkan workflow, mengelola proyek, dan berkolaborasi secara efektif di lingkungan digital yang semakin kompleks.</li>
+<li>Diresearch secara mendalam dari sumber terpercaya</li>
+<li>Diuji langsung oleh tim kami</li>
+<li>Diperbarui secara berkala sesuai perkembangan teknologi</li>
+<li>Ditulis dengan gaya yang mudah dipahami pemula</li>
 </ul>
 
-<h3>Mengapa Memilih Maneh?</h3>
-<p>Kami memahami bahwa dunia teknologi bisa terasa menakutkan dan membingungkan. Itulah mengapa kami berkomitmen untuk:</p>
+<h3>Transparansi</h3>
+<p>Kami berkomitmen pada transparansi penuh. Jika di masa depan kami menggunakan program afiliasi atau menerima kompensasi dari produk yang kami review, hal tersebut akan dijelaskan secara jelas kepada pembaca.</p>
+
+<h2>Tim di Balik Maneh</h2>
+<p>Maneh dikelola oleh <strong>Penjaga</strong> dan tim yang terdiri dari praktisi teknologi berpengalaman. Kami memiliki latar belakang di bidang software development, cybersecurity, dan digital marketing. Pengalaman praktis ini memungkinkan kami menyajikan konten yang tidak hanya akurat secara teknis, tetapi juga relevan dengan kebutuhan industri.</p>
+
+<h2>Komitmen Kami</h2>
+<p>Kami berjanji untuk selalu:</p>
 <ul>
-  <li><strong>Menyederhanakan yang Kompleks:</strong> Mengubah konsep teknologi yang rumit menjadi penjelasan yang mudah dipahami</li>
-  <li><strong>Memberikan Nilai Nyata:</strong> Setiap artikel dirancang untuk memberikan wawasan praktis yang dapat Anda terapkan langsung</li>
-  <li><strong>Mengikuti Perkembangan Terkini:</strong> Selalu update dengan tren dan teknologi terbaru</li>
-  <li><strong>Membangun Komunitas:</strong> Menciptakan ruang di mana pembelajar dapat berbagi pengalaman dan saling membantu</li>
+<li>Menyajikan informasi yang akurat dan terkini</li>
+<li>Menggunakan bahasa yang mudah dipahami</li>
+<li>Memberikan contoh praktis yang bisa langsung diterapkan</li>
+<li>Merespons feedback dan saran dari pembaca</li>
+<li>Memperbaiki kesalahan jika ditemukan</li>
 </ul>
 
-<h3>Tim Kami</h3>
-<p>Di balik Maneh, ada tim yang terdiri dari:</p>
-<ul>
-  <li><strong>Software Engineers:</strong> Dengan pengalaman bertahun-tahun dalam berbagai bahasa pemrograman dan framework</li>
-  <li><strong>UI/UX Designers:</strong> Ahli dalam menciptakan pengalaman digital yang user-friendly</li>
-  <li><strong>Data Scientists:</strong> Spesialis dalam AI, machine learning, dan analisis data</li>
-  <li><strong>Content Creators:</strong> Penulis terampil yang menerjemahkan konsep teknis kompleks menjadi konten yang menarik</li>
-  <li><strong>Technology Consultants:</strong> Veteran industri dengan pengetahuan mendalam tentang solusi enterprise</li>
-</ul>
+<h2>Mari Berkolaborasi</h2>
+<p>Maneh bukan hanya platform satu arah. Kami menghargai masukan, pertanyaan, dan saran dari pembaca. Jika Anda memiliki topik yang ingin kami bahas, atau menemukan kesalahan dalam artikel kami, jangan ragu untuk <a href="#contact">menghubungi kami</a>.</p>
 
-<h3>Komitmen Kami</h3>
-<p>Kami berkomitmen untuk menyediakan pendidikan teknologi berkualitas tinggi, akurat, dan berharga yang membantu pembaca kami:</p>
-<ul>
-  <li>Tetap kompetitif di ekonomi digital</li>
-  <li>Membuat keputusan teknologi yang tepat</li>
-  <li>Mengembangkan keterampilan dan kemampuan baru</li>
-  <li>Maju dalam karir teknologi mereka</li>
-  <li>Memahami dampak teknologi terhadap masyarakat</li>
-</ul>
+<p>Bersama-sama, mari kita buat teknologi menjadi lebih mudah diakses dan dipahami oleh semua orang.</p>
 
-<h3>Komunitas & Dukungan</h3>
-<p>Kami percaya pada kekuatan pembelajaran komunitas. Platform kami mendorong:</p>
+<h3>Artikel Rekomendasi</h3>
 <ul>
-  <li>Berbagi pengetahuan dan kolaborasi</li>
-  <li>Pembelajaran peer-to-peer dan dukungan</li>
-  <li>Update rutin dan konten baru</li>
-  <li>Umpan balik responsif dan perbaikan</li>
+<li><a href="/2025/01/22/setup-vscode-web-development-panduan-lengkap">Setup VSCode untuk Web Development: Panduan Lengkap 2025</a></li>
+<li><a href="/2025/01/23/cara-membuat-website-dengan-chatgpt-ai-tools">Cara Membuat Website dengan ChatGPT & AI Tools (2025)</a></li>
+<li><a href="/2025/01/26/panduan-lengkap-belajar-python-untuk-pemula">Belajar Python untuk Pemula: Panduan Lengkap 2025</a></li>
 </ul>
-
-<p><em>Terima kasih telah menjadi bagian dari komunitas Maneh. Mari bersama-sama membangun masyarakat yang lebih melek teknologi dan berdaya!</em></p>
 `;
 
 const POLICY_ID = `
-<h2>Kebijakan Privasi untuk Maneh</h2>
-<p><strong>Tanggal Efektif:</strong> 22 Januari 2025</p>
+<h1>Kebijakan Privasi Maneh</h1>
 
-<h3>1. Pengantar</h3>
-<p>Selamat datang di Maneh ("kami", "kita", atau "milik kita"). Kami sangat menghargai privasi pengunjung dan pembaca kami. Kebijakan Privasi ini bertujuan untuk menjelaskan secara transparan jenis informasi apa yang kami kumpulkan ketika Anda mengunjungi dan berinteraksi dengan situs kami (maneh.blog), bagaimana kami menggunakan informasi tersebut, dengan siapa kami dapat membaginya, dan hak-hak apa yang Anda miliki terkait data pribadi Anda.</p>
-<p>Dengan mengakses atau menggunakan layanan kami, Anda mengakui bahwa Anda telah membaca, memahami, dan menyetujui pengumpulan, penyimpanan, penggunaan, dan pengungkapan informasi pribadi Anda seperti yang dijelaskan dalam Kebijakan Privasi ini. Jika Anda tidak setuju dengan kebijakan ini, harap jangan menggunakan situs kami.</p>
+<p><strong>Terakhir diperbarui:</strong> 24 Januari 2025</p>
 
-<h3>2. Informasi yang Kami Kumpulkan</h3>
-<p>Kami menganut prinsip minimisasi data, artinya kami hanya mengumpulkan informasi yang benar-benar diperlukan untuk menyediakan dan meningkatkan layanan kami. Informasi yang kami kumpulkan dapat dibagi menjadi dua kategori utama:</p>
+<p>Di Maneh, kami menghargai privasi Anda dan berkomitmen melindungi informasi pribadi yang Anda berikan. Kebijakan ini menjelaskan bagaimana kami mengumpulkan, menggunakan, dan melindungi data Anda saat mengunjungi situs kami.</p>
 
-<h4>A. Informasi yang Kami Kumpulkan Secara Otomatis (Data Teknis)</h4>
-<p>Ketika Anda mengunjungi Maneh, server kami dan layanan analitik pihak ketiga secara otomatis mencatat informasi tertentu yang dikirim oleh browser Anda. Informasi ini bersifat non-pribadi dan tidak dapat mengidentifikasi Anda secara langsung. Data ini meliputi:</p>
+<h2>Informasi yang Kami Kumpulkan</h2>
+
+<h3>Data Teknis Otomatis</h3>
+<p>Ketika Anda mengunjungi Maneh, server kami secara otomatis mencatat informasi tertentu:</p>
 <ul>
-    <li><strong>Data Log:</strong> Seperti kebanyakan situs web, kami mengumpulkan informasi dalam file log. Ini termasuk alamat Internet Protocol (IP) Anda (yang mungkin dianonimkan), jenis browser (misalnya Chrome, Firefox), Penyedia Layanan Internet (ISP), halaman rujukan/keluar, jenis platform, stempel tanggal/waktu, dan jumlah klik. Informasi ini digunakan untuk menganalisis tren, mengelola situs, melacak pergerakan pengguna secara agregat, dan mengumpulkan informasi demografis yang luas.</li>
-    <li><strong>Cookie dan Teknologi Pelacakan Serupa:</strong> Kami menggunakan cookie untuk meningkatkan pengalaman Anda. Cookie adalah file data kecil yang disimpan di perangkat Anda. Kami menggunakannya untuk:
-        <ul>
-            <li><strong>Cookie Esensial:</strong> Diperlukan untuk fungsi dasar situs, seperti mengingat preferensi tema Anda (gelap/terang).</li>
-            <li><strong>Cookie Analitik:</strong> Membantu kami memahami bagaimana pengunjung berinteraksi dengan situs kami, halaman mana yang paling populer, dan berapa lama pengunjung tinggal. Ini memungkinkan kami untuk terus meningkatkan konten dan tata letak kami. Kami menggunakan layanan yang berfokus pada privasi seperti Cloudflare Analytics.</li>
-        </ul>
-    </li>
-    <li><strong>Informasi Perangkat:</strong> Kami dapat mengumpulkan informasi tentang perangkat yang Anda gunakan untuk mengakses situs kami, seperti model perangkat keras, sistem operasi dan versi, pengidentifikasi perangkat unik, dan informasi jaringan seluler. Ini membantu kami mengoptimalkan tampilan situs untuk berbagai perangkat.</li>
+<li><strong>Log Server:</strong> Alamat IP (yang kami anonimkan), jenis browser, sistem operasi, halaman yang dikunjungi, dan waktu akses</li>
+<li><strong>Cookie Analitik:</strong> Kami menggunakan Google Analytics untuk memahami bagaimana pengunjung berinteraksi dengan situs kami</li>
+<li><strong>Preferensi Tema:</strong> Pilihan tema gelap/terang yang Anda simpan di browser</li>
 </ul>
 
-<h4>B. Informasi yang Anda Berikan Secara Sukarela</h4>
-<p>Saat ini, Maneh tidak memiliki fitur yang secara aktif meminta informasi pribadi seperti registrasi akun, komentar, atau formulir kontak. Namun, jika kami memperkenalkan fitur tersebut di masa depan, kebijakan ini akan diperbarui. Jika Anda menghubungi kami langsung melalui email, kami akan menerima informasi yang Anda berikan, seperti nama, alamat email, dan isi pesan Anda.</p>
+<h3>Data yang Anda Berikan</h3>
+<p>Saat ini, Maneh tidak meminta informasi pribadi seperti nama atau email. Jika di masa depan kami menambahkan fitur seperti newsletter atau komentar, kami akan meminta persetujuan Anda terlebih dahulu.</p>
 
-<h3>3. Bagaimana Kami Menggunakan Informasi Anda</h3>
-<p>Tujuan utama kami dalam mengumpulkan data adalah untuk menyediakan dan meningkatkan pengalaman di Maneh. Secara khusus, kami menggunakan informasi yang kami kumpulkan untuk:</p>
+<h2>Penggunaan Data</h2>
+<p>Informasi yang kami kumpulkan digunakan untuk:</p>
 <ul>
-    <li><strong>Menyediakan, Mengoperasikan, dan Memelihara Situs Web Kami:</strong> Memastikan situs berfungsi dengan benar, memuat dengan cepat, dan aman dari ancaman.</li>
-    <li><strong>Meningkatkan, Mempersonalisasi, dan Memperluas Situs Web Kami:</strong> Menganalisis data penggunaan untuk memahami konten apa yang paling berharga bagi pembaca kami, sehingga kami dapat membuat lebih banyak konten tersebut.</li>
-    <li><strong>Memahami dan Menganalisis Cara Anda Menggunakan Situs Web Kami:</strong> Mengidentifikasi pola navigasi, gesekan pengguna, dan peluang untuk perbaikan desain dan fungsionalitas.</li>
-    <li><strong>Mencegah Penipuan dan Menegakkan Keamanan:</strong> Memantau lalu lintas untuk aktivitas mencurigakan, serangan DDoS, dan upaya peretasan lainnya untuk melindungi integritas situs dan data pengguna.</li>
-    <li><strong>Mematuhi Kewajiban Hukum:</strong> Memenuhi permintaan hukum, peraturan, atau pemerintah yang berlaku.</li>
+<li>Menganalisis performa situs dan konten yang paling diminati</li>
+<li>Memperbaiki pengalaman pengguna dan navigasi situs</li>
+<li>Mengoptimalkan kecepatan loading dan fungsionalitas</li>
+<li>Mencegah aktivitas yang merugikan atau mencurigakan</li>
 </ul>
 
-<h3>4. Berbagi dan Pengungkapan Informasi</h3>
-<p>Privasi Anda adalah prioritas kami. Kami tidak menjual, menyewakan, atau memperdagangkan informasi pribadi Anda kepada pihak ketiga untuk tujuan pemasaran mereka. Kami hanya dapat membagikan informasi dalam keadaan terbatas berikut:</p>
+<h2>Iklan dan Google AdSense</h2>
+<p>Maneh menggunakan <strong>Google AdSense</strong> untuk menampilkan iklan yang relevan. Google menggunakan cookie dan teknologi serupa untuk:</p>
 <ul>
-    <li><strong>Penyedia Layanan Pihak Ketiga:</strong> Kami dapat bekerja dengan perusahaan pihak ketiga untuk memfasilitasi layanan kami (misalnya, hosting web, layanan analitik, penyedia CDN). Penyedia ini hanya memiliki akses ke informasi yang diperlukan untuk melakukan tugas mereka atas nama kami dan secara kontraktual dilarang mengungkapkan atau menggunakannya untuk tujuan lain.</li>
-    <li><strong>Kewajiban Hukum:</strong> Kami dapat mengungkapkan informasi Anda jika diwajibkan oleh hukum atau sebagai tanggapan terhadap permintaan yang sah oleh otoritas publik (misalnya, pengadilan atau lembaga pemerintah).</li>
-    <li><strong>Perlindungan Hak:</strong> Kami dapat mengungkapkan informasi jika kami yakin hal itu diperlukan untuk menyelidiki, mencegah, atau mengambil tindakan terkait aktivitas ilegal, penipuan yang dicurigai, situasi yang melibatkan potensi ancaman terhadap keselamatan fisik seseorang, pelanggaran terhadap Ketentuan Layanan kami, atau sebagaimana diwajibkan oleh hukum.</li>
+<li>Menampilkan iklan berdasarkan minat dan riwayat browsing Anda</li>
+<li>Mengukur efektivitas iklan</li>
+<li>Mencegah iklan yang sama ditampilkan berulang kali</li>
 </ul>
 
-<h3>5. Iklan Google AdSense</h3>
-<p>Kami menggunakan Google AdSense untuk menampilkan iklan di situs web kami. Google AdSense adalah layanan iklan pihak ketiga yang menggunakan cookie dan teknologi serupa untuk menyajikan iklan berdasarkan kunjungan Anda ke situs ini dan situs lain di Internet.</p>
-<p><strong>Cara Kerja Google AdSense:</strong></p>
-<ul>
-    <li>Google menggunakan cookie untuk menyajikan iklan berdasarkan kunjungan sebelumnya Anda ke situs web kami atau situs web lain</li>
-    <li>Penggunaan cookie iklan Google memungkinkan Google dan mitranya untuk menyajikan iklan kepada Anda berdasarkan kunjungan Anda ke situs kami dan/atau situs lain di Internet</li>
-    <li>Anda dapat memilih keluar dari iklan yang dipersonalisasi dengan mengunjungi <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">Pengaturan Iklan Google</a></li>
-    <li>Anda juga dapat memilih keluar dari penggunaan cookie oleh beberapa vendor pihak ketiga untuk iklan yang dipersonalisasi dengan mengunjungi <a href="www.aboutads.info/choices" target="_blank" rel="noopener">www.aboutads.info/choices</a></li>
-</ul>
-<p><strong>Data yang Dikumpulkan oleh Google AdSense:</strong></p>
-<ul>
-    <li>Alamat IP (dianonimkan)</li>
-    <li>Jenis dan versi browser</li>
-    <li>Sistem operasi</li>
-    <li>Halaman yang dikunjungi dan waktu yang dihabiskan di halaman</li>
-    <li>Situs web rujukan</li>
-    <li>Interaksi dan klik iklan</li>
-</ul>
-<p>Untuk informasi lebih lanjut tentang bagaimana Google menggunakan data ketika Anda menggunakan situs kami, silakan kunjungi <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">Privasi & Ketentuan Google</a>.</p>
+<p>Anda dapat mengatur preferensi iklan di <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">Pengaturan Iklan Google</a>. Untuk informasi lebih lanjut tentang kebijakan privasi Google, kunjungi <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privasi & Ketentuan Google</a>.</p>
 
-<h3>6. Hak Privasi Data Anda</h3>
-<p>Kami menghormati hak-hak Anda atas data Anda. Bergantung pada lokasi Anda, Anda mungkin memiliki hak-hak berikut di bawah undang-undang perlindungan data yang berlaku (seperti GDPR):</p>
+<h3>File ads.txt</h3>
+<p>Kami menggunakan file <code>ads.txt</code> untuk memastikan hanya pengiklan yang sah yang dapat menampilkan iklan di situs kami. File ini dapat diakses di <a href="/ads.txt">maneh.blog/ads.txt</a>.</p>
+
+<h2>Analitik dan Google Analytics</h2>
+<p>Kami menggunakan Google Analytics untuk memahami perilaku pengunjung. Data yang dikumpulkan meliputi:</p>
 <ul>
-    <li><strong>Hak akses:</strong> Anda berhak meminta salinan informasi pribadi yang kami pegang.</li>
-    <li><strong>Hak perbaikan:</strong> Anda berhak meminta kami memperbaiki informasi yang tidak akurat atau tidak lengkap.</li>
-    <li><strong>Hak penghapusan:</strong> Anda berhak meminta kami menghapus informasi pribadi Anda dalam keadaan tertentu.</li>
-    <li><strong>Hak pembatasan:</strong> Anda berhak meminta kami membatasi pemrosesan informasi pribadi Anda dalam keadaan tertentu.</li>
-    <li><strong>Hak portabilitas:</strong> Anda berhak menerima informasi pribadi yang telah Anda berikan kepada kami dalam format yang terstruktur dan dapat dibaca mesin.</li>
-    <li><strong>Hak untuk menolak:</strong> Anda berhak menolak pemrosesan informasi pribadi Anda untuk tujuan tertentu.</li>
+<li>Halaman yang paling sering dikunjungi</li>
+<li>Waktu yang dihabiskan di situs</li>
+<li>Perangkat dan browser yang digunakan</li>
+<li>Lokasi geografis (tingkat negara/kota)</li>
 </ul>
 
-<h3>7. Keamanan Data</h3>
-<p>Kami menerapkan langkah-langkah keamanan yang tepat untuk melindungi informasi pribadi Anda dari akses, perubahan, pengungkapan, atau penghancuran yang tidak sah. Namun, tidak ada metode transmisi melalui Internet atau penyimpanan elektronik yang 100% aman, jadi kami tidak dapat menjamin keamanan mutlak.</p>
+<p>Data ini dianonimkan dan tidak dapat digunakan untuk mengidentifikasi Anda secara pribadi. Anda dapat menonaktifkan Google Analytics dengan menginstall <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">browser add-on</a>.</p>
 
-<h3>8. Tautan ke Situs Pihak Ketiga</h3>
-<p>Situs web kami mungkin berisi tautan ke situs web pihak ketiga. Kami tidak bertanggung jawab atas praktik privasi situs web tersebut. Kami mendorong Anda untuk membaca kebijakan privasi setiap situs web yang Anda kunjungi.</p>
-
-<h3>9. Perubahan pada Kebijakan Ini</h3>
-<p>Kami dapat memperbarui Kebijakan Privasi ini dari waktu ke waktu. Kami akan memberi tahu Anda tentang perubahan material dengan memposting kebijakan baru di halaman ini dan memperbarui tanggal "Terakhir Diperbarui" di bagian atas.</p>
-
-<h3>10. Kontak Kami</h3>
-<p>Jika Anda memiliki pertanyaan tentang Kebijakan Privasi ini, silakan hubungi kami di:</p>
+<h2>Keamanan Data</h2>
+<p>Kami menerapkan langkah-langkah keamanan yang wajar untuk melindungi informasi Anda:</p>
 <ul>
-    <li><strong>Email:</strong> privacy@maneh.blog</li>
-    <li><strong>Website:</strong> https://maneh.blog</li>
-    <li><strong>Alamat:</strong> Maneh Technology Blog, Digital Innovation Hub, Jakarta, Indonesia 12345</li>
+<li><strong>HTTPS:</strong> Semua komunikasi dengan situs kami dienkripsi</li>
+<li><strong>Akses Terbatas:</strong> Hanya personel yang berwenang yang dapat mengakses data</li>
+<li><strong>Pembaruan Berkala:</strong> Sistem keamanan kami diperbarui secara rutin</li>
+<li><strong>Monitoring:</strong> Kami memantau aktivitas mencurigakan secara aktif</li>
 </ul>
 
-<p><em>Terima kasih telah mempercayai Maneh dengan informasi pribadi Anda. Kami berkomitmen untuk melindungi privasi Anda dan memberikan pengalaman yang aman dan bermanfaat.</em></p>
+<h2>Hak Anda</h2>
+<p>Anda memiliki hak untuk:</p>
+<ul>
+<li><strong>Akses:</strong> Meminta salinan data yang kami miliki tentang Anda</li>
+<li><strong>Koreksi:</strong> Meminta perbaikan data yang tidak akurat</li>
+<li><strong>Penghapusan:</strong> Meminta penghapusan data pribadi Anda</li>
+<li><strong>Portabilitas:</strong> Meminta data Anda dalam format yang dapat dibaca</li>
+<li><strong>Keberatan:</strong> Menolak pemrosesan data untuk tujuan tertentu</li>
+</ul>
+
+<p>Untuk menggunakan hak-hak ini, silakan <a href="#contact">hubungi kami</a> dengan detail permintaan Anda.</p>
+
+<h2>Anak di Bawah Umur</h2>
+<p>Konten Maneh ditujukan untuk pengguna berusia 13 tahun ke atas. Kami tidak secara sengaja mengumpulkan informasi dari anak di bawah 13 tahun. Jika Anda adalah orang tua atau wali dan mengetahui bahwa anak Anda telah memberikan informasi pribadi kepada kami, silakan hubungi kami untuk menghapus informasi tersebut.</p>
+
+<h2>Cookie dan Teknologi Pelacakan</h2>
+<p>Kami menggunakan cookie untuk:</p>
+<ul>
+<li><strong>Cookie Esensial:</strong> Memastikan situs berfungsi dengan baik</li>
+<li><strong>Cookie Preferensi:</strong> Mengingat pilihan tema dan pengaturan Anda</li>
+<li><strong>Cookie Analitik:</strong> Menganalisis penggunaan situs (Google Analytics)</li>
+<li><strong>Cookie Iklan:</strong> Menampilkan iklan yang relevan (Google AdSense)</li>
+</ul>
+
+<p>Anda dapat mengatur preferensi cookie melalui pengaturan browser Anda. Namun, menonaktifkan cookie tertentu dapat mempengaruhi fungsionalitas situs.</p>
+
+<h2>Perubahan Kebijakan</h2>
+<p>Kami dapat memperbarui kebijakan privasi ini dari waktu ke waktu. Perubahan material akan diberitahukan melalui:</p>
+<ul>
+<li>Pemberitahuan di halaman utama situs</li>
+<li>Update tanggal "Terakhir diperbarui" di bagian atas kebijakan ini</li>
+<li>Email (jika Anda berlangganan newsletter kami)</li>
+</ul>
+
+<h2>Kontak</h2>
+<p>Jika Anda memiliki pertanyaan tentang kebijakan privasi ini atau ingin menggunakan hak-hak Anda, silakan hubungi kami di:</p>
+<ul>
+<li><strong>Email:</strong> privacy [at] maneh [dot] blog</li>
+<li><strong>Subjek:</strong> "Kebijakan Privasi - [Jenis Permintaan]"</li>
+</ul>
+
+<p>Kami akan merespons dalam 1-3 hari kerja.</p>
+
+<h3>Artikel Terkait</h3>
+<ul>
+<li><a href="/2025/09/18/panduan-keamanan-siber-2025">Keamanan Digital: Lindungi Akun dari Hacker 2025</a></li>
+<li><a href="/2025/09/20/perang-dingin-digital-keamanan-siber">Cyber War: Ancaman Siber Berbasis Negara 2025</a></li>
+<li><a href="#about">Tentang Maneh: Platform Teknologi Terpercaya</a></li>
+</ul>
 `;
 
 const CONTACT_ID = `
-<h2>Hubungi Kami</h2>
-<p>Kami sangat menghargai masukan, pertanyaan, dan saran Anda. Silakan hubungi kami melalui salah satu saluran berikut:</p>
+<h1>Hubungi Tim Maneh</h1>
 
-<h3>Pertanyaan Umum</h3>
-<p>Untuk pertanyaan umum, saran konten, atau masukan tentang artikel kami, silakan hubungi kami di:</p>
+<p>Kami senang mendengar dari pembaca Maneh! Baik Anda memiliki pertanyaan, saran, atau ingin berkolaborasi, tim kami siap membantu. Kami berkomitmen merespons setiap pesan dalam 1-3 hari kerja.</p>
+
+<h2>Cara Menghubungi Kami</h2>
+
+<h3>Email Utama</h3>
+<p>Untuk pertanyaan umum, saran konten, atau masukan tentang artikel kami:</p>
+<p><strong>hello [at] maneh [dot] blog</strong></p>
+
+<p>Email ini dipantau secara aktif oleh tim editorial kami. Kami akan merespons dalam 1-3 hari kerja, Senin hingga Jumat.</p>
+
+<h2>Jenis Pertanyaan yang Kami Tangani</h2>
+
+<h3>Usulan Topik Artikel</h3>
+<p>Punya ide artikel yang ingin kami tulis? Kami selalu terbuka untuk saran topik yang relevan dengan teknologi, programming, atau produktivitas. Sertakan:</p>
 <ul>
-    <li><strong>Email:</strong> kontak@maneh.blog</li>
-    <li><strong>Website:</strong> https://maneh.blog</li>
+<li>Judul atau tema yang diusulkan</li>
+<li>Alasan mengapa topik ini penting</li>
+<li>Tingkat kesulitan yang diinginkan (pemula/menengah/lanjutan)</li>
 </ul>
 
-<h3>Konten & Kolaborasi</h3>
-<p>Tertarik untuk berkontribusi konten atau berkolaborasi dengan kami? Kami selalu mencari:</p>
-<ul>
-    <li>Penulis tamu dengan keahlian di bidang teknologi</li>
-    <li>Reviewer teknis untuk tutorial kami</li>
-    <li>Peluang kemitraan</li>
-    <li>Saran konten dan ide-ide</li>
-        </ul>
-<p>Silakan hubungi kami di: <strong>kolaborasi@maneh.blog</strong></p>
+<h3>Koreksi Teknis</h3>
+<p>Menemukan kesalahan dalam artikel kami? Kami sangat menghargai feedback untuk menjaga akurasi konten. Sertakan:</li>
+<li>URL artikel yang bermasalah</li>
+<li>Bagian yang perlu dikoreksi</li>
+<li>Sumber referensi yang benar (jika ada)</li>
+</ul>
 
-<h3>Dukungan Teknis</h3>
-<p>Mengalami kesulitan dengan tutorial kami atau membutuhkan bantuan teknis? Tim kami siap membantu:</p>
+<h3>Kerja Sama Editorial</h3>
+<p>Ingin berkontribusi sebagai penulis tamu atau berkolaborasi dalam proyek khusus? Kami terbuka untuk:</p>
 <ul>
-    <li><strong>Masalah Teknis:</strong> teknis@maneh.blog</li>
-    <li><strong>Waktu Respons:</strong> Maksimal 24-48 jam</li>
-    <li><strong>Jam Dukungan:</strong> Senin - Jumat, 09.00 - 17.00 WIB</li>
+<li>Guest posting dari praktisi teknologi berpengalaman</li>
+<li>Review produk atau tools teknologi</li>
+<li>Kolaborasi dalam riset atau survey</li>
 </ul>
 
 <h3>Pertanyaan Bisnis</h3>
-<p>Untuk kemitraan bisnis, peluang iklan, atau pertanyaan komersial lainnya:</p>
+<p>Untuk kemitraan, sponsorship, atau pertanyaan komersial lainnya:</p>
+<p><strong>partnership [at] maneh [dot] blog</strong></p>
+
+<h2>Form Saran (Jika Tersedia)</h2>
+<p>Jika situs kami memiliki form kontak, pastikan untuk mengisi:</p>
 <ul>
-    <li><strong>Email:</strong> bisnis@maneh.blog</li>
-    <li><strong>Kemitraan:</strong> kemitraan@maneh.blog</li>
+<li><strong>Nama:</strong> Nama lengkap atau nama panggilan</li>
+<li><strong>Email:</strong> Alamat email yang valid untuk respons</li>
+<li><strong>Subjek:</strong> Ringkasan singkat pertanyaan Anda</li>
+<li><strong>Pesan:</strong> Detail pertanyaan atau saran Anda</li>
 </ul>
 
-<h3>Media Sosial</h3>
-<p>Terhubung dengan kami di media sosial untuk update terbaru:</p>
+<p><em>Catatan: Form ini mendukung navigasi keyboard dan dilengkapi dengan aria-label untuk aksesibilitas.</em></p>
+
+<h2>Kebijakan Respons</h2>
+<p>Kami berkomitmen untuk:</p>
 <ul>
-    <li><strong>Twitter:</strong> @maneh_blog</li>
-    <li><strong>LinkedIn:</strong> Maneh Technology Blog</li>
-    <li><strong>YouTube:</strong> Maneh Tutorials</li>
-    <li><strong>Instagram:</strong> @maneh.technology</li>
+<li><strong>Waktu Respons:</strong> 1-3 hari kerja untuk pertanyaan umum</li>
+<li><strong>Prioritas:</strong> Pertanyaan teknis dan koreksi mendapat prioritas tinggi</li>
+<li><strong>Follow-up:</strong> Kami akan memberikan update jika memerlukan waktu lebih lama</li>
+<li><strong>Privasi:</strong> Semua komunikasi akan diproses sesuai <a href="#policy">Kebijakan Privasi</a> kami</li>
 </ul>
 
-<h3>Alamat Surat</h3>
-<p>Maneh Technology Blog<br>
-Digital Innovation Hub<br>
-Jakarta, Indonesia 12345</p>
-
-<h3>Kebijakan Respons</h3>
-<p>Kami berusaha merespons semua pertanyaan dalam 24-48 jam pada hari kerja. Untuk hal mendesak, silakan tandai email Anda dengan "MENDESAK" di baris subjek.</p>
-
-<h3>FAQ (Frequently Asked Questions)</h3>
-<p><strong>Q: Apakah konten di Maneh gratis?</strong><br>
-A: Ya, semua konten di Maneh dapat diakses secara gratis tanpa biaya apapun.</p>
-
-<p><strong>Q: Bagaimana cara mengusulkan topik artikel?</strong><br>
-A: Kirimkan saran topik ke kontak@maneh.blog dengan subjek "Usulan Topik Artikel".</p>
-
-<p><strong>Q: Apakah saya bisa menggunakan konten Maneh untuk keperluan komersial?</strong><br>
-A: Silakan baca ketentuan penggunaan di halaman Privacy Policy untuk detail lengkapnya.</p>
-
-<p><strong>Q: Bagaimana cara melaporkan bug atau masalah teknis?</strong><br>
-A: Laporkan masalah ke teknis@maneh.blog dengan detail lengkap tentang masalah yang Anda alami.</p>
-
-<h3>Tim Editorial</h3>
-<p>Tim editorial Maneh terdiri dari:</p>
+<h2>Yang Tidak Kami Tangani</h2>
+<p>Untuk menjaga fokus pada misi kami, kami tidak dapat membantu dengan:</p>
 <ul>
-    <li><strong>Editor in Chief:</strong> Ahmad Rizki</li>
-    <li><strong>Senior Technology Writer:</strong> Sarah Putri</li>
-    <li><strong>Web Development Specialist:</strong> Budi Santoso</li>
-    <li><strong>AI & Machine Learning Expert:</strong> Dr. Maya Sari</li>
-    <li><strong>Cybersecurity Analyst:</strong> Rizki Pratama</li>
+<li>Pertanyaan teknis yang memerlukan debugging kode spesifik</li>
+<li>Permintaan review produk tanpa nilai edukatif</li>
+<li>Spam atau promosi yang tidak relevan</li>
+<li>Pertanyaan yang sudah dijawab di artikel kami</li>
 </ul>
 
-<h3>Partnership & Advertising</h3>
-<p>Untuk kemitraan strategis, sponsorship, atau iklan, silakan hubungi:</p>
+<h2>Media Sosial</h2>
+<p>Ikuti perkembangan terbaru Maneh di:</p>
 <ul>
-    <li><strong>Partnership Manager:</strong> partnership@maneh.blog</li>
-    <li><strong>Advertising Sales:</strong> iklan@maneh.blog</li>
-    <li><strong>Media Kit:</strong> Tersedia untuk download di halaman About Us</li>
+<li><strong>Twitter:</strong> @maneh_blog (untuk update artikel dan diskusi teknologi)</li>
+<li><strong>LinkedIn:</strong> Maneh Technology Blog (untuk konten profesional)</li>
 </ul>
 
-<p><em>Terima kasih atas minat Anda terhadap Maneh. Kami berharap dapat mendengar dari Anda!</em></p>
+<p><em>Catatan: Media sosial tidak digunakan untuk support teknis. Gunakan email untuk pertanyaan yang memerlukan respons detail.</em></p>
+
+<h2>FAQ Cepat</h2>
+
+<h3>Apakah konten Maneh gratis?</h3>
+<p>Ya, semua artikel dan panduan di Maneh dapat diakses secara gratis tanpa biaya apapun.</p>
+
+<h3>Bisakah saya menggunakan konten Maneh untuk keperluan komersial?</h3>
+<p>Silakan baca ketentuan penggunaan di halaman <a href="#policy">Kebijakan Privasi</a> untuk detail lengkapnya.</p>
+
+<h3>Bagaimana cara melaporkan bug atau masalah teknis?</h3>
+<p>Kirimkan detail lengkap ke email utama dengan subjek "Bug Report" dan sertakan screenshot jika memungkinkan.</p>
+
+<h2>Terima Kasih</h2>
+<p>Kami menghargai setiap feedback dan saran dari pembaca Maneh. Komunitas yang aktif dan terlibat adalah kunci untuk menciptakan konten yang lebih baik dan lebih relevan.</p>
+
+<p>Mari bersama-sama membangun ekosistem teknologi yang lebih mudah dipahami dan diakses oleh semua orang.</p>
+
+<h3>Artikel Populer</h3>
+<ul>
+<li><a href="/2025/01/22/setup-vscode-web-development-panduan-lengkap">Setup VSCode untuk Web Development: Panduan Lengkap 2025</a></li>
+<li><a href="/2025/01/23/cara-membuat-website-dengan-chatgpt-ai-tools">Cara Membuat Website dengan ChatGPT & AI Tools (2025)</a></li>
+<li><a href="#about">Tentang Maneh: Platform Teknologi Terpercaya</a></li>
+</ul>
 `;
 
 const CATEGORY_DESCRIPTIONS = {
