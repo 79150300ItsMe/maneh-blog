@@ -3023,7 +3023,7 @@ const CONTACT_ID = `
     <li>Reviewer teknis untuk tutorial kami</li>
     <li>Peluang kemitraan</li>
     <li>Saran konten dan ide-ide</li>
-</ul>
+        </ul>
 <p>Silakan hubungi kami di: <strong>kolaborasi@maneh.blog</strong></p>
 
 <h3>Dukungan Teknis</h3>

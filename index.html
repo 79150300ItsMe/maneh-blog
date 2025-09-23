@@ -7,6 +7,9 @@
   <!-- Performance Optimizations -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+  <link rel="preconnect" href="https://securepubads.g.doubleclick.net" crossorigin>
+  <link rel="preconnect" href="https://googleads.g.doubleclick.net" crossorigin>
   <link rel="dns-prefetch" href="https://images.unsplash.com">
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
   <link rel="dns-prefetch" href="https://static.cloudflareinsights.com">
@@ -31,7 +34,7 @@
   <meta name="description" content="Maneh: platform tutorial & tips teknologi terlengkap dengan bahasa sederhana, panduan step-by-step, dan bisa langsung dipraktikkan. Temukan artikel terbaru tentang programming, web development, mobile apps, dan teknologi terkini 2025!">
   <meta name="keywords" content="tutorial teknologi, tips teknologi, panduan teknologi, belajar teknologi, teknologi terbaru, tutorial programming, tips coding, teknologi 2025, web development, mobile development, artificial intelligence, cybersecurity, remote work, productivity tools">
   <meta name="author" content="Penjaga">
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="googlebot" content="index, follow">
   <meta name="bingbot" content="index, follow">
   <meta name="language" content="Indonesian">
@@ -168,10 +171,9 @@
   }
   </script>
   
-  <!-- Enhanced Security Headers -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://static.cloudflareinsights.com https://scornfacultative.com http://scornfacultative.com https://preferencenail.com http://preferencenail.com https://weirdopt.com http://weirdopt.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' https: data: http: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://ipapi.co https://static.cloudflareinsights.com https://scornfacultative.com http://scornfacultative.com https://preparecommands.com https://cdn.jsdelivr.net; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests;">
+  <!-- Enhanced Security Headers - AdSense Compatible -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://securepubads.g.doubleclick.net https://googleads.g.doubleclick.net https://www.googletagmanager.com https://www.google-analytics.com https://tpc.googlesyndication.com https://cdn.jsdelivr.net https://static.cloudflareinsights.com; connect-src 'self' https://pagead2.googlesyndication.com https://securepubads.g.doubleclick.net https://googleads.g.doubleclick.net https://pubads.g.doubleclick.net https://adservice.google.com https://adservice.google.co.id https://*.adtrafficquality.google https://eol.adtrafficquality.google https://fundingchoicesmessages.google.com https://www.google-analytics.com https://www.googletagmanager.com https://cdn.jsdelivr.net; frame-src https://*.googlesyndication.com https://*.doubleclick.net https://*.google.com; img-src 'self' https: data: blob: https://tpc.googlesyndication.com https://*.ggpht.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; object-src 'none'; frame-ancestors 'self';">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta http-equiv="X-Frame-Options" content="DENY">
   <meta http-equiv="X-XSS-Protection" content="1; mode=block">
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
@@ -258,68 +260,10 @@
     (function() {
       'use strict';
       
-      // Disable right-click context menu
-      document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        return false;
-      });
-      
-      // Disable F12, Ctrl+Shift+I, Ctrl+U, Ctrl+S
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'F12' || 
-            (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-            (e.ctrlKey && e.key === 'u') ||
-            (e.ctrlKey && e.key === 's') ||
-            (e.ctrlKey && e.key === 'a') ||
-            (e.ctrlKey && e.key === 'c') ||
-            (e.ctrlKey && e.key === 'v') ||
-            (e.ctrlKey && e.key === 'x')) {
-          e.preventDefault();
-          return false;
-        }
-      });
-      
-      // Disable text selection
-      document.addEventListener('selectstart', function(e) {
-        e.preventDefault();
-        return false;
-      });
-      
-      // Disable drag
-      document.addEventListener('dragstart', function(e) {
-        e.preventDefault();
-        return false;
-      });
-      
-      // Console warning
-      console.clear();
+      // Anti-inspect code removed for AdSense compliance
+      // Only console warning for security
       console.log('%c⚠️ STOP! ⚠️', 'color: red; font-size: 50px; font-weight: bold;');
       console.log('%cThis is a browser feature intended for developers. If someone told you to copy-paste something here, it is a scam and will give them access to your account.', 'color: red; font-size: 16px;');
-      
-      // Detect DevTools - DISABLED FOR DEVELOPMENT
-      // let devtools = {open: false, orientation: null};
-      // const threshold = 160;
-      
-      // setInterval(function() {
-      //   if (window.outerHeight - window.innerHeight > threshold || 
-      //       window.outerWidth - window.innerWidth > threshold) {
-      //     if (!devtools.open) {
-      //       devtools.open = true;
-      //       // Optionally redirect or show warning
-      //       // window.location.href = 'about:blank';
-      //     }
-      //   } else {
-      //     devtools.open = false;
-      //   }
-      // }, 500);
-      
-      // Disable image saving
-      document.addEventListener('dragstart', function(e) {
-        if (e.target.tagName === 'IMG') {
-          e.preventDefault();
-          return false;
-        }
-      });
       
     })();
   </script>
@@ -448,10 +392,10 @@
     <!-- Comments Section -->
     <div class="comments-section">
       <div class="comment-author-info">
-        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" 
+        <img src="/img/avatar-default.svg" 
              alt="Avatar Penjaga" 
              class="comment-author-avatar"
-             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMyNTYzZWIiLz4KPHRleHQgeD0iMTYiIHk9IjIwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5QPC90ZXh0Pgo8L3N2Zz4K'; this.onerror=null;">
+             loading="lazy">
         <span class="comment-author-name">Penjaga</span>
       </div>
       <h2 class="sectionTitle">Tinggalkan Komentar</h2>

@@ -310,6 +310,67 @@ function getRandomArticles(count) {
   }
 }
 
+/* ======= Constants ======= */
+const AVATAR_URL = '/img/avatar-default.svg';
+
+/* ======= AdSense Health Check ======= */
+function checkAdSenseSetup() {
+  console.log('🔍 Checking AdSense setup...');
+  
+  // Check AdSense script
+  const adsenseScript = document.querySelector('script[src*="adsbygoogle.js"]');
+  if (adsenseScript) {
+    console.log('✅ AdSense script loaded');
+  } else {
+    console.log('❌ AdSense script not found');
+  }
+  
+  // Check meta tag
+  const adsenseMeta = document.querySelector('meta[name="google-adsense-account"]');
+  if (adsenseMeta && adsenseMeta.content === 'ca-pub-2251624901582740') {
+    console.log('✅ AdSense meta tag found');
+  } else {
+    console.log('❌ AdSense meta tag not found or incorrect');
+  }
+  
+  // Check CSP
+  const cspMeta = document.querySelector('meta[http-equiv="Content-Security-Policy"]');
+  if (cspMeta && cspMeta.content.includes('adtrafficquality.google') && cspMeta.content.includes('eol.adtrafficquality.google')) {
+    console.log('✅ CSP includes all AdSense domains (including adtrafficquality)');
+  } else {
+    console.log('❌ CSP missing AdSense domains');
+  }
+  
+  // Check ads.txt
+  fetch('/ads.txt')
+    .then(response => {
+      if (response.ok) {
+        return response.text();
+      }
+      throw new Error('ads.txt not accessible');
+    })
+    .then(text => {
+      const expectedContent = 'google.com, pub-2251624901582740, DIRECT, f08c47fec0942fa0';
+      if (text.trim() === expectedContent) {
+        console.log('✅ ads.txt accessible and correct');
+      } else {
+        console.log('❌ ads.txt content incorrect');
+      }
+    })
+    .catch(error => {
+      console.log('❌ ads.txt not accessible:', error.message);
+    });
+    
+  // Test AdSense connection
+  setTimeout(() => {
+    const hasAdSenseErrors = console.error.toString().includes('CSP') || 
+                            document.querySelector('[data-adsbygoogle-status]');
+    if (!hasAdSenseErrors) {
+      console.log('✅ CSP OK - No AdSense connection errors detected');
+    }
+  }, 2000);
+}
+
 /* ======= Enhanced SEO helpers ======= */
 
 /**
@@ -340,6 +401,24 @@ function findOrCreateMeta(selector, attribute, value, content = null) {
 }
 
 /**
+ * Ensure meta element exists with proper attributes
+ * @param {string} selector - CSS selector for meta tag
+ * @param {Object} attrs - Attributes to set
+ * @returns {HTMLElement} - Meta element
+ */
+function ensureMeta(selector, attrs = {}) {
+  let el = document.querySelector(selector);
+  if (!el) {
+    el = document.createElement('meta');
+    for (const [k, v] of Object.entries(attrs)) {
+      el.setAttribute(k, v);
+    }
+    document.head.appendChild(el);
+  }
+  return el;
+}
+
+/**
  * Find or create link tag with null safety
  * @param {string} rel - rel attribute value
  * @param {string} href - href value
@@ -359,56 +438,52 @@ function findOrCreateLink(rel, href) {
 
 function updateSEOForArticle(a){
   try {
-    const url = canonicalPath(a);
+  const url = canonicalPath(a);
     const fullUrl = `https://maneh.blog${url}`;
     const siteTitle = typeof SITE_TITLE !== 'undefined' ? SITE_TITLE : 'Maneh — Tutorial & Tips Teknologi';
     
-    // Update page title
-    document.title = `${a.title} — ${siteTitle}`;
+    // Update page title with null safety
+    const titleEl = document.head.querySelector('title') || document.head.appendChild(document.createElement('title'));
+    titleEl.textContent = `${a.title} — ${siteTitle}`;
     
     // Update canonical URL with null safety
-    const canonEl = document.getElementById('canon');
-    if (canonEl) {
-      canonEl.href = fullUrl;
-    } else {
-      findOrCreateLink('canonical', fullUrl);
-    }
-    
-    // Ensure canonical uses current origin + pathname
+    const canon = document.querySelector('#canon') || Object.assign(document.createElement('link'), { id: 'canon', rel: 'canonical' });
     const currentCanonical = location.origin + location.pathname;
-    if (canonEl) {
-      canonEl.href = currentCanonical;
-    } else {
-      findOrCreateLink('canonical', currentCanonical);
-    }
+    canon.href = currentCanonical;
+    if (!canon.parentNode) document.head.appendChild(canon);
     
     // Update meta description with null safety
-    findOrCreateMeta('meta[name="description"]', 'name', 'description', a.summary || 'Tutorial lengkap dengan panduan step-by-step.');
+    const mDesc = ensureMeta('meta[name="description"]', { name: 'description' });
+    mDesc.setAttribute('content', a.summary || 'Tutorial lengkap dengan panduan step-by-step.');
     
     // Update Open Graph tags with null safety
-    const ogTitleEl = document.getElementById('ogTitle');
-    const ogDescEl = document.getElementById('ogDesc');
-    const ogImageEl = document.getElementById('ogImage');
-    const ogUrlEl = document.getElementById('ogUrl');
+    const mOgTitle = ensureMeta('meta[property="og:title"]', { property: 'og:title' });
+    mOgTitle.setAttribute('content', `${a.title} | Maneh Blog`);
     
-    if (ogTitleEl) ogTitleEl.content = `${a.title} | Maneh Blog`;
-    else findOrCreateMeta('meta[property="og:title"]', 'property', 'og:title', `${a.title} | Maneh Blog`);
+    const mOgDesc = ensureMeta('meta[property="og:description"]', { property: 'og:description' });
+    mOgDesc.setAttribute('content', `${a.summary} | Tutorial lengkap dengan panduan step-by-step di Maneh.`);
     
-    if (ogDescEl) ogDescEl.content = `${a.summary} | Tutorial lengkap dengan panduan step-by-step di Maneh.`;
-    else findOrCreateMeta('meta[property="og:description"]', 'property', 'og:description', `${a.summary} | Tutorial lengkap dengan panduan step-by-step di Maneh.`);
+    const mOgImage = ensureMeta('meta[property="og:image"]', { property: 'og:image' });
+    mOgImage.setAttribute('content', a.cover);
     
-    if (ogImageEl) ogImageEl.content = a.cover;
-    else findOrCreateMeta('meta[property="og:image"]', 'property', 'og:image', a.cover);
-    
-    if (ogUrlEl) ogUrlEl.content = fullUrl;
-    else findOrCreateMeta('meta[property="og:url"]', 'property', 'og:url', fullUrl);
+    const mOgUrl = ensureMeta('meta[property="og:url"]', { property: 'og:url' });
+    mOgUrl.setAttribute('content', fullUrl);
     
     // Update Twitter tags with null safety
-    findOrCreateMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image');
-    findOrCreateMeta('meta[name="twitter:title"]', 'name', 'twitter:title', `${a.title} | Maneh Blog`);
-    findOrCreateMeta('meta[name="twitter:description"]', 'name', 'twitter:description', `${a.summary} | Tutorial lengkap dengan panduan step-by-step di Maneh.`);
-    findOrCreateMeta('meta[name="twitter:image"]', 'name', 'twitter:image', a.cover);
-    findOrCreateMeta('meta[name="twitter:url"]', 'name', 'twitter:url', fullUrl);
+    const mTwitterCard = ensureMeta('meta[name="twitter:card"]', { name: 'twitter:card' });
+    mTwitterCard.setAttribute('content', 'summary_large_image');
+    
+    const mTwitterTitle = ensureMeta('meta[name="twitter:title"]', { name: 'twitter:title' });
+    mTwitterTitle.setAttribute('content', `${a.title} | Maneh Blog`);
+    
+    const mTwitterDesc = ensureMeta('meta[name="twitter:description"]', { name: 'twitter:description' });
+    mTwitterDesc.setAttribute('content', `${a.summary} | Tutorial lengkap dengan panduan step-by-step di Maneh.`);
+    
+    const mTwitterImage = ensureMeta('meta[name="twitter:image"]', { name: 'twitter:image' });
+    mTwitterImage.setAttribute('content', a.cover);
+    
+    const mTwitterUrl = ensureMeta('meta[name="twitter:url"]', { name: 'twitter:url' });
+    mTwitterUrl.setAttribute('content', fullUrl);
     
     // Enhanced Article Structured Data
   let ld = document.getElementById('ld-article');
@@ -681,8 +756,8 @@ function optimizeImagesInContent(htmlContent) {
       // Check if already has loading attribute
       if (match.includes('loading=')) return match;
       
-      // Add lazy loading and error handling
-      return `<img${before}src="${src}"${after} loading="lazy" decoding="async" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjQ1MCIgdmlld0JveD0iMCAwIDgwMCA0NTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNDUwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0zNTAgMjAwSDQ1MFYyNTBIMzUwVjIwMFoiIGZpbGw9IiM5Q0EzQUYiLz4KPHRleHQgeD0iNDAwIiB5PSIzMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzZCNzI4MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+SW1hZ2UgTm90IEZvdW5kPC90ZXh0Pgo8L3N2Zz4K'; this.onerror=null;">`;
+      // Add lazy loading
+      return `<img${before}src="${src}"${after} loading="lazy" decoding="async">`;
     }
   );
 }
@@ -810,7 +885,7 @@ document.addEventListener('click', (e)=>{
     // Check if it's an index.html link or root link
     if (href === '/' || href === '/index.html' || href.endsWith('/index.html')) {
       console.log('Internal home link found:', href);
-      e.preventDefault();
+  e.preventDefault();
       e.stopPropagation();
       
       // Normalize to root path
@@ -996,43 +1071,37 @@ function renderReader(slug, queryStr) {
     // Optimize images in content
     const optimizedHTML = optimizeImagesInContent(cleanHTML);
     
-    // Secure DOM update
-    post.innerHTML = `<h1 id="post-top">${cleanTitle}</h1>${optimizedHTML}`;
-    console.log('Article content rendered securely with optimized images');
+    // Secure DOM update with proper order: H1 → Meta → Figure → Body
+    post.innerHTML = `
+      <h1 class="post-title" id="post-top">${cleanTitle}</h1>
+      <div class="post-meta author">
+        <img src="${AVATAR_URL}" 
+             alt="Avatar Penjaga" 
+             class="author-avatar"
+             loading="lazy">
+        <div>
+          <div class="author-name">
+            Penjaga 
+            <svg class="verified-badge" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="10" fill="currentColor"/>
+              <path d="M9 12l2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </div>
+          <time datetime="${a.published}">${fmtDate(a.published)}</time>
+        </div>
+      </div>
+      <figure class="post-hero">
+        <img class="thumb" src="${a.cover}" alt="${a.title}" loading="eager" decoding="async" fetchpriority="high">
+        <figcaption class="caption">${a.altTitle || a.title}</figcaption>
+      </figure>
+      <div class="post-body">${optimizedHTML}</div>
+    `;
+    console.log('Article content rendered with proper order: H1 → Meta → Figure → Body');
     
     // Ensure the post element is visible
     post.style.display = 'block';
     post.style.visibility = 'visible';
     post.style.opacity = '1';
-
-  /* Hero figure = cover */
-  const firstImg = post.querySelector('img.thumb');
-  if(!firstImg){
-    const fig = document.createElement('figure'); fig.className='heroFigure';
-    fig.innerHTML = `<img class="thumb" src="${a.cover}" alt="${a.title}" loading="eager" decoding="async" fetchpriority="high"><figcaption class="caption">${a.title}</figcaption>`;
-    post.prepend(fig);
-  }
-
-  /* Meta dengan avatar, nama Penjaga, dan badge verified */
-  const meta = post.querySelector('.meta') || document.createElement('div');
-  meta.className='meta author';
-  meta.innerHTML = `
-    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=88&h=88&fit=crop&crop=face" 
-         alt="Avatar Penjaga" 
-         class="author-avatar"
-         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDQiIGhlaWdodD0iNDQiIHZpZXdCb3g9IjAgMCA0NCA0NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjIiIGN5PSIyMiIgcj0iMjIiIGZpbGw9IiMyNTYzZWIiLz4KPHRleHQgeD0iMjIiIHk9IjI4IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5QPC90ZXh0Pgo8L3N2Zz4K'; this.onerror=null;">
-    <div>
-      <div class="author-name">
-        Penjaga 
-        <svg class="verified-badge" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="12" r="10" fill="currentColor"/>
-          <path d="M9 12l2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        </svg>
-      </div>
-      <time datetime="${a.published}">${fmtDate(a.published)}</time>
-    </div>
-  `;
-  const h1 = post.querySelector('h1'); if(h1 && meta.parentNode!==post){ h1.after(meta); }
 
   /* Tampilkan Tags */
   post.querySelectorAll('.tags-container').forEach(n => n.remove()); // Hapus yg lama jika ada
@@ -1042,7 +1111,12 @@ function renderReader(slug, queryStr) {
     tagsContainer.innerHTML = a.tags.map(tag => 
       `<a href="#tag/${slugify(tag)}" class="tag-item">${tag}</a>`
     ).join('');
-    meta.after(tagsContainer);
+    const postMeta = post.querySelector('.post-meta');
+    if (postMeta) {
+      postMeta.after(tagsContainer);
+    } else {
+      post.appendChild(tagsContainer);
+    }
   }
 
   // ToC
@@ -1122,16 +1196,7 @@ function renderReader(slug, queryStr) {
   
   } catch (error) {
     console.error('Render reader error:', error);
-    // Show error page instead of redirecting to home
-    const post = document.getElementById('post');
-    if (post) {
-      post.innerHTML = `
-        <h1>Error Loading Article</h1>
-        <p>Maaf, terjadi kesalahan saat memuat artikel.</p>
-        <p><a href="/">← Kembali ke Beranda</a></p>
-      `;
-    }
-    show('reader');
+    showReaderError();
   }
 }
 
@@ -1160,6 +1225,22 @@ function renderPost(article) {
     console.error('❌ Error rendering post:', error);
     render404();
   }
+}
+
+/**
+ * Show reader error page
+ */
+function showReaderError() {
+  console.log('Showing reader error page');
+  const post = document.getElementById('post');
+  if (post) {
+    post.innerHTML = `
+      <h1>Error Loading Article</h1>
+      <p>Maaf, terjadi kesalahan saat memuat artikel.</p>
+      <p><a href="/">← Kembali ke Beranda</a></p>
+    `;
+  }
+  show('reader');
 }
 
 /**
@@ -1343,7 +1424,7 @@ function route(){
     if (article) {
       console.log('Found article by slug, redirecting to proper format');
       location.hash = `#p/${possibleSlug}`;
-      return;
+    return;
     }
   }
   
@@ -1493,11 +1574,11 @@ function renderQuickResults(term){
         
         return `
           <a href="${newUrl}" data-slug="${a.slug}">
-            <img loading="lazy" decoding="async" src="${a.cover}" alt="">
-            <div>
-              <div class="hit-title">${a.title}</div>
-              <div class="hit-meta"><time datetime="${a.published}">${fmtDate(a.published)}</time></div>
-            </div>
+          <img loading="lazy" decoding="async" src="${a.cover}" alt="">
+          <div>
+            <div class="hit-title">${a.title}</div>
+            <div class="hit-meta"><time datetime="${a.published}">${fmtDate(a.published)}</time></div>
+          </div>
           </a>`;
       }).join('') : `<div style="padding:12px;color:var(--muted)">${t('noResultsFor')} &ldquo;${term}&rdquo;.</div>`;
   qResults.classList.add('show');
@@ -1614,12 +1695,12 @@ if (btnSearch) {
     const searchBar = DOMCache.get('searchBar');
     if (!searchBar) return;
     
-    searchBar.classList.toggle('show');
+  searchBar.classList.toggle('show');
     if (searchBar.classList.contains('show')) {
       const q = document.getElementById('searchInput');
       if (q) q.focus();
     }
-  };
+};
 }
 document.addEventListener('click',e=>{
   const bar = document.getElementById('searchBar');
@@ -1792,6 +1873,9 @@ function initializeBlog() {
   try {
     console.log('Initializing Maneh blog...');
     
+    // Check AdSense setup
+    checkAdSenseSetup();
+    
     // Initialize DOM cache
     DOMCache.init();
     
@@ -1824,7 +1908,7 @@ function initializeBlog() {
     
     // Ensure I18N is loaded before applying translations
     if (typeof I18N !== 'undefined') {
-      detectAndApplyLocale(); // Run locale detection and initial render
+detectAndApplyLocale(); // Run locale detection and initial render
       // Don't call route() here - it will be called from index.html after scripts load
       console.log('Initialization complete');
     } else {
