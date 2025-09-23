@@ -19,7 +19,8 @@
   # Permissions Policy - Restrict dangerous APIs
   Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()
   
-  # CSP handled by meta tag in HTML (removed to avoid conflicts)
+  # Content Security Policy - Comprehensive for AdSense/Analytics
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://googletagmanager.com https://www.googletagmanager.com https://google-analytics.com https://www.google-analytics.com https://securepubads.g.doubleclick.net https://adservice.google.com https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; script-src-elem 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://securepubads.g.doubleclick.net https://googleads.g.doubleclick.net https://www.googletagmanager.com https://www.google-analytics.com https://tpc.googlesyndication.com https://cdn.jsdelivr.net; connect-src 'self' https://pagead2.googlesyndication.com https://securepubads.g.doubleclick.net https://google-analytics.com https://www.google-analytics.com https://fundingchoicesmessages.google.com https://cdn.jsdelivr.net; frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com; frame-ancestors 'none'; img-src 'self' data: blob: https: http:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; object-src 'none'; require-trusted-types-for 'script'
   
   # SEO Headers
   X-Robots-Tag: index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Routing Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .pass { background-color: #d4edda; border-color: #c3e6cb; }
+        .fail { background-color: #f8d7da; border-color: #f5c6cb; }
+        .info { background-color: #d1ecf1; border-color: #bee5eb; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+        #results { margin-top: 20px; }
+        .route-test { margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 3px; }
+        .route-test.pass { background: #d4edda; }
+        .route-test.fail { background: #f8d7da; }
+    </style>
+</head>
+<body>
+    <h1>SEO Routing Test</h1>
+    
+    <div class="test-section info">
+        <h3>Test Instructions</h3>
+        <p>1. Make sure your blog is running on localhost:5503</p>
+        <p>2. Click "Test SEO Routing" to verify all routes and SEO</p>
+        <p>3. Check console for detailed logs</p>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test Controls</h3>
+        <button onclick="testSEORouting()">Test SEO Routing</button>
+        <button onclick="testSingleRoute()">Test Single Route</button>
+        <button onclick="testConsoleErrors()">Test Console Errors</button>
+        <button onclick="clearResults()">Clear Results</button>
+    </div>
+    
+    <div id="results"></div>
+
+    <script>
+        const testRoutes = [
+            { path: '/', name: 'Home', type: 'page' },
+            { path: '#about', name: 'About', type: 'page' },
+            { path: '#policy', name: 'Privacy Policy', type: 'page' },
+            { path: '#contact', name: 'Contact', type: 'page' },
+            { path: '/2025/01/22/setup-vscode-web-development-panduan-lengkap', name: 'Article', type: 'article' },
+            { path: '#category/tutorial', name: 'Category', type: 'page' }
+        ];
+
+        function log(message, type = 'info') {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `test-section ${type}`;
+            div.innerHTML = `<strong>${new Date().toLocaleTimeString()}</strong>: ${message}`;
+            results.appendChild(div);
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+
+        function testConsoleErrors() {
+            log('Testing Console Errors...', 'info');
+            
+            // Check for common errors
+            const errorPatterns = [
+                'ReferenceError',
+                'TypeError',
+                'undefined is not a function',
+                'Cannot read property',
+                'runUrl is not defined',
+                'fullUrl is not defined'
+            ];
+            
+            let hasErrors = false;
+            errorPatterns.forEach(pattern => {
+                if (console.error && console.error.toString().includes(pattern)) {
+                    log(`✗ Console error found: ${pattern}`, 'fail');
+                    hasErrors = true;
+                }
+            });
+            
+            if (!hasErrors) {
+                log('✓ No console errors found', 'pass');
+            }
+        }
+
+        async function testRoute(route) {
+            return new Promise((resolve) => {
+                log(`Testing route: ${route.name} (${route.path})`, 'info');
+                
+                // Create iframe to test route
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.src = `http://localhost:5503${route.path}`;
+                document.body.appendChild(iframe);
+                
+                iframe.onload = () => {
+                    setTimeout(() => {
+                        try {
+                            const doc = iframe.contentDocument || iframe.contentWindow.document;
+                            
+                            // Check for errors
+                            const hasErrors = doc.title.includes('Error') || 
+                                            doc.body.textContent.includes('ReferenceError') ||
+                                            doc.body.textContent.includes('TypeError');
+                            
+                            if (hasErrors) {
+                                log(`✗ ${route.name} has errors`, 'fail');
+                                resolve(false);
+                                return;
+                            }
+                            
+                            // Check title
+                            const title = doc.title;
+                            if (title) {
+                                log(`✓ ${route.name} title: "${title}"`, 'pass');
+                            } else {
+                                log(`✗ ${route.name} no title`, 'fail');
+                            }
+                            
+                            // Check meta description
+                            const desc = doc.querySelector('meta[name="description"]');
+                            if (desc && desc.content) {
+                                log(`✓ ${route.name} description: "${desc.content}"`, 'pass');
+                            } else {
+                                log(`✗ ${route.name} no description`, 'fail');
+                            }
+                            
+                            // Check canonical
+                            const canon = doc.querySelector('link[rel="canonical"]');
+                            if (canon && canon.href) {
+                                log(`✓ ${route.name} canonical: "${canon.href}"`, 'pass');
+                            } else {
+                                log(`✗ ${route.name} no canonical`, 'fail');
+                            }
+                            
+                            // Check Open Graph
+                            const ogTitle = doc.querySelector('meta[property="og:title"]');
+                            const ogDesc = doc.querySelector('meta[property="og:description"]');
+                            const ogImage = doc.querySelector('meta[property="og:image"]');
+                            
+                            if (ogTitle && ogDesc && ogImage) {
+                                log(`✓ ${route.name} Open Graph tags present`, 'pass');
+                            } else {
+                                log(`✗ ${route.name} missing Open Graph tags`, 'fail');
+                            }
+                            
+                            // Check Twitter Cards
+                            const twTitle = doc.querySelector('meta[name="twitter:title"]');
+                            const twDesc = doc.querySelector('meta[name="twitter:description"]');
+                            const twImage = doc.querySelector('meta[name="twitter:image"]');
+                            
+                            if (twTitle && twDesc && twImage) {
+                                log(`✓ ${route.name} Twitter Card tags present`, 'pass');
+                            } else {
+                                log(`✗ ${route.name} missing Twitter Card tags`, 'fail');
+                            }
+                            
+                            // Check JSON-LD
+                            const jsonLd = doc.querySelector('script[type="application/ld+json"]');
+                            if (jsonLd) {
+                                try {
+                                    const data = JSON.parse(jsonLd.textContent);
+                                    if (data['@type']) {
+                                        log(`✓ ${route.name} JSON-LD valid: ${data['@type']}`, 'pass');
+                                    } else {
+                                        log(`✗ ${route.name} JSON-LD invalid`, 'fail');
+                                    }
+                                } catch (e) {
+                                    log(`✗ ${route.name} JSON-LD parse error`, 'fail');
+                                }
+                            } else {
+                                log(`✗ ${route.name} no JSON-LD`, 'fail');
+                            }
+                            
+                            document.body.removeChild(iframe);
+                            resolve(true);
+                            
+                        } catch (e) {
+                            log(`✗ Error testing ${route.name}: ${e.message}`, 'fail');
+                            document.body.removeChild(iframe);
+                            resolve(false);
+                        }
+                    }, 2000);
+                };
+                
+                iframe.onerror = () => {
+                    log(`✗ Could not load ${route.name}`, 'fail');
+                    document.body.removeChild(iframe);
+                    resolve(false);
+                };
+            });
+        }
+
+        async function testSEORouting() {
+            log('Starting comprehensive SEO routing test...', 'info');
+            clearResults();
+            
+            testConsoleErrors();
+            
+            let passed = 0;
+            for (const route of testRoutes) {
+                const result = await testRoute(route);
+                if (result) passed++;
+            }
+            
+            log(`SEO routing test complete: ${passed}/${testRoutes.length} routes passed`, 
+                passed === testRoutes.length ? 'pass' : 'fail');
+        }
+
+        function testSingleRoute() {
+            const route = testRoutes[Math.floor(Math.random() * testRoutes.length)];
+            testRoute(route);
+        }
+
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+        }
+
+        // Auto-run basic tests on load
+        window.addEventListener('load', () => {
+            log('SEO Routing Test loaded', 'info');
+            log('Click "Test SEO Routing" to start verification', 'info');
+        });
+    </script>
+</body>
+</html>

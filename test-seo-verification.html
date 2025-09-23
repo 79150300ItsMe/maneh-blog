@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Verification Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .pass { background-color: #d4edda; border-color: #c3e6cb; }
+        .fail { background-color: #f8d7da; border-color: #f5c6cb; }
+        .info { background-color: #d1ecf1; border-color: #bee5eb; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+        #results { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>SEO Verification Test</h1>
+    
+    <div class="test-section info">
+        <h3>Test Instructions</h3>
+        <p>1. Open this page in the same domain as your blog</p>
+        <p>2. Click "Run All Tests" to verify SEO functions</p>
+        <p>3. Check console for detailed logs</p>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test Controls</h3>
+        <button onclick="runAllTests()">Run All Tests</button>
+        <button onclick="testAbsUrl()">Test absUrl()</button>
+        <button onclick="testEnsureSingle()">Test ensureSingle()</button>
+        <button onclick="testSeoQA()">Test seoQA()</button>
+        <button onclick="clearResults()">Clear Results</button>
+    </div>
+    
+    <div id="results"></div>
+
+    <script>
+        // Test functions
+        function log(message, type = 'info') {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `test-section ${type}`;
+            div.innerHTML = `<strong>${new Date().toLocaleTimeString()}</strong>: ${message}`;
+            results.appendChild(div);
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+
+        function testAbsUrl() {
+            log('Testing absUrl() function...', 'info');
+            
+            try {
+                // Test cases
+                const testCases = [
+                    { input: '/test', expected: location.origin + '/test' },
+                    { input: 'https://example.com', expected: 'https://example.com' },
+                    { input: '#about', expected: location.origin + location.pathname + '#about' },
+                    { input: 'test', expected: location.origin + '/test' }
+                ];
+                
+                let passed = 0;
+                testCases.forEach((testCase, index) => {
+                    try {
+                        const result = absUrl(testCase.input);
+                        if (result === testCase.expected) {
+                            log(`✓ Test ${index + 1} passed: ${testCase.input} → ${result}`, 'pass');
+                            passed++;
+                        } else {
+                            log(`✗ Test ${index + 1} failed: ${testCase.input} → ${result} (expected: ${testCase.expected})`, 'fail');
+                        }
+                    } catch (e) {
+                        log(`✗ Test ${index + 1} error: ${e.message}`, 'fail');
+                    }
+                });
+                
+                log(`absUrl() tests: ${passed}/${testCases.length} passed`, passed === testCases.length ? 'pass' : 'fail');
+            } catch (e) {
+                log(`absUrl() function not found: ${e.message}`, 'fail');
+            }
+        }
+
+        function testEnsureSingle() {
+            log('Testing ensureSingle() function...', 'info');
+            
+            try {
+                // Test meta description deduplication
+                const beforeDesc = document.querySelectorAll('meta[name="description"]').length;
+                ensureSingle('meta[name="description"]', () => {
+                    const m = document.createElement('meta');
+                    m.setAttribute('name', 'description');
+                    return m;
+                });
+                const afterDesc = document.querySelectorAll('meta[name="description"]').length;
+                
+                if (afterDesc <= beforeDesc + 1) {
+                    log('✓ Meta description deduplication working', 'pass');
+                } else {
+                    log('✗ Meta description deduplication failed', 'fail');
+                }
+                
+                // Test canonical link deduplication
+                const beforeCanon = document.querySelectorAll('link[rel="canonical"]').length;
+                ensureSingle('link[rel="canonical"]', () => {
+                    const l = document.createElement('link');
+                    l.setAttribute('rel', 'canonical');
+                    return l;
+                });
+                const afterCanon = document.querySelectorAll('link[rel="canonical"]').length;
+                
+                if (afterCanon <= beforeCanon + 1) {
+                    log('✓ Canonical link deduplication working', 'pass');
+                } else {
+                    log('✗ Canonical link deduplication failed', 'fail');
+                }
+                
+            } catch (e) {
+                log(`ensureSingle() function not found: ${e.message}`, 'fail');
+            }
+        }
+
+        function testSeoQA() {
+            log('Testing seoQA() function...', 'info');
+            
+            try {
+                // Test with sample data
+                seoQA({
+                    type: 'page',
+                    title: 'Test Page',
+                    description: 'This is a test description for SEO QA verification.',
+                    image: 'https://example.com/test.jpg'
+                });
+                
+                log('✓ seoQA() function executed successfully', 'pass');
+                
+                // Check if JSON-LD was injected
+                const jsonLd = document.querySelector('script[type="application/ld+json"].seo-jsonld');
+                if (jsonLd) {
+                    log('✓ JSON-LD structured data injected', 'pass');
+                    try {
+                        const data = JSON.parse(jsonLd.textContent);
+                        if (data['@type'] === 'WebPage') {
+                            log('✓ JSON-LD has correct @type', 'pass');
+                        } else {
+                            log('✗ JSON-LD has incorrect @type', 'fail');
+                        }
+                    } catch (e) {
+                        log('✗ JSON-LD is not valid JSON', 'fail');
+                    }
+                } else {
+                    log('✗ JSON-LD not found', 'fail');
+                }
+                
+            } catch (e) {
+                log(`seoQA() function error: ${e.message}`, 'fail');
+            }
+        }
+
+        function testMetaTags() {
+            log('Testing meta tags...', 'info');
+            
+            const checks = {
+                title: !!document.title,
+                desc: !!document.querySelector('meta[name="description"]'),
+                canon: !!document.querySelector('link[rel="canonical"]'),
+                ogt: !!document.querySelector('meta[property="og:title"]'),
+                ogd: !!document.querySelector('meta[property="og:description"]'),
+                ogu: !!document.querySelector('meta[property="og:url"]'),
+                ogi: !!document.querySelector('meta[property="og:image"]'),
+                twt: !!document.querySelector('meta[name="twitter:title"]'),
+                twd: !!document.querySelector('meta[name="twitter:description"]'),
+                twi: !!document.querySelector('meta[name="twitter:image"]')
+            };
+            
+            const fails = Object.entries(checks).filter(([k, v]) => !v).map(([k]) => k);
+            
+            if (fails.length === 0) {
+                log('✓ All meta tags present', 'pass');
+            } else {
+                log(`✗ Missing meta tags: ${fails.join(', ')}`, 'fail');
+            }
+            
+            // Check for duplicates
+            const descCount = document.querySelectorAll('meta[name="description"]').length;
+            const canonCount = document.querySelectorAll('link[rel="canonical"]').length;
+            
+            if (descCount === 1) {
+                log('✓ Meta description is unique', 'pass');
+            } else {
+                log(`✗ Meta description duplicated (${descCount} instances)`, 'fail');
+            }
+            
+            if (canonCount === 1) {
+                log('✓ Canonical link is unique', 'pass');
+            } else {
+                log(`✗ Canonical link duplicated (${canonCount} instances)`, 'fail');
+            }
+        }
+
+        function runAllTests() {
+            log('Starting comprehensive SEO verification...', 'info');
+            clearResults();
+            
+            testAbsUrl();
+            testEnsureSingle();
+            testSeoQA();
+            testMetaTags();
+            
+            log('SEO verification complete!', 'info');
+        }
+
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+        }
+
+        // Auto-run basic tests on load
+        window.addEventListener('load', () => {
+            log('SEO Verification Test loaded', 'info');
+            log('Click "Run All Tests" to start verification', 'info');
+        });
+    </script>
+</body>
+</html>

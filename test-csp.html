@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSP Compliance Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .pass { background-color: #d4edda; border-color: #c3e6cb; }
+        .fail { background-color: #f8d7da; border-color: #f5c6cb; }
+        .info { background-color: #d1ecf1; border-color: #bee5eb; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+        #results { margin-top: 20px; }
+        .domain-list { margin: 10px 0; }
+        .domain { padding: 5px; margin: 2px 0; background: #f8f9fa; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <h1>CSP Compliance Test</h1>
+    
+    <div class="test-section info">
+        <h3>Test Instructions</h3>
+        <p>1. Open this page in the same domain as your blog</p>
+        <p>2. Click "Test CSP Compliance" to verify AdSense domains</p>
+        <p>3. Check console for CSP violations</p>
+    </div>
+    
+    <div class="test-section">
+        <h3>Required AdSense Domains</h3>
+        <div class="domain-list">
+            <div class="domain">https://www.googletagmanager.com</div>
+            <div class="domain">https://www.google-analytics.com</div>
+            <div class="domain">https://pagead2.googlesyndication.com</div>
+            <div class="domain">https://googleads.g.doubleclick.net</div>
+            <div class="domain">https://securepubads.g.doubleclick.net</div>
+            <div class="domain">https://*.adtrafficquality.google</div>
+            <div class="domain">https://eol.adtrafficquality.google</div>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test Controls</h3>
+        <button onclick="testCSPCompliance()">Test CSP Compliance</button>
+        <button onclick="testAdSenseScripts()">Test AdSense Scripts</button>
+        <button onclick="clearResults()">Clear Results</button>
+    </div>
+    
+    <div id="results"></div>
+
+    <script>
+        function log(message, type = 'info') {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `test-section ${type}`;
+            div.innerHTML = `<strong>${new Date().toLocaleTimeString()}</strong>: ${message}`;
+            results.appendChild(div);
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+
+        function testCSPCompliance() {
+            log('Testing CSP Compliance...', 'info');
+            
+            // Check if CSP meta tag exists
+            const cspMeta = document.querySelector('meta[http-equiv="Content-Security-Policy"]');
+            if (cspMeta) {
+                log('✓ CSP meta tag found', 'pass');
+                
+                const cspContent = cspMeta.content;
+                const requiredDomains = [
+                    'www.googletagmanager.com',
+                    'www.google-analytics.com',
+                    'pagead2.googlesyndication.com',
+                    'googleads.g.doubleclick.net',
+                    'securepubads.g.doubleclick.net',
+                    'adtrafficquality.google',
+                    'eol.adtrafficquality.google'
+                ];
+                
+                let foundDomains = 0;
+                requiredDomains.forEach(domain => {
+                    if (cspContent.includes(domain)) {
+                        log(`✓ Domain found in CSP: ${domain}`, 'pass');
+                        foundDomains++;
+                    } else {
+                        log(`✗ Domain missing from CSP: ${domain}`, 'fail');
+                    }
+                });
+                
+                if (foundDomains === requiredDomains.length) {
+                    log('✓ All required AdSense domains found in CSP', 'pass');
+                } else {
+                    log(`✗ Only ${foundDomains}/${requiredDomains.length} domains found in CSP`, 'fail');
+                }
+                
+                // Check for unsafe directives
+                if (cspContent.includes("'unsafe-inline'")) {
+                    log('⚠ CSP allows unsafe-inline (required for AdSense)', 'info');
+                }
+                
+                if (cspContent.includes("'unsafe-eval'")) {
+                    log('⚠ CSP allows unsafe-eval (required for AdSense)', 'info');
+                }
+                
+            } else {
+                log('✗ No CSP meta tag found', 'fail');
+            }
+        }
+
+        function testAdSenseScripts() {
+            log('Testing AdSense Scripts...', 'info');
+            
+            // Check for AdSense script
+            const adsenseScript = document.querySelector('script[src*="adsbygoogle.js"]');
+            if (adsenseScript) {
+                log('✓ AdSense script found', 'pass');
+            } else {
+                log('✗ AdSense script not found', 'fail');
+            }
+            
+            // Check for AdSense meta tag
+            const adsenseMeta = document.querySelector('meta[name="google-adsense-account"]');
+            if (adsenseMeta) {
+                log(`✓ AdSense meta tag found: ${adsenseMeta.content}`, 'pass');
+            } else {
+                log('✗ AdSense meta tag not found', 'fail');
+            }
+            
+            // Check for ads.txt
+            fetch('/ads.txt')
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    }
+                    throw new Error('ads.txt not accessible');
+                })
+                .then(text => {
+                    if (text.includes('google.com') && text.includes('pub-2251624901582740')) {
+                        log('✓ ads.txt accessible and contains correct data', 'pass');
+                    } else {
+                        log('✗ ads.txt content incorrect', 'fail');
+                    }
+                })
+                .catch(error => {
+                    log(`✗ ads.txt not accessible: ${error.message}`, 'fail');
+                });
+        }
+
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+        }
+
+        // Auto-run basic tests on load
+        window.addEventListener('load', () => {
+            log('CSP Compliance Test loaded', 'info');
+            log('Click "Test CSP Compliance" to start verification', 'info');
+        });
+    </script>
+</body>
+</html>

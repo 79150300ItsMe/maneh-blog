@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lighthouse SEO Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .pass { background-color: #d4edda; border-color: #c3e6cb; }
+        .fail { background-color: #f8d7da; border-color: #f5c6cb; }
+        .info { background-color: #d1ecf1; border-color: #bee5eb; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+        #results { margin-top: 20px; }
+        .lighthouse-item { margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 3px; }
+        .lighthouse-item.pass { background: #d4edda; }
+        .lighthouse-item.fail { background: #f8d7da; }
+        .lighthouse-item.warning { background: #fff3cd; }
+    </style>
+</head>
+<body>
+    <h1>Lighthouse SEO Test</h1>
+    
+    <div class="test-section info">
+        <h3>Test Instructions</h1>
+        <p>1. Open this page in the same domain as your blog</p>
+        <p>2. Click "Test Lighthouse SEO" to verify SEO elements</p>
+        <p>3. Check console for detailed results</p>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test Controls</h3>
+        <button onclick="testLighthouseSEO()">Test Lighthouse SEO</button>
+        <button onclick="testMetaTags()">Test Meta Tags</button>
+        <button onclick="testStructuredData()">Test Structured Data</button>
+        <button onclick="testPerformance()">Test Performance</button>
+        <button onclick="clearResults()">Clear Results</button>
+    </div>
+    
+    <div id="results"></div>
+
+    <script>
+        function log(message, type = 'info') {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `test-section ${type}`;
+            div.innerHTML = `<strong>${new Date().toLocaleTimeString()}</strong>: ${message}`;
+            results.appendChild(div);
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+
+        function testLighthouseSEO() {
+            log('Testing Lighthouse SEO...', 'info');
+            clearResults();
+            
+            testMetaTags();
+            testStructuredData();
+            testPerformance();
+        }
+
+        function testMetaTags() {
+            log('Testing Meta Tags for Lighthouse...', 'info');
+            
+            // Test title
+            const title = document.title;
+            if (title && title.length > 0) {
+                log('✓ Title tag present', 'pass');
+                if (title.length <= 60) {
+                    log('✓ Title length optimal (≤60 chars)', 'pass');
+                } else if (title.length <= 65) {
+                    log('⚠ Title length acceptable (≤65 chars)', 'warning');
+                } else {
+                    log('✗ Title too long (>65 chars)', 'fail');
+                }
+            } else {
+                log('✗ No title tag', 'fail');
+            }
+            
+            // Test meta description
+            const desc = document.querySelector('meta[name="description"]');
+            if (desc && desc.content) {
+                log('✓ Meta description present', 'pass');
+                if (desc.content.length >= 120 && desc.content.length <= 155) {
+                    log('✓ Meta description length optimal (120-155 chars)', 'pass');
+                } else if (desc.content.length >= 100 && desc.content.length <= 160) {
+                    log('⚠ Meta description length acceptable (100-160 chars)', 'warning');
+                } else {
+                    log('✗ Meta description length suboptimal', 'fail');
+                }
+            } else {
+                log('✗ No meta description', 'fail');
+            }
+            
+            // Test canonical
+            const canon = document.querySelector('link[rel="canonical"]');
+            if (canon && canon.href) {
+                log('✓ Canonical URL present', 'pass');
+                if (canon.href.startsWith('http')) {
+                    log('✓ Canonical URL is absolute', 'pass');
+                } else {
+                    log('✗ Canonical URL is not absolute', 'fail');
+                }
+            } else {
+                log('✗ No canonical URL', 'fail');
+            }
+            
+            // Test Open Graph
+            const ogTitle = document.querySelector('meta[property="og:title"]');
+            const ogDesc = document.querySelector('meta[property="og:description"]');
+            const ogImage = document.querySelector('meta[property="og:image"]');
+            
+            if (ogTitle && ogDesc && ogImage) {
+                log('✓ Open Graph tags present', 'pass');
+            } else {
+                log('✗ Missing Open Graph tags', 'fail');
+            }
+            
+            // Test Twitter Cards
+            const twCard = document.querySelector('meta[name="twitter:card"]');
+            const twTitle = document.querySelector('meta[name="twitter:title"]');
+            const twDesc = document.querySelector('meta[name="twitter:description"]');
+            const twImage = document.querySelector('meta[name="twitter:image"]');
+            
+            if (twCard && twTitle && twDesc && twImage) {
+                log('✓ Twitter Card tags present', 'pass');
+            } else {
+                log('✗ Missing Twitter Card tags', 'fail');
+            }
+        }
+
+        function testStructuredData() {
+            log('Testing Structured Data...', 'info');
+            
+            const jsonLdScripts = document.querySelectorAll('script[type="application/ld+json"]');
+            
+            if (jsonLdScripts.length === 0) {
+                log('✗ No structured data found', 'fail');
+                return;
+            }
+            
+            log(`✓ Found ${jsonLdScripts.length} structured data script(s)`, 'pass');
+            
+            jsonLdScripts.forEach((script, index) => {
+                try {
+                    const data = JSON.parse(script.textContent);
+                    
+                    // Check required fields
+                    if (data['@context'] === 'https://schema.org') {
+                        log(`✓ Script ${index + 1} has correct @context`, 'pass');
+                    } else {
+                        log(`✗ Script ${index + 1} has incorrect @context`, 'fail');
+                    }
+                    
+                    if (data['@type']) {
+                        log(`✓ Script ${index + 1} has @type: ${data['@type']}`, 'pass');
+                    } else {
+                        log(`✗ Script ${index + 1} missing @type`, 'fail');
+                    }
+                    
+                    // Check for common required fields
+                    const commonFields = ['name', 'headline', 'description', 'url'];
+                    const foundFields = commonFields.filter(field => data[field]);
+                    
+                    if (foundFields.length > 0) {
+                        log(`✓ Script ${index + 1} has common fields: ${foundFields.join(', ')}`, 'pass');
+                    } else {
+                        log(`✗ Script ${index + 1} missing common fields`, 'fail');
+                    }
+                    
+                } catch (e) {
+                    log(`✗ Script ${index + 1} is not valid JSON`, 'fail');
+                }
+            });
+        }
+
+        function testPerformance() {
+            log('Testing Performance...', 'info');
+            
+            // Test image optimization
+            const images = document.querySelectorAll('img');
+            let unoptimizedImages = 0;
+            
+            images.forEach((img, index) => {
+                if (img.src && !img.src.includes('w_') && !img.src.includes('h_') && !img.src.includes('q_')) {
+                    unoptimizedImages++;
+                }
+            });
+            
+            if (unoptimizedImages === 0) {
+                log('✓ All images appear optimized', 'pass');
+            } else {
+                log(`⚠ ${unoptimizedImages} images may not be optimized`, 'warning');
+            }
+            
+            // Test font loading
+            const fonts = document.querySelectorAll('link[href*="fonts.googleapis.com"]');
+            if (fonts.length > 0) {
+                log('✓ Google Fonts loaded', 'pass');
+            } else {
+                log('✗ No Google Fonts found', 'fail');
+            }
+            
+            // Test preconnect
+            const preconnects = document.querySelectorAll('link[rel="preconnect"]');
+            if (preconnects.length > 0) {
+                log(`✓ Found ${preconnects.length} preconnect links`, 'pass');
+            } else {
+                log('✗ No preconnect links found', 'fail');
+            }
+            
+            // Test DNS prefetch
+            const prefetches = document.querySelectorAll('link[rel="dns-prefetch"]');
+            if (prefetches.length > 0) {
+                log(`✓ Found ${prefetches.length} DNS prefetch links`, 'pass');
+            } else {
+                log('✗ No DNS prefetch links found', 'fail');
+            }
+        }
+
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+        }
+
+        // Auto-run basic tests on load
+        window.addEventListener('load', () => {
+            log('Lighthouse SEO Test loaded', 'info');
+            log('Click "Test Lighthouse SEO" to start verification', 'info');
+        });
+    </script>
+</body>
+</html>
