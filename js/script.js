@@ -181,11 +181,24 @@ function applyI18N() {
       { id: 'menuContact', prop: 'textContent', value: t('menuContact') }
     ];
     
-    // Apply updates efficiently
+    // Apply updates efficiently with Trusted Types safety
     updates.forEach(({ id, prop, value }) => {
       const element = document.getElementById(id);
       if (element && value) {
-        element[prop] = value;
+        try {
+          // Safe property assignment
+          if (prop === 'innerHTML') {
+            setHTMLSafe(element, value);
+          } else {
+            element[prop] = value;
+          }
+        } catch (e) {
+          console.warn(`Failed to set ${prop} on ${id}:`, e);
+          // Fallback untuk textContent
+          if (prop === 'innerHTML' || prop === 'textContent') {
+            element.textContent = value;
+          }
+        }
       }
     });
     
