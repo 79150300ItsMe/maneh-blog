@@ -1,29 +1,15 @@
-// Performance & Security Optimizations - Enhanced with Anti-Detection
+/**
+ * Maneh Blog - Main JavaScript
+ * Optimized for performance and maintainability
+ */
 'use strict';
-history.scrollRestoration = 'manual';
 
-// Performance monitoring with obfuscation
+// Performance monitoring
 const perfStartTime = performance.now();
 let metricsCollected = false;
 
-// Anti-fingerprinting measures
-(function antiDetection() {
-  // Randomize performance timing
-  if (typeof performance !== 'undefined' && performance.now) {
-    const originalNow = performance.now.bind(performance);
-    performance.now = function() {
-      return originalNow() + (Math.random() - 0.5) * 2;
-    };
-  }
-  
-  // Obfuscate console patterns
-  const originalLog = console.log;
-  console.log = function(...args) {
-    if (Math.random() > 0.7) { // Only log 30% of the time
-      originalLog.apply(console, args);
-    }
-  };
-})();
+// Restore scroll position
+history.scrollRestoration = 'manual';
 
 // Secure locale detection with fallback
 let LOCALE = (() => {
@@ -35,6 +21,78 @@ let LOCALE = (() => {
     return 'en';
   }
 })();
+
+// DOM Element Cache
+const DOMCache = {
+  home: null,
+  reader: null,
+  post: null,
+  searchBar: null,
+  drawer: null,
+  btnMenu: null,
+  btnClose: null,
+  
+  /**
+   * Initialize DOM cache
+   */
+  init() {
+    this.home = document.getElementById('home');
+    this.reader = document.getElementById('reader');
+    this.post = document.getElementById('post');
+    this.searchBar = document.getElementById('searchBar');
+    this.drawer = document.getElementById('drawer');
+    this.btnMenu = document.getElementById('btnMenu');
+    this.btnClose = document.getElementById('btnClose');
+  },
+  
+  /**
+   * Get cached element or query DOM
+   * @param {string} id - Element ID
+   * @returns {Element|null}
+   */
+  get(id) {
+    return this[id] || document.getElementById(id);
+  }
+};
+
+// Utility Functions
+/**
+ * Debounce function to limit function calls
+ * @param {Function} func - Function to debounce
+ * @param {number} wait - Wait time in milliseconds
+ * @param {boolean} immediate - Execute immediately
+ * @returns {Function} Debounced function
+ */
+function debounce(func, wait, immediate = false) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      timeout = null;
+      if (!immediate) func.apply(this, args);
+    };
+    const callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(this, args);
+  };
+}
+
+/**
+ * Throttle function to limit function calls
+ * @param {Function} func - Function to throttle
+ * @param {number} limit - Time limit in milliseconds
+ * @returns {Function} Throttled function
+ */
+function throttle(func, limit) {
+  let inThrottle;
+  return function(...args) {
+    if (!inThrottle) {
+      func.apply(this, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  };
+}
 
 /* Enhanced locale detection with error handling */
 function detectAndApplyLocale() {
@@ -52,12 +110,31 @@ function detectAndApplyLocale() {
       }
 }
 
-// Secure translation function with error handling
+// Secure translation function with error handling and fallback
 function t(key) { 
   try {
-    return (I18N[LOCALE] || I18N.id || {})[key] || key;
+    // Try current locale first
+    let result = (I18N[LOCALE] || {})[key];
+    
+    // Fallback to Indonesian if not found
+    if (!result && LOCALE !== 'id') {
+      result = (I18N.id || {})[key];
+    }
+    
+    // Fallback to English if still not found
+    if (!result && LOCALE !== 'en') {
+      result = (I18N.en || {})[key];
+    }
+    
+    // Final fallback to key itself
+    if (!result) {
+      result = key;
+      console.warn('Translation not found for key:', key, 'locale:', LOCALE);
+    }
+    
+    return result;
   } catch (e) {
-    console.warn('Translation error for key:', key);
+    console.warn('Translation error for key:', key, 'error:', e);
     return key;
   }
 }
@@ -65,6 +142,10 @@ function t(key) {
 // Optimized I18N application with batch DOM updates
 function applyI18N() {
   try {
+    console.log('Applying I18N with locale:', LOCALE);
+    console.log('I18N object available:', typeof I18N !== 'undefined');
+    console.log('I18N[LOCALE] available:', I18N && I18N[LOCALE] ? 'yes' : 'no');
+    
   document.documentElement.lang = LOCALE;
     
     // Batch DOM updates for better performance with safe innerHTML
@@ -78,7 +159,8 @@ function applyI18N() {
       { id: 'menuNews', prop: 'textContent', value: t('menuNews') },
       { id: 'menuTutorial', prop: 'textContent', value: t('menuTutorial') },
       { id: 'menuAbout', prop: 'textContent', value: t('menuAbout') },
-      { id: 'menuPolicy', prop: 'textContent', value: t('menuPolicy') }
+      { id: 'menuPolicy', prop: 'textContent', value: t('menuPolicy') },
+      { id: 'menuContact', prop: 'textContent', value: t('menuContact') }
     ];
     
     // Apply updates efficiently
@@ -90,7 +172,7 @@ function applyI18N() {
     });
     
     // Handle special cases
-    const aboutPostH1 = document.querySelector('#aboutPost h1');
+    const aboutPostH1 = document.querySelector('#about h1');
     if (aboutPostH1) aboutPostH1.textContent = t('aboutTitle');
     
     const aboutContent = document.getElementById('aboutContent');
@@ -99,8 +181,14 @@ function applyI18N() {
     const policyPostH1 = document.querySelector('#policyPost h1');
     if (policyPostH1) policyPostH1.textContent = t('policyTitle');
     
+    const contactPostH1 = document.querySelector('#contactPost h1');
+    if (contactPostH1) contactPostH1.textContent = t('contactTitle');
+    
     const policyContent = document.getElementById('policyContent');
     if (policyContent) policyContent.innerHTML = t('policyHTML');
+    
+    const contactContent = document.getElementById('contactContent');
+    if (contactContent) contactContent.innerHTML = t('contactHTML');
     
   } catch (error) {
     console.error('I18N application error:', error);
@@ -223,39 +311,104 @@ function getRandomArticles(count) {
 }
 
 /* ======= Enhanced SEO helpers ======= */
+
+/**
+ * Find or create meta tag with null safety
+ * @param {string} selector - CSS selector for meta tag
+ * @param {string} attribute - Attribute to set (content, property, name)
+ * @param {string} value - Value to set
+ * @param {string} content - Content value (for content attribute)
+ */
+function findOrCreateMeta(selector, attribute, value, content = null) {
+  let meta = document.querySelector(selector);
+  
+  if (!meta) {
+    meta = document.createElement('meta');
+    if (attribute === 'property') {
+      meta.setAttribute('property', value);
+    } else if (attribute === 'name') {
+      meta.setAttribute('name', value);
+    }
+    document.head.appendChild(meta);
+  }
+  
+  if (content !== null) {
+    meta.content = content;
+  }
+  
+  return meta;
+}
+
+/**
+ * Find or create link tag with null safety
+ * @param {string} rel - rel attribute value
+ * @param {string} href - href value
+ */
+function findOrCreateLink(rel, href) {
+  let link = document.querySelector(`link[rel="${rel}"]`);
+  
+  if (!link) {
+    link = document.createElement('link');
+    link.rel = rel;
+    document.head.appendChild(link);
+  }
+  
+  link.href = href;
+  return link;
+}
+
 function updateSEOForArticle(a){
   try {
-  const url = canonicalPath(a);
+    const url = canonicalPath(a);
     const fullUrl = `https://maneh.blog${url}`;
+    const siteTitle = typeof SITE_TITLE !== 'undefined' ? SITE_TITLE : 'Maneh — Tutorial & Tips Teknologi';
     
-    // Update canonical URL
-    document.getElementById('canon').href = fullUrl;
+    // Update page title
+    document.title = `${a.title} — ${siteTitle}`;
     
-    // Update page title with SEO optimization
-    document.title = `${a.title} | Maneh — Tutorial & Tips Teknologi`;
-    
-    // Update meta description
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.content = `${a.summary} | Tutorial lengkap dengan panduan step-by-step di Maneh.`;
+    // Update canonical URL with null safety
+    const canonEl = document.getElementById('canon');
+    if (canonEl) {
+      canonEl.href = fullUrl;
+    } else {
+      findOrCreateLink('canonical', fullUrl);
     }
     
-    // Update Open Graph tags
-    document.getElementById('ogTitle').content = `${a.title} | Maneh Blog`;
-    document.getElementById('ogDesc').content = `${a.summary} | Tutorial lengkap dengan panduan step-by-step di Maneh.`;
-  document.getElementById('ogImage').content = a.cover;
-    document.getElementById('ogUrl').content = fullUrl;
+    // Ensure canonical uses current origin + pathname
+    const currentCanonical = location.origin + location.pathname;
+    if (canonEl) {
+      canonEl.href = currentCanonical;
+    } else {
+      findOrCreateLink('canonical', currentCanonical);
+    }
     
-    // Update Twitter tags
-    const twitterTitle = document.querySelector('meta[name="twitter:title"]');
-    const twitterDesc = document.querySelector('meta[name="twitter:description"]');
-    const twitterImage = document.querySelector('meta[name="twitter:image"]');
-    const twitterUrl = document.querySelector('meta[name="twitter:url"]');
+    // Update meta description with null safety
+    findOrCreateMeta('meta[name="description"]', 'name', 'description', a.summary || 'Tutorial lengkap dengan panduan step-by-step.');
     
-    if (twitterTitle) twitterTitle.content = `${a.title} | Maneh Blog`;
-    if (twitterDesc) twitterDesc.content = `${a.summary} | Tutorial lengkap dengan panduan step-by-step di Maneh.`;
-    if (twitterImage) twitterImage.content = a.cover;
-    if (twitterUrl) twitterUrl.content = fullUrl;
+    // Update Open Graph tags with null safety
+    const ogTitleEl = document.getElementById('ogTitle');
+    const ogDescEl = document.getElementById('ogDesc');
+    const ogImageEl = document.getElementById('ogImage');
+    const ogUrlEl = document.getElementById('ogUrl');
+    
+    if (ogTitleEl) ogTitleEl.content = `${a.title} | Maneh Blog`;
+    else findOrCreateMeta('meta[property="og:title"]', 'property', 'og:title', `${a.title} | Maneh Blog`);
+    
+    if (ogDescEl) ogDescEl.content = `${a.summary} | Tutorial lengkap dengan panduan step-by-step di Maneh.`;
+    else findOrCreateMeta('meta[property="og:description"]', 'property', 'og:description', `${a.summary} | Tutorial lengkap dengan panduan step-by-step di Maneh.`);
+    
+    if (ogImageEl) ogImageEl.content = a.cover;
+    else findOrCreateMeta('meta[property="og:image"]', 'property', 'og:image', a.cover);
+    
+    if (ogUrlEl) ogUrlEl.content = fullUrl;
+    else findOrCreateMeta('meta[property="og:url"]', 'property', 'og:url', fullUrl);
+    
+    // Update Twitter tags with null safety
+    findOrCreateMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image');
+    findOrCreateMeta('meta[name="twitter:title"]', 'name', 'twitter:title', `${a.title} | Maneh Blog`);
+    findOrCreateMeta('meta[name="twitter:description"]', 'name', 'twitter:description', `${a.summary} | Tutorial lengkap dengan panduan step-by-step di Maneh.`);
+    findOrCreateMeta('meta[name="twitter:image"]', 'name', 'twitter:image', a.cover);
+    findOrCreateMeta('meta[name="twitter:url"]', 'name', 'twitter:url', fullUrl);
     
     // Enhanced Article Structured Data
   let ld = document.getElementById('ld-article');
@@ -338,13 +491,13 @@ function resetSEOHome(){
     // Reset canonical URL
     document.getElementById('canon').href = 'https://maneh.blog/';
     
-    // Reset page title
-    document.title = 'Maneh — Tutorial & Tips Teknologi Terlengkap 2025';
+    // Reset page title using SITE_TITLE
+    document.title = typeof SITE_TITLE !== 'undefined' ? SITE_TITLE : 'Maneh — Tutorial & Tips Teknologi Terlengkap 2025';
     
-    // Reset meta description
+    // Reset meta description using SITE_DESC
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
-      metaDesc.content = 'Maneh: platform tutorial & tips teknologi terlengkap dengan bahasa sederhana, panduan step-by-step, dan bisa langsung dipraktikkan. Update terbaru 2025!';
+      metaDesc.content = typeof SITE_DESC !== 'undefined' ? SITE_DESC : 'Maneh: platform tutorial & tips teknologi terlengkap dengan bahasa sederhana, panduan step-by-step, dan bisa langsung dipraktikkan. Update terbaru 2025!';
     }
     
     // Reset Open Graph tags with null checks
@@ -380,6 +533,158 @@ function resetSEOHome(){
   } catch (error) {
     console.error('SEO reset error:', error);
   }
+}
+
+/**
+ * Update SEO for category pages
+ * @param {string} categoryName - Category name
+ * @param {number} articleCount - Number of articles
+ */
+function updateSEOForCategory(categoryName, articleCount) {
+  try {
+    const cleanCategoryName = categoryName.charAt(0).toUpperCase() + categoryName.slice(1);
+    const categoryUrl = `https://maneh.blog/#category/${categoryName}`;
+    
+    // Update page title
+    const siteTitle = typeof SITE_TITLE !== 'undefined' ? SITE_TITLE : 'Maneh Blog';
+    document.title = `Category: ${cleanCategoryName} — ${siteTitle}`;
+    
+    // Update meta description
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.content = `Koleksi ${articleCount} tutorial dan tips ${cleanCategoryName.toLowerCase()} terbaru. Panduan lengkap dengan bahasa sederhana dan bisa langsung dipraktikkan.`;
+    }
+    
+    // Update canonical URL
+    const canon = document.getElementById('canon');
+    if (canon) canon.href = categoryUrl;
+    
+    // Update Open Graph tags
+    const ogTitle = document.getElementById('ogTitle');
+    const ogDesc = document.getElementById('ogDesc');
+    const ogUrl = document.getElementById('ogUrl');
+    
+    if (ogTitle) ogTitle.content = `${cleanCategoryName} - Tutorial & Tips | Maneh Blog`;
+    if (ogDesc) ogDesc.content = `Koleksi ${articleCount} tutorial dan tips ${cleanCategoryName.toLowerCase()} terbaru di Maneh.`;
+    if (ogUrl) ogUrl.content = categoryUrl;
+    
+    // Update Twitter tags
+    const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+    const twitterDesc = document.querySelector('meta[name="twitter:description"]');
+    const twitterUrl = document.querySelector('meta[name="twitter:url"]');
+    
+    if (twitterTitle) twitterTitle.content = `${cleanCategoryName} - Tutorial & Tips | Maneh Blog`;
+    if (twitterDesc) twitterDesc.content = `Koleksi ${articleCount} tutorial dan tips ${cleanCategoryName.toLowerCase()} terbaru di Maneh.`;
+    if (twitterUrl) twitterUrl.content = categoryUrl;
+    
+  } catch (error) {
+    console.error('Error updating SEO for category:', error);
+  }
+}
+
+/**
+ * Update SEO for tag pages
+ * @param {string} tagName - Tag name
+ * @param {number} articleCount - Number of articles
+ */
+function updateSEOForTag(tagName, articleCount) {
+  try {
+    const cleanTagName = tagName.charAt(0).toUpperCase() + tagName.slice(1);
+    const tagUrl = `https://maneh.blog/#tag/${tagName}`;
+    
+    // Update page title
+    const siteTitle = typeof SITE_TITLE !== 'undefined' ? SITE_TITLE : 'Maneh Blog';
+    document.title = `Tag: ${cleanTagName} - ${articleCount} Artikel | ${siteTitle}`;
+    
+    // Update meta description
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.content = `Temukan ${articleCount} artikel dengan tag "${cleanTagName}". Tutorial dan tips teknologi terbaru dengan panduan lengkap.`;
+    }
+    
+    // Update canonical URL
+    const canon = document.getElementById('canon');
+    if (canon) canon.href = tagUrl;
+    
+    // Update Open Graph tags
+    const ogTitle = document.getElementById('ogTitle');
+    const ogDesc = document.getElementById('ogDesc');
+    const ogUrl = document.getElementById('ogUrl');
+    
+    if (ogTitle) ogTitle.content = `Tag: ${cleanTagName} - ${articleCount} Artikel | Maneh Blog`;
+    if (ogDesc) ogDesc.content = `Temukan ${articleCount} artikel dengan tag "${cleanTagName}" di Maneh.`;
+    if (ogUrl) ogUrl.content = tagUrl;
+    
+    // Update Twitter tags
+    const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+    const twitterDesc = document.querySelector('meta[name="twitter:description"]');
+    const twitterUrl = document.querySelector('meta[name="twitter:url"]');
+    
+    if (twitterTitle) twitterTitle.content = `Tag: ${cleanTagName} - ${articleCount} Artikel | Maneh Blog`;
+    if (twitterDesc) twitterDesc.content = `Temukan ${articleCount} artikel dengan tag "${cleanTagName}" di Maneh.`;
+    if (twitterUrl) twitterUrl.content = tagUrl;
+    
+  } catch (error) {
+    console.error('Error updating SEO for tag:', error);
+  }
+}
+
+/**
+ * Image optimization with fallback and lazy loading
+ * @param {string} imageUrl - Original image URL
+ * @param {string} alt - Alt text
+ * @param {string} className - CSS class
+ * @returns {string} Optimized image HTML
+ */
+function createOptimizedImage(imageUrl, alt = '', className = '') {
+  const fallbackImage = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjQ1MCIgdmlld0JveD0iMCAwIDgwMCA0NTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNDUwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0zNTAgMjAwSDQ1MFYyNTBIMzUwVjIwMFoiIGZpbGw9IiM5Q0EzQUYiLz4KPHRleHQgeD0iNDAwIiB5PSIzMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzZCNzI4MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+SW1hZ2UgTm90IEZvdW5kPC90ZXh0Pgo8L3N2Zz4K';
+  
+  return `
+    <img 
+      src="${imageUrl}" 
+      alt="${alt}" 
+      class="${className}"
+      loading="lazy" 
+      decoding="async"
+      onerror="this.src='${fallbackImage}'; this.onerror=null;"
+      style="width: 100%; height: auto;"
+    />
+  `;
+}
+
+// Global fallback for all images
+document.addEventListener('DOMContentLoaded', function() {
+  // Add fallback to all images
+  const images = document.querySelectorAll('img');
+  images.forEach(img => {
+    if (!img.onerror) {
+      img.onerror = function() {
+        this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjQ1MCIgdmlld0JveD0iMCAwIDgwMCA0NTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNDUwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0zNTAgMjAwSDQ1MFYyNTBIMzUwVjIwMFoiIGZpbGw9IiM5Q0EzQUYiLz4KPHRleHQgeD0iNDAwIiB5PSIzMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzZCNzI4MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+SW1hZ2UgTm90IEZvdW5kPC90ZXh0Pgo8L3N2Zz4K';
+        this.onerror = null;
+      };
+    }
+  });
+});
+
+/**
+ * Validate and optimize all images in article content
+ * @param {string} htmlContent - HTML content with images
+ * @returns {string} Optimized HTML content
+ */
+function optimizeImagesInContent(htmlContent) {
+  if (!htmlContent) return htmlContent;
+  
+  // Add lazy loading and error handling to existing images
+  return htmlContent.replace(
+    /<img([^>]*?)src="([^"]*?)"([^>]*?)>/gi,
+    (match, before, src, after) => {
+      // Check if already has loading attribute
+      if (match.includes('loading=')) return match;
+      
+      // Add lazy loading and error handling
+      return `<img${before}src="${src}"${after} loading="lazy" decoding="async" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjQ1MCIgdmlld0JveD0iMCAwIDgwMCA0NTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNDUwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0zNTAgMjAwSDQ1MFYyNTBIMzUwVjIwMFoiIGZpbGw9IiM5Q0EzQUYiLz4KPHRleHQgeD0iNDAwIiB5PSIzMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzZCNzI4MCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+SW1hZ2UgTm90IEZvdW5kPC90ZXh0Pgo8L3N2Zz4K'; this.onerror=null;">`;
+    }
+  );
 }
 
 // Enhanced breadcrumb structured data
@@ -481,7 +786,7 @@ document.addEventListener('click', (e)=>{
     
     // Skip category and other navigation links
     const categoryLink = e.target.closest('a[href^="#category/"]');
-    const otherNavLink = e.target.closest('a[href="#about"], a[href="#policy"]');
+    const otherNavLink = e.target.closest('a[href="#about"], a[href="#policy"], a[href="#contact"]');
     if (categoryLink || otherNavLink) {
       console.log('Category or navigation link clicked, allowing default behavior');
       console.log('Link href:', categoryLink ? categoryLink.href : otherNavLink.href);
@@ -497,17 +802,65 @@ document.addEventListener('click', (e)=>{
       return;
     }
     
-  const a = e.target.closest('a[data-slug]');
-    if(!a) {
-      console.log('No article link found');
+  // Check for internal links (including index.html)
+  const internalLink = e.target.closest('a[href^="/"], a[href^="./"], a[href^="../"]');
+  if (internalLink) {
+    const href = internalLink.getAttribute('href');
+    
+    // Check if it's an index.html link or root link
+    if (href === '/' || href === '/index.html' || href.endsWith('/index.html')) {
+      console.log('Internal home link found:', href);
+      e.preventDefault();
+      e.stopPropagation();
+      
+      // Normalize to root path
+      const normalizedHref = href.replace(/\/index\.html$/, '/');
+      
+      // Use History API to navigate
+      history.pushState({ type: 'home' }, '', normalizedHref);
+      
+      // Trigger debounced route function
+      debouncedRoute();
       return;
     }
-    console.log('Article link found:', a);
-  e.preventDefault();
+  }
+  
+  // Check for article links with pathname format
+  const articleLink = e.target.closest('a[href^="/"][data-slug]');
+  if (articleLink) {
+    console.log('Article link found (pathname format):', articleLink);
+    e.preventDefault();
     e.stopPropagation();
-    const slug = a.dataset.slug;
-    if(slug) {
-      console.log('Navigating to article:', slug);
+    
+    const href = articleLink.getAttribute('href');
+    const slug = articleLink.dataset.slug;
+    
+    if (href && slug) {
+      console.log('Navigating to article URL:', href, 'slug:', slug);
+      
+      // Use History API to navigate
+      history.pushState({ type: 'post', slug: slug }, '', href);
+      
+      // Trigger debounced route function to handle the new pathname
+      debouncedRoute();
+    } else {
+      console.warn('Invalid article link - missing href or slug');
+    }
+    return;
+  }
+  
+  // Check for hash-based article links (backward compatibility)
+  const hashLink = e.target.closest('a[href^="#p/"], a[href^="#post/"]');
+  if (hashLink) {
+    console.log('Article link found (hash format):', hashLink);
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const href = hashLink.getAttribute('href');
+    const slug = hashLink.dataset.slug;
+    
+    if (href && slug) {
+      console.log('Converting hash link to pathname format');
       
       // Generate new URL format
       const article = ARTICLES.find(art => art.slug === slug);
@@ -522,13 +875,13 @@ document.addEventListener('click', (e)=>{
         const order = categoryArticles.findIndex(art => art.slug === slug) + 1;
         
         const newUrl = `/${year}/${month}/${day}/${order}-${slug}`;
-        console.log('Navigating to new URL:', newUrl);
+        console.log('Converting to new URL:', newUrl);
         history.pushState(null, '', newUrl);
-        route();
+        debouncedRoute();
       }
-    } else {
-      console.warn('No slug found in clicked element');
     }
+    return;
+  }
   });
 }
 
@@ -640,9 +993,12 @@ function renderReader(slug, queryStr) {
       cleanHTML = '<p>Sorry, there was an error loading this article.</p>';
     }
     
+    // Optimize images in content
+    const optimizedHTML = optimizeImagesInContent(cleanHTML);
+    
     // Secure DOM update
-    post.innerHTML = `<h1 id="post-top">${cleanTitle}</h1>${cleanHTML}`;
-    console.log('Article content rendered securely');
+    post.innerHTML = `<h1 id="post-top">${cleanTitle}</h1>${optimizedHTML}`;
+    console.log('Article content rendered securely with optimized images');
     
     // Ensure the post element is visible
     post.style.display = 'block';
@@ -657,10 +1013,24 @@ function renderReader(slug, queryStr) {
     post.prepend(fig);
   }
 
-  /* Meta dengan verified icon dan nama Penjaga */
+  /* Meta dengan avatar, nama Penjaga, dan badge verified */
   const meta = post.querySelector('.meta') || document.createElement('div');
-  meta.className='meta';
-  meta.innerHTML = `<span class="verified-icon"></span><strong>Penjaga</strong> <time datetime="${a.published}">${fmtDate(a.published)}</time>`;
+  meta.className='meta author';
+  meta.innerHTML = `
+    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=88&h=88&fit=crop&crop=face" 
+         alt="Avatar Penjaga" 
+         class="author-avatar"
+         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDQiIGhlaWdodD0iNDQiIHZpZXdCb3g9IjAgMCA0NCA0NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjIiIGN5PSIyMiIgcj0iMjIiIGZpbGw9IiMyNTYzZWIiLz4KPHRleHQgeD0iMjIiIHk9IjI4IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5QPC90ZXh0Pgo8L3N2Zz4K'; this.onerror=null;">
+    <div>
+      <div class="author-name">
+        Penjaga 
+        <svg class="badge-verified" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="#1da1f2"/>
+        </svg>
+      </div>
+      <time datetime="${a.published}">${fmtDate(a.published)}</time>
+    </div>
+  `;
   const h1 = post.querySelector('h1'); if(h1 && meta.parentNode!==post){ h1.after(meta); }
 
   /* Tampilkan Tags */
@@ -745,28 +1115,114 @@ function renderReader(slug, queryStr) {
     // Fallback to old format
   history.replaceState(null, '', window.location.pathname + window.location.search + `#p/${slug}`);
   }
-  updateSEOForArticle(a);
+  // SEO already updated in renderPost, don't update again
   show('reader');
-  console.log('Reader page should now be visible');
+  console.log('✅ Reader page should now be visible');
   
   } catch (error) {
     console.error('Render reader error:', error);
-    // Fallback to home page
-    location.hash = '#';
+    // Show error page instead of redirecting to home
+    const post = document.getElementById('post');
+    if (post) {
+      post.innerHTML = `
+        <h1>Error Loading Article</h1>
+        <p>Maaf, terjadi kesalahan saat memuat artikel.</p>
+        <p><a href="/">← Kembali ke Beranda</a></p>
+      `;
+    }
+    show('reader');
   }
 }
+
+/**
+ * Render article post with proper SEO and navigation
+ * @param {Object} article - Article object from ARTICLES array
+ */
+function renderPost(article) {
+  try {
+    console.log('Rendering post:', article.title);
+    
+    // Update SEO for article first
+    updateSEOForArticle(article);
+    
+    // Render the article content
+    renderReader(article.slug);
+    
+    // Show reader section
+    show('reader');
+    
+    // Scroll to top
+    window.scrollTo(0, 0);
+    
+    console.log('✅ Post rendered successfully');
+  } catch (error) {
+    console.error('❌ Error rendering post:', error);
+    render404();
+  }
+}
+
+/**
+ * Render 404 page
+ */
+function render404() {
+  console.log('Rendering 404 page');
+  show('reader');
+  const post = document.getElementById('post');
+  if (post) {
+    post.innerHTML = `
+      <h1>Artikel Tidak Ditemukan</h1>
+      <p>Maaf, artikel yang Anda cari tidak ditemukan.</p>
+      <p><a href="/">← Kembali ke Beranda</a></p>
+    `;
+  }
+}
+
 function route(){
   const path = location.pathname;
-  const hash = location.hash.slice(1);
+  const hash = location.hash.slice(1).trim();
   console.log('Routing to path:', path);
   console.log('Routing to hash:', hash);
 
-  // Handle static pages FIRST (highest priority)
-  if (hash === 'about' || hash === 'policy') {
+  // Normalize path - treat /index.html same as /
+  const normalizedPath = path.replace(/\/index\.html$/, '/');
+  
+  // Handle root/home page FIRST
+  if (normalizedPath === '/' || normalizedPath === '' || path.endsWith('/index.html')) {
+    console.log('Handling home page (normalized path:', normalizedPath, ')');
+    show('home');
+    
+    const q = document.getElementById('q');
+    if (q) q.value = '';
+    
+    const heroTitle = document.getElementById('heroTitle');
+    if (heroTitle) heroTitle.textContent = t('heroTitle');
+    
+    const heroSub = document.getElementById('heroSub');
+    if (heroSub) heroSub.textContent = t('heroSub');
+    
+    renderList(getRandomArticles(8));
+    
+    // Ensure URL is normalized to /
+    if (path !== '/') {
+      history.replaceState(null, '', '/');
+    }
+    
+    resetSEOHome();
+    console.log('Home page rendered successfully');
+    return;
+  }
+
+  // Handle static pages SECOND (high priority)
+  if (hash === 'about' || hash === 'policy' || hash === 'contact') {
     console.log('Handling static page:', hash);
     hideSearch();
     show(hash);
     closeDrawer();
+    
+    // Force apply I18N for static pages
+    console.log('Force applying I18N for static page:', hash);
+    applyI18N();
+    
     console.log('Static page rendered successfully:', hash);
     return;
   }
@@ -788,7 +1244,7 @@ function route(){
     renderList(filteredArticles); // Tampilkan artikel yang sudah difilter
     
     history.replaceState(null, '', window.location.pathname + window.location.search + `#category/${categoryName}`);
-    resetSEOHome();
+    updateSEOForCategory(categoryName, filteredArticles.length);
     closeDrawer();
     console.log('Category page rendered successfully');
     return;
@@ -796,48 +1252,58 @@ function route(){
 
   // Handle article page - new URL format: /2025/09/25/1-era-baru-sinema-ai-sora
   console.log('Checking path for article format:', path);
-  const articleMatch = path.match(/^\/(\d{4})\/(\d{2})\/(\d{2})\/(\d+)-(.+)$/);
+  const articleMatch = path.match(/^\/(\d{4})\/(\d{2})\/(\d{2})\/([^\/#?]+)\/?$/);
   if(articleMatch){
     const year = articleMatch[1];
     const month = articleMatch[2];
     const day = articleMatch[3];
-    const order = articleMatch[4];
-    const slug = articleMatch[5];
+    const slugPart = articleMatch[4];
+    
+    // Extract slug from order-slug format
+    const slugMatch = slugPart.match(/^\d+-(.+)$/);
+    const slug = slugMatch ? slugMatch[1] : slugPart;
+    
     console.log('✅ MATCH FOUND - Handling article page with new format');
     console.log('Article slug:', slug);
     console.log('Date:', year, month, day);
-    console.log('Order:', order);
+    console.log('Slug part:', slugPart);
     
     // Check if article exists
     const article = ARTICLES?.find(a => a.slug === slug);
     if (!article) {
       console.warn('Article not found for slug:', slug);
       console.log('Available slugs:', ARTICLES?.map(a => a.slug) || []);
-      // Redirect to home page
-      history.replaceState(null, '', '/');
-      show('home');
-      renderList(getRandomArticles(8));
-      resetSEOHome();
+      // Render 404 page instead of redirecting to home
+      render404();
       return;
     }
     
+    console.log('Found article:', article.title);
     hideSearch();
-    console.log('About to render reader for slug:', slug);
-    renderReader(slug);
-    console.log('About to show reader section');
-    show('reader');
-    console.log('Reader section should now be visible');
+    
+    // Render the article
+    renderPost(article);
+    
+    console.log('Reader page should now be visible');
     return;
   }
-  // Handle old hash format for backward compatibility
-  else if (hash.startsWith('p/')) {
-    console.log('Handling article page (legacy hash format)');
+  // Handle article page formats: #p/slug, #post/slug
+  if (hash.startsWith('p/') || hash.startsWith('post/')) {
+    console.log('Handling article page (hash format)');
     hideSearch();
-    const rest = hash.slice(2);
+    const rest = hash.startsWith('p/') ? hash.slice(2) : hash.slice(5);
     const [slug, queryStr] = rest.split('?');
-    console.log('Article slug:', slug);
-    renderReader(slug, queryStr);
-    return;
+    const cleanSlug = decodeURIComponent(slug).trim();
+    console.log('Article slug:', cleanSlug);
+    
+    if (cleanSlug && cleanSlug.length > 0) {
+      renderReader(cleanSlug, queryStr);
+      return;
+    } else {
+      console.warn('Invalid slug, redirecting to home');
+      location.hash = '#';
+      return;
+    }
   }
 
 
@@ -855,43 +1321,148 @@ function route(){
     renderList(filteredArticles);
     
     history.replaceState(null, '', window.location.pathname + window.location.search + `#tag/${tagName}`);
-    resetSEOHome(); // Reset SEO for list pages
+    updateSEOForTag(tagName, filteredArticles.length);
     return;
   }
 
 
-  // Default to home page (covers #, #tutorial, or any other hash)
-  console.log('❌ NO MATCH FOUND - Defaulting to home page');
-  console.log('Path was:', path);
-  console.log('Hash was:', hash);
-  console.log('Showing home page');
-  show('home');
+  // Handle unknown routes - only fallback if truly unrecognized
+  // Don't log UNKNOWN ROUTE for /index.html as it should be treated as home
+  if (!path.endsWith('/index.html')) {
+    console.log('❌ UNKNOWN ROUTE - Hash not recognized:', hash);
+    console.log('Path was:', path);
+    console.log('Hash was:', hash);
+  }
   
-  const q = document.getElementById('q');
-  if (q) q.value = '';
+  // Check if it might be a malformed article slug (no prefix)
+  const possibleSlug = hash.toLowerCase().trim();
+  if (possibleSlug && possibleSlug.length > 3 && !possibleSlug.includes('/')) {
+    console.log('Attempting to treat as article slug:', possibleSlug);
+    const article = ARTICLES?.find(a => a.slug === possibleSlug);
+    if (article) {
+      console.log('Found article by slug, redirecting to proper format');
+      location.hash = `#p/${possibleSlug}`;
+      return;
+    }
+  }
   
-  const heroTitle = document.getElementById('heroTitle');
-  if (heroTitle) heroTitle.textContent = t('heroTitle');
-  
-  const heroSub = document.getElementById('heroSub');
-  if (heroSub) heroSub.textContent = t('heroSub');
-  
-  console.log('About to render list...');
-  renderList(getRandomArticles(8)); 
-  console.log('List rendered');
-  
-  
-  history.replaceState(null, '', window.location.pathname + window.location.search);
-  resetSEOHome();
+  // Only fallback to home if truly unrecognized
+  console.log('Redirecting to home page');
+  location.hash = '#';
 }
-window.addEventListener('hashchange', (e) => {
-  console.log('Hash changed to:', location.hash);
-  route();
-});
+// Unit tests for routing (lightweight)
+function testRouting() {
+  const testCases = [
+    { hash: '#', expected: 'home' },
+    { hash: '#home', expected: 'home' },
+    { hash: '#p/test-slug', expected: 'article' },
+    { hash: '#post/test-slug', expected: 'article' },
+    { hash: '#category/news', expected: 'category' },
+    { hash: '#tag/ai', expected: 'tag' },
+    { hash: '#about', expected: 'static' },
+    { hash: '#policy', expected: 'static' },
+    { hash: '#contact', expected: 'static' }
+  ];
+  
+  console.log('🧪 Running routing tests...');
+  testCases.forEach(test => {
+    const originalHash = location.hash;
+    location.hash = test.hash;
+    const hash = location.hash.slice(1).trim();
+    
+    let result = 'unknown';
+    if (!hash || hash === '' || hash === 'home') result = 'home';
+    else if (hash === 'about' || hash === 'policy' || hash === 'contact') result = 'static';
+    else if (hash.startsWith('category/')) result = 'category';
+    else if (hash.startsWith('tag/')) result = 'tag';
+    else if (hash.startsWith('p/') || hash.startsWith('post/')) result = 'article';
+    
+    const passed = result === test.expected;
+    console.log(`${passed ? '✅' : '❌'} ${test.hash} → ${result} (expected: ${test.expected})`);
+    
+    location.hash = originalHash;
+  });
+  console.log('🧪 Routing tests completed');
+}
 
-window.addEventListener('popstate', (e) => {
+// Run tests in development
+if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+  window.testRouting = testRouting;
+  console.log('💡 Call testRouting() to run routing tests');
+}
+
+// Debounced route handler to prevent double rendering
+let routeInProgress = false;
+const debouncedRoute = debounce(() => {
+  if (routeInProgress) {
+    console.log('⚠️ Route already in progress, skipping...');
+    return;
+  }
+  
+  routeInProgress = true;
+  console.log('🔄 Starting route...');
+  
+  try {
+    route();
+  } finally {
+    // Reset flag after a short delay to allow for async operations
+    setTimeout(() => {
+      routeInProgress = false;
+      console.log('✅ Route completed');
+    }, 100);
+  }
+}, 120);
+
+// Debounced hashchange handler for better performance
+const debouncedHashChange = debounce(() => {
+  console.log('Hash changed to:', location.hash);
+  debouncedRoute();
+}, 120);
+
+// Debounced popstate handler for better performance
+const debouncedPopstate = debounce(() => {
   console.log('Popstate event, path:', location.pathname);
-  route();
+  debouncedRoute();
+}, 120);
+
+// Add event listeners only once
+if (!window.routeListenersAdded) {
+  window.addEventListener('hashchange', debouncedHashChange);
+  window.addEventListener('popstate', debouncedPopstate);
+  window.onpopstate = debouncedPopstate;
+  window.routeListenersAdded = true;
+  console.log('✅ Route listeners added');
+}
+
+// Global interceptor for all internal links to prevent full page reloads
+document.addEventListener('click', function(e) {
+  const link = e.target.closest('a[href]');
+  if (!link) return;
+  
+  const href = link.getAttribute('href');
+  
+  // Check if it's an internal link that should be handled by SPA
+  if (href && (
+    href === '/' || 
+    href === '/index.html' || 
+    href.endsWith('/index.html') ||
+    href.startsWith('/') && !href.startsWith('//') // Internal absolute paths
+  )) {
+    // Don't prevent if it's already handled by specific handlers above
+    if (e.defaultPrevented) return;
+    
+    console.log('🔄 Intercepting internal link:', href);
+    e.preventDefault();
+    
+    // Normalize path
+    const normalizedHref = href.replace(/\/index\.html$/, '/');
+    
+    // Use History API
+    history.pushState({ type: 'internal' }, '', normalizedHref);
+    
+    // Trigger debounced route
+    debouncedRoute();
+  }
 });
 
 /* ======= Search ======= */
@@ -899,32 +1470,35 @@ const q=document.getElementById('q');
 const qResults=document.getElementById('qResults');
 let qTimer=null, qActiveIndex=-1;
 
-// Debounce function for better performance
-function debounce(func, wait) {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-}
+// Debounce function already defined above
 
 function renderQuickResults(term){
   const v = term.trim().toLowerCase();
   if(v.length<2){ qResults.classList.remove('show'); qResults.innerHTML=''; qActiveIndex=-1; return; }
   const filtered = ARTICLES.filter(a => (a.title+' '+a.summary).toLowerCase().includes(v));
   qResults.innerHTML = filtered.length
-    ? filtered.map(a=>`
-        <a href="#p/${a.slug}" data-slug="${a.slug}">
-          <img loading="lazy" decoding="async" src="${a.cover}" alt="">
-          <div>
-            <div class="hit-title">${a.title}</div>
-            <div class="hit-meta"><time datetime="${a.published}">${fmtDate(a.published)}</time></div>
-          </div>
-        </a>`).join('') : `<div style="padding:12px;color:var(--muted)">${t('noResultsFor')} &ldquo;${term}&rdquo;.</div>`;
+    ? filtered.map(a=>{
+        // Generate new URL format for search results
+        const date = new Date(a.published);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        
+        const categoryArticles = ARTICLES.filter(art => art.category === a.category)
+          .sort((x, y) => new Date(y.published) - new Date(x.published));
+        const order = categoryArticles.findIndex(art => art.slug === a.slug) + 1;
+        
+        const newUrl = `/${year}/${month}/${day}/${order}-${a.slug}`;
+        
+        return `
+          <a href="${newUrl}" data-slug="${a.slug}">
+            <img loading="lazy" decoding="async" src="${a.cover}" alt="">
+            <div>
+              <div class="hit-title">${a.title}</div>
+              <div class="hit-meta"><time datetime="${a.published}">${fmtDate(a.published)}</time></div>
+            </div>
+          </a>`;
+      }).join('') : `<div style="padding:12px;color:var(--muted)">${t('noResultsFor')} &ldquo;${term}&rdquo;.</div>`;
   qResults.classList.add('show');
   qActiveIndex=-1;
 }
@@ -968,7 +1542,17 @@ qResults.addEventListener('click',e=>{
   if(!a) return;
   e.preventDefault();
   hideSearch();
-  location.hash = `#p/${a.dataset.slug}`;
+  
+  const href = a.getAttribute('href');
+  const slug = a.dataset.slug;
+  
+  if (href && slug) {
+    console.log('Search result clicked, navigating to:', href);
+    history.pushState({ type: 'post', slug: slug }, '', href);
+    debouncedRoute();
+  } else {
+    console.warn('Invalid search result link');
+  }
 });
 window.addEventListener('keydown',e=>{
   if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='k'){
@@ -979,29 +1563,70 @@ window.addEventListener('keydown',e=>{
 });
 
 /* ======= Drawer & global keyboard ======= */
-const drawer=document.getElementById('drawer');
-function openDrawer(){drawer.classList.add('show');document.body.classList.add('noscroll');}
-function closeDrawer(){drawer.classList.remove('show');document.body.classList.remove('noscroll');}
-document.getElementById('btnMenu').onclick=openDrawer;
-document.getElementById('btnClose').onclick=closeDrawer;
-drawer.querySelector('.backdrop').onclick=closeDrawer;
-window.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){ closeDrawer(); document.getElementById('searchBar').classList.remove('show'); }
+/**
+ * Open drawer with accessibility support
+ */
+function openDrawer() {
+  const drawer = DOMCache.get('drawer');
+  if (!drawer) return;
+  
+  drawer.classList.add('show');
+  drawer.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('noscroll');
+}
+
+/**
+ * Close drawer with accessibility support
+ */
+function closeDrawer() {
+  const drawer = DOMCache.get('drawer');
+  if (!drawer) return;
+  
+  drawer.classList.remove('show');
+  drawer.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('noscroll');
+}
+
+// Event listeners with null checks
+const btnMenu = DOMCache.get('btnMenu');
+const btnClose = DOMCache.get('btnClose');
+const drawer = DOMCache.get('drawer');
+
+if (btnMenu) btnMenu.onclick = openDrawer;
+if (btnClose) btnClose.onclick = closeDrawer;
+if (drawer) {
+  const backdrop = drawer.querySelector('.backdrop');
+  if (backdrop) backdrop.onclick = closeDrawer;
+}
+window.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeDrawer();
+    const searchBar = DOMCache.get('searchBar');
+    if (searchBar) searchBar.classList.remove('show');
+  }
 });
 
 /* ======= Search toggle ======= */
-const searchBar=document.getElementById('searchBar');
-document.getElementById('btnSearch').onclick=()=>{
-  searchBar.classList.toggle('show');
-  if(searchBar.classList.contains('show')) q.focus();
-};
+const btnSearch = document.getElementById('btnSearch');
+if (btnSearch) {
+  btnSearch.onclick = () => {
+    const searchBar = DOMCache.get('searchBar');
+    if (!searchBar) return;
+    
+    searchBar.classList.toggle('show');
+    if (searchBar.classList.contains('show')) {
+      const q = document.getElementById('searchInput');
+      if (q) q.focus();
+    }
+  };
+}
 document.addEventListener('click',e=>{
   const bar = document.getElementById('searchBar');
   if(!bar.contains(e.target) && e.target.id!=='btnSearch'){
     qResults.classList.remove('show');
   }
   
-  if (e.target.closest('a[href="#about"], a[href="#policy"]')) {
+  if (e.target.closest('a[href="#about"], a[href="#policy"], a[href="#contact"]')) {
     console.log('About/Policy link clicked in search handler:', e.target.closest('a[href="#about"], a[href="#policy"]'));
   }
 });
@@ -1051,11 +1676,13 @@ function initReadingProgress() {
     }
   };
   
-  // Reset on new article
-  window.addEventListener('hashchange', () => {
+  // Reset on new article (debounced)
+  const debouncedReadingReset = debounce(() => {
     readingStartTime = Date.now();
     progressTracked = [];
-  });
+  }, 120);
+  
+  window.addEventListener('hashchange', debouncedReadingReset);
   
   // Track progress on scroll
   window.addEventListener('scroll', trackProgress, { passive: true });
@@ -1089,12 +1716,14 @@ function healthCheck() {
 // Expose health check for monitoring
 window.healthCheck = healthCheck;
 
-// Expose health endpoint via hash route
-window.addEventListener('hashchange', () => {
+// Expose health endpoint via hash route (debounced)
+const debouncedHealthCheck = debounce(() => {
   if (location.hash === '#health') {
     document.body.innerHTML = `<pre>${JSON.stringify(healthCheck(), null, 2)}</pre>`;
   }
-});
+}, 120);
+
+window.addEventListener('hashchange', debouncedHealthCheck);
 
 /* ======= Theme Toggle ======= */
 (function initTheme() {
@@ -1155,13 +1784,31 @@ function clearCache() {
   }
 }
 
-// Initialize with proper error handling
+/**
+ * Initialize blog with proper error handling and performance optimization
+ */
 function initializeBlog() {
   try {
     console.log('Initializing Maneh blog...');
-    console.log('ARTICLES available:', typeof ARTICLES !== 'undefined' ? ARTICLES.length : 'undefined');
-    console.log('I18N available:', typeof I18N !== 'undefined' ? 'yes' : 'no');
-    console.log('DOMPurify available:', typeof DOMPurify !== 'undefined' ? 'yes' : 'no');
+    
+    // Initialize DOM cache
+    DOMCache.init();
+    
+    // Validate required data
+    if (typeof ARTICLES === 'undefined') {
+      console.error('❌ ARTICLES not loaded! Check data.js file');
+      return;
+    }
+    if (typeof I18N === 'undefined') {
+      console.error('❌ I18N not loaded! Check data.js file');
+      return;
+    }
+    
+    console.log('✅ Data loaded successfully:', {
+      articles: ARTICLES.length,
+      i18n: typeof I18N !== 'undefined',
+      dompurify: typeof DOMPurify !== 'undefined'
+    });
     
     // Check if required elements exist
     const homeEl = document.getElementById('home');
@@ -1174,9 +1821,22 @@ function initializeBlog() {
     // Setup click handlers first
     setupClickHandlers();
     
-detectAndApplyLocale(); // Run locale detection and initial render
-route(); // Run the router to handle the initial hash
-    console.log('Initialization complete');
+    // Ensure I18N is loaded before applying translations
+    if (typeof I18N !== 'undefined') {
+      detectAndApplyLocale(); // Run locale detection and initial render
+      // Don't call route() here - it will be called from index.html after scripts load
+      console.log('Initialization complete');
+    } else {
+      console.error('I18N not loaded, retrying...');
+      setTimeout(() => {
+        if (typeof I18N !== 'undefined') {
+          detectAndApplyLocale();
+          // Don't call route() here - it will be called from index.html after scripts load
+        } else {
+          console.error('I18N still not available after timeout');
+        }
+      }, 100);
+    }
   } catch (error) {
     console.error('Initialization error:', error);
   }
@@ -1261,25 +1921,109 @@ if (document.readyState === 'loading') {
     const savedName = localStorage.getItem('commentName');
     const savedEmail = localStorage.getItem('commentEmail');
     const savedWebsite = localStorage.getItem('commentWebsite');
+    const savedRemember = localStorage.getItem('commentRemember') === 'true';
     
     if (savedName) document.getElementById('commentName').value = savedName;
     if (savedEmail) document.getElementById('commentEmail').value = savedEmail;
     if (savedWebsite) document.getElementById('commentWebsite').value = savedWebsite;
+    if (savedRemember) document.getElementById('remember').checked = savedRemember;
   }
 
   // Save user info
   function saveUserInfo() {
-    const saveInfo = document.getElementById('saveInfo').checked;
+    const saveInfo = document.getElementById('remember').checked;
+    localStorage.setItem('commentRemember', saveInfo);
+    
     if (saveInfo) {
       localStorage.setItem('commentName', document.getElementById('commentName').value);
       localStorage.setItem('commentEmail', document.getElementById('commentEmail').value);
       localStorage.setItem('commentWebsite', document.getElementById('commentWebsite').value);
+    } else {
+      localStorage.removeItem('commentName');
+      localStorage.removeItem('commentEmail');
+      localStorage.removeItem('commentWebsite');
     }
+  }
+
+  // Clear error messages
+  function clearErrors() {
+    const errorElements = document.querySelectorAll('.form-error');
+    errorElements.forEach(el => el.classList.remove('show'));
+    
+    const inputs = document.querySelectorAll('input, textarea');
+    inputs.forEach(input => {
+      input.setAttribute('aria-invalid', 'false');
+      input.classList.remove('is-invalid');
+    });
+  }
+
+  // Show error message
+  function showError(fieldId, message) {
+    const errorEl = document.getElementById(fieldId + 'Error');
+    const inputEl = document.getElementById(fieldId);
+    
+    if (errorEl) {
+      errorEl.textContent = message;
+      errorEl.classList.add('show');
+    }
+    
+    if (inputEl) {
+      inputEl.setAttribute('aria-invalid', 'true');
+      inputEl.classList.add('is-invalid');
+    }
+  }
+
+  // Validate form fields
+  function validateForm() {
+    clearErrors();
+    let isValid = true;
+
+    // Validate comment
+    const comment = document.getElementById('commentText').value.trim();
+    if (!comment) {
+      showError('commentText', 'Komentar wajib diisi');
+      isValid = false;
+    }
+
+    // Validate name
+    const name = document.getElementById('commentName').value.trim();
+    if (!name) {
+      showError('commentName', 'Nama wajib diisi');
+      isValid = false;
+    }
+
+    // Validate email
+    const email = document.getElementById('commentEmail').value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+      showError('commentEmail', 'Email wajib diisi');
+      isValid = false;
+    } else if (!emailRegex.test(email)) {
+      showError('commentEmail', 'Format email tidak valid');
+      isValid = false;
+    }
+
+    // Validate website (optional)
+    const website = document.getElementById('commentWebsite').value.trim();
+    if (website) {
+      try {
+        new URL(website);
+      } catch {
+        showError('commentWebsite', 'Format URL tidak valid');
+        isValid = false;
+      }
+    }
+
+    return isValid;
   }
 
   // Handle form submission
   commentForm.addEventListener('submit', function(e) {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
     
     const formData = new FormData(commentForm);
     const commentData = {
@@ -1289,12 +2033,6 @@ if (document.readyState === 'loading') {
       website: formData.get('website'),
       timestamp: new Date().toISOString()
     };
-
-    // Validate required fields
-    if (!commentData.comment.trim() || !commentData.name.trim() || !commentData.email.trim()) {
-      alert('Mohon isi semua field yang wajib diisi (Nama, Email, dan Komentar).');
-      return;
-    }
 
     // Save user info if checkbox is checked
     saveUserInfo();
@@ -1310,6 +2048,38 @@ if (document.readyState === 'loading') {
     
     // Reload saved info
     loadSavedInfo();
+  });
+
+  // Real-time validation
+  const inputs = commentForm.querySelectorAll('input, textarea');
+  inputs.forEach(input => {
+    input.addEventListener('blur', function() {
+      if (this.hasAttribute('required') && !this.value.trim()) {
+        showError(this.id, 'Field ini wajib diisi');
+      } else if (this.type === 'email' && this.value.trim()) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(this.value.trim())) {
+          showError(this.id, 'Format email tidak valid');
+        }
+      } else if (this.type === 'url' && this.value.trim()) {
+        try {
+          new URL(this.value.trim());
+        } catch {
+          showError(this.id, 'Format URL tidak valid');
+        }
+      }
+    });
+
+    input.addEventListener('input', function() {
+      if (this.getAttribute('aria-invalid') === 'true') {
+        this.setAttribute('aria-invalid', 'false');
+        this.classList.remove('is-invalid');
+        const errorEl = document.getElementById(this.id + 'Error');
+        if (errorEl) {
+          errorEl.classList.remove('show');
+        }
+      }
+    });
   });
 
   // Load saved info on page load

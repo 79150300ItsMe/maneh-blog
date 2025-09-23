@@ -63,10 +63,11 @@ self.addEventListener('fetch', event => {
   // Skip chrome-extension and other non-http(s) URLs
   if (!request.url.startsWith('http')) return;
 
-  // Skip API calls, video proxy, and article URLs
+  // Skip API calls, video proxy, article URLs, and ads.txt
   if (url.pathname.startsWith('/v/') || 
       url.pathname.startsWith('/api/') ||
-      url.pathname.match(/^\/\d{4}\/\d{2}\/\d{2}\/\d+-/)) {
+      url.pathname.match(/^\/\d{4}\/\d{2}\/\d{2}\/\d+-/) ||
+      url.pathname === '/ads.txt') {
     return;
   }
 

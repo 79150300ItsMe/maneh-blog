@@ -32,3 +32,6 @@ Crawl-delay: 2
 Sitemap: https://maneh.blog/sitemap.xml
 Sitemap: https://maneh.blog/sitemap-index.xml
 Sitemap: https://maneh.blog/wp-sitemap.xml
+
+# AdSense
+Allow: /ads.txt

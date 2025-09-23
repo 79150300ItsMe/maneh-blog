@@ -1,227 +1,141 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://maneh.blog/</loc>
-    <lastmod>2025-09-21</lastmod>
+    <lastmod>2025-01-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-  
-  <!-- Category Pages -->
   <url>
     <loc>https://maneh.blog/#category/news</loc>
-    <lastmod>2025-09-21</lastmod>
+    <lastmod>2025-01-22</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
   </url>
-  
   <url>
     <loc>https://maneh.blog/#category/tutorial</loc>
-    <lastmod>2025-09-21</lastmod>
+    <lastmod>2025-01-22</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
   </url>
-  
-  <!-- Static Pages -->
   <url>
     <loc>https://maneh.blog/#about</loc>
-    <lastmod>2025-09-21</lastmod>
+    <lastmod>2025-01-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-  
   <url>
     <loc>https://maneh.blog/#policy</loc>
-    <lastmod>2025-09-21</lastmod>
+    <lastmod>2025-01-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://maneh.blog/2025/09/25/1-news-era-baru-sinema-ai-sora</loc>
-    <lastmod>2025-09-25</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://maneh.blog/#contact</loc>
+    <lastmod>2025-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://maneh.blog/2025/01/22/setup-vscode-web-development-panduan-lengkap</loc>
+    <lastmod>2025-01-22</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1489599808061-4b5b5b5b5b5b?w=800&q=80&auto=format</image:loc>
-      <image:title>Era Baru Sinema: Bagaimana AI Seperti Sora Mengubah Wajah Industri Film</image:title>
-      <image:caption>Analisis mendalam tentang bagaimana model AI text-to-video seperti Sora dari OpenAI merevolusi industri perfilman, mulai dari pra-produksi hingga efek visual, serta tantangan etis yang menyertainya.</image:caption>
-    </image:image>
-    <news:news>
-      <news:publication>
-        <news:name>Maneh</news:name>
-        <news:language>id</news:language>
-      </news:publication>
-      <news:publication_date>2025-09-25</news:publication_date>
-      <news:title>Era Baru Sinema: Bagaimana AI Seperti Sora Mengubah Wajah Industri Film</news:title>
-      <news:keywords>AI, Sora, Generative Video, Teknologi</news:keywords>
-    </news:news>
   </url>
   <url>
-    <loc>https://maneh.blog/2025/09/24/2-news-perlombaan-antariksa-generasi-baru</loc>
-    <lastmod>2025-09-24</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://maneh.blog/2025/01/22/cara-membuat-website-dengan-chatgpt-ai-tools</loc>
+    <lastmod>2025-01-22</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=800&q=80&auto=format</image:loc>
-      <image:title>Perlombaan Antariksa Generasi Baru: Swasta vs. Negara dalam Menaklukkan Mars dan Bulan</image:title>
-      <image:caption>Eksplorasi dinamika baru dalam penjelajahan antariksa, di mana perusahaan swasta seperti SpaceX dan Blue Origin kini bersaing dan berkolaborasi dengan badan antariksa negara seperti NASA dan CNSA.</image:caption>
-    </image:image>
-    <news:news>
-      <news:publication>
-        <news:name>Maneh</news:name>
-        <news:language>id</news:language>
-      </news:publication>
-      <news:publication_date>2025-09-24</news:publication_date>
-      <news:title>Perlombaan Antariksa Generasi Baru: Swasta vs. Negara dalam Menaklukkan Mars dan Bulan</news:title>
-      <news:keywords>Antariksa, SpaceX, NASA, Mars</news:keywords>
-    </news:news>
   </url>
   <url>
-    <loc>https://maneh.blog/2025/09/23/3-news-revolusi-energi-hijau-baterai-solid-state</loc>
-    <lastmod>2025-09-23</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://maneh.blog/2025/01/22/panduan-lengkap-setup-home-office-remote-work</loc>
+    <lastmod>2025-01-22</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format</image:loc>
-      <image:title>Revolusi Energi Hijau: Terobosan Baterai Solid-State dan Masa Depan Kendaraan Listrik</image:title>
-      <image:caption>Mengapa baterai solid-state dianggap sebagai 'cawan suci' untuk kendaraan listrik (EV) dan penyimpanan energi terbarukan, serta tantangan manufaktur yang harus diatasi.</image:caption>
-    </image:image>
-    <news:news>
-      <news:publication>
-        <news:name>Maneh</news:name>
-        <news:language>id</news:language>
-      </news:publication>
-      <news:publication_date>2025-09-23</news:publication_date>
-      <news:title>Revolusi Energi Hijau: Terobosan Baterai Solid-State dan Masa Depan Kendaraan Listrik</news:title>
-      <news:keywords>Energi Terbarukan, EV, Baterai, Lingkungan</news:keywords>
-    </news:news>
   </url>
   <url>
-    <loc>https://maneh.blog/2025/09/22/4-news-dampak-jangka-panjang-remote-work</loc>
-    <lastmod>2025-09-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&q=80&auto=format</image:loc>
-      <image:title>Pasca-Pandemi, Pasca-Kantor: Menganalisis Dampak Jangka Panjang Remote Work pada Ekonomi Global</image:title>
-      <image:caption>Studi komprehensif tentang bagaimana eksperimen kerja jarak jauh terbesar dalam sejarah membentuk kembali pasar tenaga kerja, real estat komersial, dan geografi ekonomi.</image:caption>
-    </image:image>
-    <news:news>
-      <news:publication>
-        <news:name>Maneh</news:name>
-        <news:language>id</news:language>
-      </news:publication>
-      <news:publication_date>2025-09-22</news:publication_date>
-      <news:title>Pasca-Pandemi, Pasca-Kantor: Menganalisis Dampak Jangka Panjang Remote Work pada Ekonomi Global</news:title>
-      <news:keywords>Remote Work, Ekonomi, Masa Depan Kerja, WFH</news:keywords>
-    </news:news>
+    <loc>https://maneh.blog/2025/01/22/tutorial-lengkap-membuat-aplikasi-mobile-flutter</loc>
+    <lastmod>2025-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://maneh.blog/2025/09/21/5-news-kedokteran-presisi-crispr-terapi-gen</loc>
-    <lastmod>2025-09-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=80&auto=format</image:loc>
-      <image:title>Kedokteran Presisi: Bagaimana CRISPR dan Terapi Gen Menulis Ulang Masa Depan Kesehatan Manusia</image:title>
-      <image:caption>Tinjauan mendalam tentang revolusi bioteknologi yang dipimpin oleh alat pengeditan gen CRISPR-Cas9, potensinya untuk menyembuhkan penyakit genetik, dan dilema etis yang kompleks.</image:caption>
-    </image:image>
-    <news:news>
-      <news:publication>
-        <news:name>Maneh</news:name>
-        <news:language>id</news:language>
-      </news:publication>
-      <news:publication_date>2025-09-21</news:publication_date>
-      <news:title>Kedokteran Presisi: Bagaimana CRISPR dan Terapi Gen Menulis Ulang Masa Depan Kesehatan Manusia</news:title>
-      <news:keywords>Bioteknologi, CRISPR, Kesehatan, Genetika</news:keywords>
-    </news:news>
+    <loc>https://maneh.blog/2025/01/22/panduan-lengkap-belajar-python-untuk-pemula</loc>
+    <lastmod>2025-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://maneh.blog/2025/09/20/6-news-perang-dingin-digital-keamanan-siber</loc>
-    <lastmod>2025-09-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80&auto=format</image:loc>
-      <image:title>Perang Dingin Digital: Eskalasi Ancaman Siber Berbasis Negara dan Tantangan Kedaulatan Data</image:title>
-      <image:caption>Analisis tentang bagaimana spionase dan sabotase siber yang disponsori negara telah menjadi alat utama dalam geopolitik modern, mengancam infrastruktur kritis dan privasi warga negara.</image:caption>
-    </image:image>
-    <news:news>
-      <news:publication>
-        <news:name>Maneh</news:name>
-        <news:language>id</news:language>
-      </news:publication>
-      <news:publication_date>2025-09-20</news:publication_date>
-      <news:title>Perang Dingin Digital: Eskalasi Ancaman Siber Berbasis Negara dan Tantangan Kedaulatan Data</news:title>
-      <news:keywords>Keamanan Siber, Privasi Data, Perang Siber, Regulasi</news:keywords>
-    </news:news>
+    <loc>https://maneh.blog/2025/01/22/era-baru-sinema-ai-sora</loc>
+    <lastmod>2025-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://maneh.blog/2025/09/19/1-tutorial-optimasi-chatgpt-panduan-prompts</loc>
-    <lastmod>2025-09-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80&auto=format</image:loc>
-      <image:title>Optimasi ChatGPT: Panduan Lengkap Menghasilkan Prompts yang Lebih Baik</image:title>
-      <image:caption>Tips dan teknik terbaru untuk mengoptimalkan hasil ChatGPT dengan struktur prompt yang efektif, context setting, dan chain-of-thought prompting.</image:caption>
-    </image:image>
+    <loc>https://maneh.blog/2025/01/22/perlombaan-antariksa-generasi-baru</loc>
+    <lastmod>2025-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://maneh.blog/2025/09/18/2-tutorial-panduan-keamanan-siber-2025</loc>
-    <lastmod>2025-09-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&q=80&auto=format</image:loc>
-      <image:title>Cara Mengamankan Akun Digital dari Serangan Hacker: Panduan Keamanan Siber 2025</image:title>
-      <image:caption>Strategi komprehensif untuk melindungi akun online dari ancaman siber modern, termasuk MFA, password manager, dan deteksi phishing.</image:caption>
-    </image:image>
+    <loc>https://maneh.blog/2025/01/22/revolusi-energi-hijau-baterai-solid-state</loc>
+    <lastmod>2025-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://maneh.blog/2025/09/16/4-tutorial-tips-optimasi-android-terbaru</loc>
-    <lastmod>2025-09-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=800&q=80&auto=format</image:loc>
-      <image:title>Tips dan Trik Mengoptimalkan Kinerja Smartphone Android Terbaru</image:title>
-      <image:caption>Panduan lengkap mengoptimalkan performa smartphone Android, dari manajemen RAM, baterai, storage, hingga kustomisasi UI untuk pengalaman lebih baik.</image:caption>
-    </image:image>
+    <loc>https://maneh.blog/2025/01/22/dampak-jangka-panjang-remote-work</loc>
+    <lastmod>2025-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://maneh.blog/2025/09/15/5-tutorial-panduan-karir-developer-2025</loc>
-    <lastmod>2025-09-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&q=80&auto=format</image:loc>
-      <image:title>Cara Memulai Karir sebagai Developer: Roadmap Lengkap 2025</image:title>
-      <image:caption>Panduan komprehensif untuk memulai karir di dunia pengembangan software, dari dasar pemrograman hingga spesialisasi dan tips mendapatkan pekerjaan pertama.</image:caption>
-    </image:image>
+    <loc>https://maneh.blog/2025/01/22/kedokteran-presisi-crispr-terapi-gen</loc>
+    <lastmod>2025-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://maneh.blog/2025/09/14/6-tutorial-setup-home-office-ergonomis</loc>
-    <lastmod>2025-09-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1486946255434-2466348c2166?w=800&q=80&auto=format</image:loc>
-      <image:title>Panduan Lengkap Setup Home Office yang Ergonomis dan Produktif</image:title>
-      <image:caption>Tips lengkap menata ruang kerja di rumah yang nyaman dan sehat, dari pemilihan furniture hingga pengaturan pencahayaan dan produktivitas.</image:caption>
-    </image:image>
+    <loc>https://maneh.blog/2025/01/22/perang-dingin-digital-keamanan-siber</loc>
+    <lastmod>2025-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://maneh.blog/2025/09/17/3-tutorial-panduan-laptop-gaming-2025</loc>
-    <lastmod>2025-09-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1593640495253-23196b27a87f?w=800&q=80&auto=format</image:loc>
-      <image:title>Panduan Lengkap Memilih dan Membeli Laptop Gaming 2025</image:title>
-      <image:caption>Paduan selera dan teknis: dari spesifikasi hardware, performa gaming, pertimbangan budget, hingga fitur-fitur terkini laptop gaming.</image:caption>
-    </image:image>
+    <loc>https://maneh.blog/2025/01/22/optimasi-chatgpt-panduan-prompts</loc>
+    <lastmod>2025-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://maneh.blog/2025/01/22/panduan-keamanan-siber-2025</loc>
+    <lastmod>2025-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://maneh.blog/2025/01/22/tips-optimasi-android-terbaru</loc>
+    <lastmod>2025-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://maneh.blog/2025/01/22/panduan-karir-developer-2025</loc>
+    <lastmod>2025-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://maneh.blog/2025/01/22/setup-home-office-ergonomis</loc>
+    <lastmod>2025-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://maneh.blog/2025/01/22/panduan-laptop-gaming-2025</loc>
+    <lastmod>2025-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
 </urlset>
